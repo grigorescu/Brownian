@@ -56,7 +56,7 @@ ROOT_URLCONF = 'Brownian.urls'
 WSGI_APPLICATION = 'Brownian.wsgi.application'
 
 INSTALLED_APPS = (
-    'view',
+    'Brownian.view',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
