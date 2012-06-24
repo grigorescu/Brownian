@@ -1,0 +1,59 @@
+{% extends "include/head.html" %}
+{% block title %}Query{% endblock %}
+{% block container %}
+  <div class="well container-fluid">
+    <form id="queryform" class="form-search form-horizontal" action="">
+      <table class=formatting>
+        <tr>
+          <td width='1%'>
+            <select name="time" id=timeinput class="span2">
+              <option value="15m">Last 15m</option>
+              <option value="60m">Last 60m</option>
+              <option value="4h">Last 4h</option>
+              <option value="12h">Last 12h</option>
+              <option value="24h">Last 24h</option>
+              <option value="48h">Last 48h</option>
+              <option value="7d">Last 7d</option>
+              <option value="all">All Time</option>
+              <!-- TODO <option value="custom">Custom</option> -->
+            </select>
+          </td>
+          <td width='85%'><input type="text" class="input-xxxlarge" placeholder="Query" name="query" id="querytext" value="{{ query }}"></td>
+          <td width='1%'><button class="btn btn-primary" type=submit>Search</button></td>
+          <td width='1%'><button class="btn btn-danger" type="reset" id="clear">Clear</button></td> <!-- TODO: This doesn't work -->
+        </tr>
+      </table>
+    </form>
+  </div>
+  <div class="well">
+    <ul id="resultTabs" class="nav nav-tabs">
+      {% for type, result in hits.items %}
+        <li {% if forloop.first %} class="active" {% endif %}>
+          <a href="#{{ type }}" data-toggle="tab">{{ type|capfirst }} ({{ result.total }})</a>
+        </li>
+      {% endfor %}
+    </ul>
+    <div id="results" class="tab-content">
+      {% for type, result in hits.items %}
+        <div class="tab-pane fade{% if forloop.first %} in active{% endif %}" id="{{ type }}">
+          <table class="table table-condensed table-striped">
+            <thead>
+              {% for attr in result.header %}
+                <th>{{ attr }}</th>
+              {% endfor %}
+            </thead>
+            <tbody>
+              {% for row in result.content %}
+                <tr>
+                  {% for key, val in row %}
+                    <td><a href="#" onclick="$('#querytext').val($('#querytext').val() + ' AND {{ key }}:&quot;{{ val }}&quot;');">{{ val }}</a></td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
