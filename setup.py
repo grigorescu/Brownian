@@ -5,5 +5,5 @@ setup(
     packages = find_packages(),
     install_requires = ["Django", "requests"],
     include_package_data = True,
-
+    zip_safe = False,
 )
