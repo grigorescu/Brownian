@@ -1,10 +1,10 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 setup(
     name = "Brownian",
     version = "0.1",
-    packages = find_packages(),
+    packages = ["Brownian", "Brownian.view", ],
     install_requires = ["Django", "requests"],
-    package_data = {'view':
+    package_data = {'Brownian.view':
                         ['static/css/*.css',
                          'static/img/*.png',
                          'static/js/*.js',
