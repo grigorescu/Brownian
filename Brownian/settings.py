@@ -56,13 +56,13 @@ ROOT_URLCONF = 'Brownian.urls'
 WSGI_APPLICATION = 'Brownian.wsgi.application'
 
 INSTALLED_APPS = (
+    'view',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'view',
 )
 
 LOGGING = {

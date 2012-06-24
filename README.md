@@ -24,6 +24,7 @@ This will prevent system upgrades from modifying the globally installed librarie
 
 1. For installing virtualenv, please see: (http://www.virtualenv.org/en/latest/index.html#installation).
 + Once installed, create and switch to your environment:
+
 ```bash
 $ virtualenv Brownian
 $ cd Brownian
@@ -42,7 +43,8 @@ The files are installed in ./lib/python2.7/site-packages/Brownian.
 Configuration
 -------------
 
-Change ELASTICSEARCH_SERVER in Brownian/settings.py to your server's hostname and port.
+1. Change ELASTICSEARCH_SERVER in Brownian/settings.py to your server's hostname and port.
++ Change TIME_ZONE in Brownian/settings.py to your desired timezone.
 
 Running Development Server
 --------------------------
