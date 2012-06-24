@@ -5,4 +5,6 @@ setup(
     packages = find_packages(),
     install_requires = ["Django", "requests"],
     package_data = {'': ["*.js", "*.css", "*.png", "*.html"]},
+    include_package_data = True,
+
 )
