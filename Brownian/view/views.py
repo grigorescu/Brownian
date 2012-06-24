@@ -17,6 +17,10 @@ def query(request):
     query = params.get("query", "*")
     if query == "": query = "*"
 
+    # To make the Javascript easier, we strip off the # from the currently open tab.
+    # If we don't have an open tab, default to conn.
+    openTab = params.get("openTab", "#conn").replace("#", "")
+
     data["query"] = query
     # Certain chars need to be escaped
     for char in ["\\", "+", "-", "&&", "||", "(", ")", "{", "}", "^", "\""]:
@@ -92,5 +96,14 @@ def query(request):
         if header:
             data["hits"][types[i]] = {"header": header, "content": content, "type": types[i],
                                       "took": result["responses"][i]["took"], "total": result["responses"][i]["hits"]["total"]}
+
+    if openTab in data["hits"].keys():
+        data["openTab"] = openTab
+    else:
+        if data["hits"]:
+            data["openTab"] = data["hits"].keys()[0]
+        else:
+            # If we have no hits, this is really not an issue, since we won't loop through anything.
+            data["openTab"] = "conn"
 
     return render(request, "query.html", data)

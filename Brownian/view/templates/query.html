@@ -15,21 +15,22 @@
         <!-- TODO <option value="custom">Custom</option> -->
       </select>
       <label for="querytext">Query</label><input type="text" class="input-xxxlarge" placeholder="Query" name="query" id="querytext" value="{{ query }}">
-      <button class="btn btn-primary" type=submit>Search</button>
+      <button class="btn btn-primary" type="submit" onclick='$("#opentab").val($("li.tab.active").children().attr("href"))'>Search</button>
       <button class="btn btn-danger" type="reset" id="clear">Clear</button>
+      <input type="hidden" name="openTab" id="opentab" value="">
     </form>
   </div>
   <div class="well">
     <ul id="resultTabs" class="nav nav-tabs">
       {% for type, result in hits.items %}
-        <li {% if forloop.first %} class="active" {% endif %}>
-          <a href="#{{ type }}" data-toggle="tab">{{ type|capfirst }} ({{ result.total }})</a>
+        <li class="tab{% if type == openTab %} active{% endif %}">
+          <a href="#{{ type }}" data-toggle="tab">{{ type }} ({{ result.total }})</a>
         </li>
       {% endfor %}
     </ul>
     <div id="results" class="tab-content">
       {% for type, result in hits.items %}
-        <div class="tab-pane fade{% if forloop.first %} in active{% endif %}" id="{{ type }}">
+        <div class="tab-pane fade{% if type == openTab %} in active{% endif %}" id="{{ type }}">
           <table class="table table-condensed table-striped">
             <thead>
               {% for attr in result.header %}
