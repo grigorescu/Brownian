@@ -34,8 +34,7 @@ class Request(object):
         self.result = json.loads(result.replace('"_', '"es_'))
         if "error" in self.result.keys():
             raise IOError(self.result["error"])
-        import sys
-        print >>sys.stderr, self.result
+
         return self.result
 
     # TODO: While these are handy, sizes need to be customizable.
