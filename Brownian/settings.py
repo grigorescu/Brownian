@@ -54,7 +54,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'Brownian.urls'
 WSGI_APPLICATION = 'Brownian.wsgi.application'
-TEMPLATE_DIRS = ('/Users/vladg/PycharmProjects/Brownian/templates',)
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -62,7 +62,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_tables2',
     'view',
 )
 

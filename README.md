@@ -26,18 +26,30 @@ This will prevent system upgrades from modifying the globally installed librarie
 + Once installed, create and switch to your environment:
 ```bash
 $ virtualenv Brownian
-$ source ./Brownian/bin/activate```
+$ cd Brownian
+$ source ./bin/activate
+```
 
 Installation
 ------------
 
 ```bash
-$ pip install git+https://github.com/grigorescu/Brownian.git```
+$ pip install git+https://github.com/grigorescu/Brownian.git
+```
+
+The files are installed in ./lib/python2.7/site-packages/Brownian.
 
 Configuration
 -------------
 
 Change ELASTICSEARCH_SERVER in Brownian/settings.py to your server's hostname and port.
+
+Running Development Server
+--------------------------
+```bash
+$ export DJANGO_SETTINGS_MODULE=Brownian.settings
+$ python ./Brownian/bin/django-admin.py runserver
+```
 
 TODO
 ----
