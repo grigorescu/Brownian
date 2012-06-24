@@ -3,26 +3,20 @@
 {% block container %}
   <div class="well container-fluid">
     <form id="queryform" class="form-search form-horizontal" action="">
-      <table class=formatting>
-        <tr>
-          <td width='1%'>
-            <select name="time" id=timeinput class="span2">
-              <option value="15m">Last 15m</option>
-              <option value="60m">Last 60m</option>
-              <option value="4h">Last 4h</option>
-              <option value="12h">Last 12h</option>
-              <option value="24h">Last 24h</option>
-              <option value="48h">Last 48h</option>
-              <option value="7d">Last 7d</option>
-              <option value="all">All Time</option>
-              <!-- TODO <option value="custom">Custom</option> -->
-            </select>
-          </td>
-          <td width='85%'><input type="text" class="input-xxxlarge" placeholder="Query" name="query" id="querytext" value="{{ query }}"></td>
-          <td width='1%'><button class="btn btn-primary" type=submit>Search</button></td>
-          <td width='1%'><button class="btn btn-danger" type="reset" id="clear">Clear</button></td> <!-- TODO: This doesn't work -->
-        </tr>
-      </table>
+      <label for="timeinput">Time</label><select name="time" id="timeinput" class="span2">
+        <option value="15m">Last 15m</option>
+        <option value="60m">Last 60m</option>
+        <option value="4h">Last 4h</option>
+        <option value="12h">Last 12h</option>
+        <option value="24h">Last 24h</option>
+        <option value="48h">Last 48h</option>
+        <option value="7d">Last 7d</option>
+        <option value="all">All Time</option>
+        <!-- TODO <option value="custom">Custom</option> -->
+      </select>
+      <label for="querytext">Query</label><input type="text" class="input-xxxlarge" placeholder="Query" name="query" id="querytext" value="{{ query }}">
+      <button class="btn btn-primary" type=submit>Search</button>
+      <button class="btn btn-danger" type="reset" id="clear">Clear</button><!-- TODO: This doesn't work -->
     </form>
   </div>
   <div class="well">
