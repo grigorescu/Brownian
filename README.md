@@ -1,7 +1,7 @@
 Brownian
 ================================
 
-Brownian is a web interface for viewing and interacting with [Bro IDS](http://bro-ids.org/) logs.
+Brownian is a web interface for viewing and interacting with [Bro IDS](http://bro-ids.org/) logs. [Screenshots](http://imgur.com/a/vfhCf)!
 
 Why Brownian?
 -------------
