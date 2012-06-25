@@ -35,10 +35,9 @@ class Request(object):
 
         return self.result
 
-    # TODO: While these are handy, sizes need to be customizable.
-    queryAll = lambda self: self._doRequest({"size": 50})
-    query = lambda self, query: self._doRequest({"query": query, "size": 500})
-    scan = lambda self, query: self._doRequest({"query": query}, search_opts="search_type=scan&scroll=10m&size=25")
+    queryAll = lambda self: self._doRequest({"size": settings.PAGE_SIZE})
+    query = lambda self, query: self._doRequest({"query": query, "size": settings.PAGE_SIZE})
+    scan = lambda self, query: self._doRequest({"query": query}, search_opts="search_type=scan&scroll=10m&size=%d" % settings.PAGE_SIZE)
     msearch_scan = lambda self, data: self._doBulkRequest(data, operation="_msearch")
     facetsOnly = lambda self, facetQuery: self._doRequest({"facets": facetQuery, "size": 0})
 

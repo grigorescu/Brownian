@@ -20,3 +20,6 @@ body{
 .popover-inner {
     width: 340px;
 }
+.modal {
+    width: 900px;
+}

@@ -26,8 +26,13 @@ def query(request):
 
     data["query"] = query
     # Certain chars need to be escaped
-    for char in ["\\", "+", "-", "&&", "||", "(", ")", "{", "}", "^", "\""]:
-        query = query.replace(char, "".join(["\\" + x for x in char]))
+    bad_chars = [("\\", "\\\\"),
+                 ("\"", "\\\""),
+                 ("[", "\u005b"),
+                 ("]", "\u005d"),
+                ]
+    for char, replacement in bad_chars:
+        query = query.replace(char, replacement)
 
     types = [type for type, fields in broLogs]
     queryString = ""

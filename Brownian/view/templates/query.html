@@ -4,7 +4,7 @@
 {% block container %}
   <div class="well container-fluid">
     <form id="queryform" class="form-search form-horizontal" action="">
-      <label for="timeinput">Time</label><select name="time" id="timeinput" class="span2">
+      <label for="timeinput"></label><select name="time" id="timeinput" class="span2">
         <option value="15m">Last 15m</option>
         <option value="60m">Last 60m</option>
         <option value="4h">Last 4h</option>
@@ -15,9 +15,10 @@
         <option value="all">All Time</option>
         <!-- TODO <option value="custom">Custom</option> -->
       </select>
-      <label for="querytext">Query</label><input type="text" class="input-xxxlarge" placeholder="Query" name="query" id="querytext" value="{{ query }}">
+      <label for="querytext"></label><input type="text" class="input-xxxlarge" placeholder="Query" name="query" id="querytext" value="{{ query }}">
+        <a data-toggle="syntaxmodal" href="#" onclick="$('#syntaxmodal').modal();" ><i class="icon-question-sign"></i></a>
       <button class="btn btn-primary" type="submit" onclick='$("#opentab").val($("li.tab.active").children().attr("href"))'>Search</button>
-      <button class="btn btn-danger" onclick="$('#querytext').val('');">Clear</button>
+      <button class="btn btn-danger" onclick='$("#querytext").val("");$("#opentab").val($("li.tab.active").children().attr("href"))'>Clear</button>
       <input type="hidden" name="openTab" id="opentab" value="">
     </form>
   </div>
@@ -58,6 +59,26 @@
       {% endfor %}
     </div>
   </div>
+    <div class="modal hide" id="syntaxmodal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4>Syntax Cheatsheet</h4>
+        </div>
+        <div class="modal-body">
+            <p>
+            <table class="table table-condensed table-bordered">
+            <tr><td><pre>(host:"google.com" OR host:"yahoo.com") AND id.resp_p:80</pre></td><td>Matches google.com or yahoo.com on port 80</td></tr>
+            <tr><td><pre>host:"ns?.*.cn"</pre></td><td>Matches ns1.mail.cn, ns2.mail.cn, but not ns01.mail.cn</td></tr>
+            <tr><td><pre>subject:"viagra~"</pre></td><td>Fuzzy search: vi4gra, viagr4, etc.</td></tr>
+            <tr><td><pre>subject:"buy viagra"~5</pre></td><td>Distance search: buy and viagra, no more than 5 words away.</td></tr>
+            <tr><td><pre>ts:[1340666078821 TO *] AND from:[alice@cmu.edu TO bob@cmu.edu]</pre></td><td>Search from a given timestamp to now, <br/>where the from address is alphabetically between alice and bob.</td></tr>
+            </table>
+            </p>
+        </div>
+        <div class="modal-footer">
+                <a href="http://lucene.apache.org/core/3_6_0/queryparsersyntax.html">More info</a>
+        </div>
+    </div>
     <script>
         $('.popover_links').popover({placement:'bottom'});
     </script>

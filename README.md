@@ -57,8 +57,9 @@ The files are installed in ./lib/python2.7/site-packages/Brownian.
 Configuration
 -------------
 
-1. Change ELASTICSEARCH_SERVER in Brownian/settings.py to your server's hostname and port.
-+ Change TIME_ZONE in Brownian/settings.py to your desired timezone.
+1. Change ELASTICSEARCH_SERVER in Brownian/lib/python2.7/site-packages/Brownian/settings.py to your server's hostname and port.
++ Change TIME_ZONE in settings.py to your desired timezone.
++ Review the other settings at the top of settings.py and configure them as desired.
 
 Running Development Server
 --------------------------
