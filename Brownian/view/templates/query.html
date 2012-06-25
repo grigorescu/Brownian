@@ -1,4 +1,5 @@
 {% extends "include/head.html" %}
+{% load es_extras %}
 {% block title %}Query{% endblock %}
 {% block container %}
   <div class="well container-fluid">
@@ -33,15 +34,21 @@
         <div class="tab-pane fade{% if hit.type == openTab %} in active{% endif %}" id="{{ hit.type }}">
           <table class="table table-condensed table-striped">
             <thead>
-              {% for attr, desc in hit.header %}
+              {% for attr, type, desc in hit.header %}
                 <th><a class="popover_links" rel="popover" data-content="{{ desc }}" data-original-title="{{ attr }}" href="#">{{ attr }}</a></th>
               {% endfor %}
             </thead>
             <tbody>
               {% for row in hit.content %}
                 <tr>
-                  {% for key, val in row %}
-                    <td onclick="appendToQuery(event, '#querytext', '{{ key }}:&quot;{{ val }}&quot;');">{{ val }}</td>
+                  {% for key, type, val in row %}
+                    <td onclick="appendToQuery(event, '#querytext', '{{ key }}:&quot;{{ val }}&quot;');">
+                        {% if type == "time" %}
+                        {{ val|dateToDatetime }}
+                        {% else %}
+                        {{ val }}
+                        {% endif %}
+                    </td>
                   {% endfor %}
                 </tr>
               {% endfor %}
@@ -52,6 +59,6 @@
     </div>
   </div>
     <script>
-        $('.popover_links').popover();
+        $('.popover_links').popover({placement:'bottom'});
     </script>
 {% endblock %}

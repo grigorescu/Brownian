@@ -43,7 +43,7 @@ def query(request):
     for i in range(len(result["responses"])):
         resultType = types[i]
         resultAnswer = result["responses"][i]
-        header = [(field.name, field.description) for field in broLogs[i][1] if field.name not in settings.ELASTICSEARCH_IGNORE_COLUMNS.get(resultType, [])]
+        header = [(field.name, field.type, field.description) for field in broLogs[i][1] if field.name not in settings.ELASTICSEARCH_IGNORE_COLUMNS.get(resultType, [])]
         content = []
 
         if resultType in settings.ELASTICSEARCH_IGNORE_TYPES:
@@ -57,8 +57,8 @@ def query(request):
 
         for hit in resultAnswer["hits"]["hits"]:
             row = []
-            for column, desc in header:
-                row.append((column, hit["es_source"].get(column, "")))
+            for column, fType, desc in header:
+                row.append((column, fType, hit["es_source"].get(column, "")))
             content.append(row)
             if len(hit["es_source"].keys()) > len(row):
                 print >>sys.stderr, "WARNING: Some fields weren't properly accounted for."

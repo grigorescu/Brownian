@@ -16,3 +16,7 @@ body{
 #results td:hover{
     color:#D14;
 }
+
+.popover-inner {
+    width: 340px;
+}

@@ -36,6 +36,9 @@ ELASTICSEARCH_IGNORE_COLUMNS = {
     "weird": ["peer"],
 }
 
+# Date/Time stuff
+
+TIME_ZONE = 'US/Eastern'
 
 # Django settings for Brownian project.
 
@@ -47,11 +50,10 @@ ADMINS = ( # ('Your Name', 'your_email@example.com'),
 
 MANAGERS = ADMINS
 
-TIME_ZONE = 'US/Eastern'
 LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = False
-USE_L10N = True
+USE_L10N = False # This isn't used.
 USE_TZ = True
 
 MEDIA_ROOT = ''
