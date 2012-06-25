@@ -2,7 +2,7 @@ from setuptools import setup
 setup(
     name = "Brownian",
     version = "0.1",
-    packages = ["Brownian", "Brownian.view", ],
+    packages = ["Brownian", "Brownian.view", "Brownian.view.utils"],
     install_requires = ["Django", "requests"],
     package_data = {'Brownian.view':
                         ['static/css/*.css',
