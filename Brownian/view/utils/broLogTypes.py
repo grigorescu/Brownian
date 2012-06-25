@@ -15,7 +15,7 @@ broLogs = [
         Field("peer", "string", "In the event that there are multiple Bro instances logging to the same host, this distinguishes each peer with its individual name."),
         Field("gaps", "count", "Number of missed ACKs from the previous measurement interval."),
         Field("acks", "count", "Total number of ACKs seen in the previous measurement interval."),
-        Field("percent_loss", "string", "Percentage of ACKs seen where the data being ACKed wasn't seen."),
+        Field("percent_lost", "string", "Percentage of ACKs seen where the data being ACKed wasn't seen."),
     ]),
     ("cluster", [
         Field("ts", "time", "The time at which a cluster message was generated."),
