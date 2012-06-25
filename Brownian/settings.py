@@ -1,7 +1,15 @@
+# Common Application Settings
+
+# How many results constitute a page.
+PAGE_SIZE=25
+
 # ElasticSearch setttings
 
 # Hostname and port of your ElasticSearch server
 ELASTICSEARCH_SERVER = "localhost:9200"
+
+# Index name - TODO this will be dynamically calculated once rotation is in place.
+ELASTICSEARCH_INDEX = "bro"
 
 # Don't ever show results for these types.
 ELASTICSEARCH_IGNORE_TYPES = {

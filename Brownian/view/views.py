@@ -34,8 +34,8 @@ def query(request):
 
     # TODO - this is ugly - needs to be replaced with a count search type, with faceting per type.
     for i in types:
-        queryString += '{"index": "bro_062220", "type": "%s"}\n' % i
-        queryString += '{"query": {"query_string": {"query": "%s"}}, "size": 25}\n' % query
+        queryString += '{"index": "%s", "type": "%s"}\n' % (settings.ELASTICSEARCH_INDEX, i)
+        queryString += '{"query": {"query_string": {"query": "%s"}}, "size": %d}\n' % (query, settings.PAGE_SIZE)
     result = utils.es.Request().msearch_scan(queryString)
 
     data["hits"] = []
