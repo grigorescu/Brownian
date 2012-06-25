@@ -1,5 +1,3 @@
-# TODO: Move this to a better place.
-
 import requests, json
 from django.conf import settings
 

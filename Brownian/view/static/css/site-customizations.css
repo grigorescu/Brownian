@@ -7,3 +7,12 @@ body{
 .input-xxxlarge {
     width: 730px;
 }
+
+#results td {
+    color:#1E347B;
+    cursor: pointer;
+}
+
+#results td:hover{
+    color:#D14;
+}

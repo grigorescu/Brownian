@@ -16,32 +16,32 @@
       </select>
       <label for="querytext">Query</label><input type="text" class="input-xxxlarge" placeholder="Query" name="query" id="querytext" value="{{ query }}">
       <button class="btn btn-primary" type="submit" onclick='$("#opentab").val($("li.tab.active").children().attr("href"))'>Search</button>
-      <button class="btn btn-danger" type="reset" id="clear">Clear</button>
+      <button class="btn btn-danger" onclick="$('#querytext').val('');">Clear</button>
       <input type="hidden" name="openTab" id="opentab" value="">
     </form>
   </div>
-  <div class="well">
+  <div class="well tabbable tabs-left">
     <ul id="resultTabs" class="nav nav-tabs">
-      {% for type, result in hits.items %}
-        <li class="tab{% if type == openTab %} active{% endif %}">
-          <a href="#{{ type }}" data-toggle="tab">{{ type }} ({{ result.total }})</a>
+      {% for hit in hits %}
+        <li class="tab{% if hit.type == openTab %} active{% endif %}">
+          <a href="#{{ hit.type }}" data-toggle="tab">{{ hit.type }} ({{ hit.total }})</a>
         </li>
       {% endfor %}
     </ul>
     <div id="results" class="tab-content">
-      {% for type, result in hits.items %}
-        <div class="tab-pane fade{% if type == openTab %} in active{% endif %}" id="{{ type }}">
+      {% for hit in hits %}
+        <div class="tab-pane fade{% if hit.type == openTab %} in active{% endif %}" id="{{ hit.type }}">
           <table class="table table-condensed table-striped">
             <thead>
-              {% for attr in result.header %}
-                <th>{{ attr }}</th>
+              {% for attr, desc in hit.header %}
+                <th><a class="popover_links" rel="popover" data-content="{{ desc }}" data-original-title="{{ attr }}" href="#">{{ attr }}</a></th>
               {% endfor %}
             </thead>
             <tbody>
-              {% for row in result.content %}
+              {% for row in hit.content %}
                 <tr>
                   {% for key, val in row %}
-                    <td><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:&quot;{{ val }}&quot;');">{{ val }}</a></td>
+                    <td onclick="appendToQuery(event, '#querytext', '{{ key }}:&quot;{{ val }}&quot;');">{{ val }}</td>
                   {% endfor %}
                 </tr>
               {% endfor %}
@@ -51,4 +51,7 @@
       {% endfor %}
     </div>
   </div>
+    <script>
+        $('.popover_links').popover();
+    </script>
 {% endblock %}

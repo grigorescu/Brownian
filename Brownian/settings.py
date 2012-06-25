@@ -1,3 +1,42 @@
+# ElasticSearch setttings
+
+# Hostname and port of your ElasticSearch server
+ELASTICSEARCH_SERVER = "localhost:9200"
+
+# Don't ever show results for these types.
+ELASTICSEARCH_IGNORE_TYPES = {
+    "communication",
+    "loaded_scripts",
+    "notice_policy",
+    "reporter",
+}
+
+# Hide these columns for these types.
+ELASTICSEARCH_IGNORE_COLUMNS = {
+    "conn": ["missed_bytes", ],
+    "dns": [],
+    "dpd": [],
+    "ftp": ["mime_desc", ],
+    "http": [],
+    "irc": [],
+    "known_certs": [],
+    "known_hosts": [],
+    "known_services": [],
+    "notice": ["actions", "dropped", "peer_descr", "policy_items", "suppress_for", ],
+    "notice_alarm": ["actions", "dropped", "peer_descr", "policy_items", "suppress_for", ],
+    "notice_policy": [],
+    "smtp": [],
+    "smtp_entities": ["excerpt", ],
+    "socks": [],
+    "software": [],
+    "ssh": [],
+    "ssl": [],
+    "syslog": [],
+    "tunnel": [],
+    "weird": ["peer"],
+}
+
+
 # Django settings for Brownian project.
 
 DEBUG = True
@@ -5,8 +44,6 @@ TEMPLATE_DEBUG = DEBUG
 
 ADMINS = ( # ('Your Name', 'your_email@example.com'),
  )
-
-ELASTICSEARCH_SERVER = "localhost:9200"
 
 MANAGERS = ADMINS
 

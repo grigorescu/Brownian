@@ -1,6 +1,6 @@
 /** Local JS functions **/
 
-function appendToQuery(query, filter, operator){
+function appendToQuery(event, query, filter, operator){
     if (operator == undefined){
         operator = "AND"
     }
@@ -9,12 +9,15 @@ function appendToQuery(query, filter, operator){
     }
 
     var currentQuery = $(query).val();
-    var newQuery;
-    if (currentQuery == "*"){
-        newQuery = filter;
+    var newQuery = '';
+
+    if (event.shiftKey){
+        <!-- If the user shift+clicked, we negate it. -->
+        newQuery = '!';
     }
-    else{
-        newQuery = currentQuery + ' ' + operator + ' ' + filter;
+    newQuery += filter;
+    if (currentQuery != "*" && currentQuery != ""){
+        newQuery = currentQuery + ' ' + operator + ' ' + newQuery;
     }
     $(query).val(newQuery);
     return true;
