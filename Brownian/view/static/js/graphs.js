@@ -27,8 +27,8 @@ function createHistogram(orig, name, title)
         .rangeBands([0, width]); // Split the keys up into distinct bands.
 
     var y = d3.scale.linear()
-        .domain([15, d3.max(data)])
-        .range([height, 15]);     // y = 0 is at the top of the graph, so we scale and flip the value.
+        .domain([0, d3.max(data)])
+        .range([height, 25]);     // y = 0 is at the top of the graph, so we scale and flip the value.
 
     chart.append("line")                         // Create a line
         .attr("x1", 0).attr("x2", width)        // going across the graph

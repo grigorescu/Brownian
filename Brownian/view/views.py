@@ -13,12 +13,18 @@ def query(request):
     data = {}
 
     params = request.GET
+
     # If we have a blank query, just return everything.
     query = params.get("query", "")
     if query == "": query = "*"
-
     data["query"] = query
-    result = utils.es.queryFromString(utils.es.queryEscape(query))
+
+    # If we have a blank time window, just return the past 15 minutes.
+    time = params.get("time", "")
+    if time == "": time = "15m"
+    data["time"] = time
+
+    result = utils.es.queryFromString(utils.es.queryEscape(query), index=utils.es.indicesFromTime(time))
     data["hits"] = utils.es.resultToTabbedTables(result)
 
     # To make the Javascript easier, we strip off the # from the currently open tab.

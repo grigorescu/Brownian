@@ -1,0 +1,84 @@
+{"index": {"_index": "bro-06241900", "_type": "communication"} }
+{"peer": "worker-1", "src_name": "child", "message": "selects=3000000 canwrites=0 timeouts=2986503", "ts": 1340647604358, "level": "info"}
+{"index": {"_index": "bro-06241900", "_type": "communication"} }
+{"peer": "worker-2", "src_name": "child", "message": "selects=2900000 canwrites=0 timeouts=2886357", "ts": 1340647615143, "level": "info"}
+{"index": {"_index": "bro-06241900", "_type": "conn"} }
+{"resp_bytes": 45, "uid": "SpoGdOarGy3", "conn_state": "SF", "proto": "udp", "id.orig_p": 20961, "id.resp_h": "128.123.140.21", "orig_pkts": 1, "orig_ip_bytes": 70, "ts": 1340647618510, "id.orig_h": "192.92.82.251", "id.resp_p": 62011, "tunnel_parents": [], "resp_pkts": 1, "local_orig": 0, "missed_bytes": 0, "duration": 0.075358, "orig_bytes": 42, "resp_ip_bytes": 73, "history": "Dd"}
+{"index": {"_index": "bro-06241900", "_type": "conn"} }
+{"resp_bytes": 178, "uid": "Kv8BEzH3L7d", "conn_state": "SF", "proto": "udp", "id.orig_p": 22821, "id.resp_h": "128.0.100.9", "orig_pkts": 4, "orig_ip_bytes": 788, "ts": 1340647617494, "id.orig_h": "12.113.6.0", "id.resp_p": 53890, "tunnel_parents": [], "resp_pkts": 5, "local_orig": 0, "missed_bytes": 0, "duration": 0.876488, "orig_bytes": 676, "resp_ip_bytes": 318, "history": "Dd"}}
+{"index": {"_index": "bro-06241900", "_type": "dns"} }
+{"AA": 0, "RD": 1, "rcode": 0, "qclass_name": "C_INTERNET", "uid": "OgG6MWp32o1", "proto": "udp", "id.orig_p": 1087, "id.resp_h": "128.2.0.0", "rcode_name": "NOERROR", "ts": 1340647607992, "id.orig_h": "23.123.21.19", "id.resp_p": 53, "qclass": 1, "RA": 0, "qtype_name": "A", "query": "bro-ids.org", "Z": 0, "qtype": 1, "TC": 0, "trans_id": 1536}
+{"index": {"_index": "bro-06241900", "_type": "dns"} }
+{"AA": 0, "RD": 1, "rcode": 0, "qclass_name": "C_INTERNET", "uid": "OgG6MWp32o1", "proto": "udp", "id.orig_p": 1087, "id.resp_h": "128.2.0.0", "rcode_name": "NOERROR", "ts": 1340647637696, "id.orig_h": "8.8.35.8", "id.resp_p": 53, "qclass": 1, "RA": 0, "qtype_name": "A", "query": "a1158.b.akamai.net", "Z": 0, "qtype": 1, "TC": 0, "trans_id": 13688}
+{"index": {"_index": "bro-06241900", "_type": "dpd"} }
+{"uid": "L1NUOOOptp2", "proto": "tcp", "id.orig_p": 52162, "id.resp_h": "17.0.6.4", "ts": 1340647598519, "analyzer": "SSL", "failure_reason": "unexpected Handshake message SERVER_HELLO from responder in state INITIAL", "id.orig_h": "128.255.255.16", "id.resp_p": 443}
+{"index": {"_index": "bro-06241900", "_type": "dpd"} }
+{"uid": "ZYbazGdmJc9", "proto": "tcp", "id.orig_p": 56574, "id.resp_h": "128.2.3.4", "ts": 1340647599095, "analyzer": "SSL", "failure_reason": "unexpected Handshake message SERVER_HELLO from responder in state INITIAL", "id.orig_h": "9.8.7.6", "id.resp_p": 443}
+{"index": {"_index": "bro-06241900", "_type": "ftp"} }
+{"reply_msg": "Transfer complete.", "uid": "J2Z55eweLj6", "id.orig_p": 47491, "id.resp_h": "2.1.155.1", "file_size": 4, "ts": 1340647523506, "id.orig_h": "128.5.130.21", "id.resp_p": 21, "reply_code": 226, "command": "RETR", "user": "anonymous", "arg": "ftp://2.1.155.1/archlinux/ftpfull/extra/os/x86_64/libxfce4ui-4.10.0-1-x86_64.pkg.tar.xz", "password": "ftp@example.com"}
+{"index": {"_index": "bro-06241900", "_type": "ftp"} }
+{"reply_msg": "Transfer complete.", "uid": "J2Z55eweLj6", "id.orig_p": 47491, "id.resp_h": "2.1.155.2", "file_size": 0, "ts": 1340647526224, "id.orig_h": "128.5.130.21", "id.resp_p": 21, "reply_code": 226, "command": "RETR", "user": "anonymous", "arg": "ftp://2.1.155.2/archlinux/ftpfull/extra/os/x86_64/garcon-0.2.0-1-x86_64.pkg.tar.xz", "password": "ftp@example.com"}
+{"index": {"_index": "bro-06241900", "_type": "http"} }
+{"trans_depth": 1, "status_code": 200, "uid": "dbuYW3FQVa8", "request_body_len": 0, "response_body_len": 73773, "id.orig_p": 51622, "id.resp_h": "128.2.7.192", "status_msg": "OK", "tags": [], "ts": 1340647560439, "uri": "/images/detail-sprite.png", "id.orig_h": "16.193.137.16", "id.resp_p": 80, "host": "gigapan.com", "user_agent": "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)", "referrer": "http://gigapan.com/galleries/5998/gigapans/93336", "cookie_vars": ["es__utmb", "es__utma", "es__utmc", "es_gigapan_session", "es__utmz"], "uri_vars": ["/images/detail-sprite.png"], "method": "GET", "mime_type": "image/png", "client_header_names": ["ACCEPT", "REFERER", "ACCEPT-LANGUAGE", "USER-AGENT", "ACCEPT-ENCODING", "HOST", "CONNECTION", "COOKIE"]}
+{"index": {"_index": "bro-06241900", "_type": "http"} }
+{"trans_depth": 3, "uid": "shriLS4fZa9", "request_body_len": 0, "response_body_len": 245207, "id.orig_p": 53860, "id.resp_h": "130.64.126.25", "status_msg": "Partial Content", "tags": [], "ts": 1340647561145, "uri": "/pdf/menus/Dinner.pdf", "id.orig_h": "128.237.124.18", "id.resp_p": 80, "host": "www.dining.com", "user_agent": "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:13.0) Gecko/20100101 Firefox/13.0.1", "status_code": 206, "cookie_vars": ["es__utmc", "s_sq", "es__utma", "s_cmrun", "es__utmb", "s_cc", "s_nr", "s_evar5", "es__utmz", "ASPSESSIONIDSABACRQR"], "uri_vars": ["/pdf/menus/Dinner.pdf"], "method": "GET", "client_header_names": ["HOST", "USER-AGENT", "ACCEPT", "ACCEPT-LANGUAGE", "ACCEPT-ENCODING", "DNT", "CONNECTION", "RANGE", "COOKIE"]}
+{"index": {"_index": "bro-06241900", "_type": "irc"} }
+{"uid": "dcqnFZeA4x6", "id.orig_p": 40206, "id.resp_h": "128.237.112.64", "ts": 1340647291296, "value": "#Cyanogenmod", "id.orig_h": "123.9.144.4", "id.resp_p": 6667, "command": "JOIN", "addl": ""}
+{"index": {"_index": "bro-06241900", "_type": "irc"} }
+{"uid": "dcqnFZeA4x6", "id.orig_p": 40206, "id.resp_h": "128.237.112.64", "ts": 1340647321396, "value": "#cyanogenmod-dev", "id.orig_h": "123.9.144.4", "id.resp_p": 6667, "command": "JOIN", "addl": ""}
+{"index": {"_index": "bro-06241900", "_type": "known_certs"} }
+{"issuer_subject": "CN=COMODO High-Assurance Secure Server CA,O=COMODO CA Limited,L=Salford,ST=Greater Manchester,C=GB", "port_num": 443, "ts": 1340647603095, "host": "128.2.105.87", "serial": "1BBEB37A021343B91E1DA231CCFE4126", "subject": "CN=calendar.andrew.cmu.edu,OU=PlatinumSSL,OU=Hosted by Carnegie Mellon University,OU=Computing Services,O=Carnegie Mellon University,streetAddress=5000 Forbes Ave,L=Pittsburgh,ST=PA,postalCode=15213,C=US"}
+{"index": {"_index": "bro-06241900", "_type": "known_certs"} }
+{"issuer_subject": "CN=COMODO High-Assurance Secure Server CA,O=COMODO CA Limited,L=Salford,ST=Greater Manchester,C=GB", "port_num": 443, "ts": 1340647610354, "host": "128.2.229.61", "serial": "170031A4782B972E1ECE57371A12510A", "subject": "CN=hpp.web.cmu.edu,OU=PlatinumSSL,OU=Hosted by Carnegie Mellon University,OU=Health Professions Program,O=Carnegie Mellon University,streetAddress=5000 Forbes Ave,L=Pittsburgh,ST=PA,postalCode=15213,C=US"}
+{"index": {"_index": "bro-06241900", "_type": "known_hosts"} }
+{"host": "128.2.5.6", "ts": 1340647598892} }
+{"index": {"_index": "bro-06241900", "_type": "known_hosts"} }
+{"host": "128.2.6.5", "ts": 1340647599402} }
+{"index": {"_index": "bro-06241900", "_type": "known_services"} }
+{"port_proto": "tcp", "host": "128.2.46.19", "port_num": 3389, "ts": 1340647299382, "service": []} }
+{"index": {"_index": "bro-06241900", "_type": "known_services"} }
+{"port_proto": "tcp", "host": "128.237.20.16", "port_num": 46657, "ts": 1340647300365, "service": []} }
+{"index": {"_index": "bro-06241900", "_type": "notice"} }
+{"note": "HTTP::Incorrect_File_Type", "dropped": 0, "uid": "jFvD488oPPk", "proto": "tcp", "id.orig_p": 2899, "id.resp_h": "128.2.8.13", "dst": "128.2.8.13", "policy_items": [7, 6], "ts": 1340647599222, "p": 50308, "id.orig_h": "15.8.33.147", "id.resp_p": 50308, "peer_descr": "worker-3", "actions": ["Notice::ACTION_ALARM", "Notice::ACTION_LOG"], "msg": "application/x-dosexec GET http://128.2.8.13:50308/tcp/8679844E004FA5E5A28B1C15EF2839B6", "src": "15.8.33.147", "suppress_for": 3600.0}
+{"index": {"_index": "bro-06241900", "_type": "notice"} }
+{"note": "DNS::External_Name", "dropped": 0, "uid": "Fm5zi7Yngvj", "proto": "tcp", "id.orig_p": 51250, "id.resp_h": "15.8.33.147", "dst": "15.8.33.147", "policy_items": [7, 6], "ts": 1340647604356, "p": 53, "id.orig_h": "128.2.2.14", "id.resp_p": 53, "peer_descr": "worker-1", "actions": ["Notice::ACTION_ALARM", "Notice::ACTION_LOG"], "msg": "plab.planetlab.org is pointing to a local host - 128.2.5.5.", "src": "128.2.2.14", "suppress_for": 3600.0}
+{"index": {"_index": "bro-06241900", "_type": "notice_alarm"} }
+{"note": "HTTP::Incorrect_File_Type", "dropped": 0, "uid": "jFvD488oPPk", "proto": "tcp", "id.orig_p": 2899, "id.resp_h": "128.2.8.13", "dst": "128.2.8.13", "policy_items": [7, 6], "ts": 1340647599222, "p": 50308, "id.orig_h": "15.8.33.147", "id.resp_p": 50308, "peer_descr": "worker-3", "actions": ["Notice::ACTION_ALARM", "Notice::ACTION_LOG"], "msg": "application/x-dosexec GET http://128.2.8.13:50308/tcp/8679844E004FA5E5A28B1C15EF2839B6", "src": "15.8.33.147", "suppress_for": 3600.0}
+{"index": {"_index": "bro-06241900", "_type": "notice_alarm"} }
+{"note": "DNS::External_Name", "dropped": 0, "uid": "Fm5zi7Yngvj", "proto": "tcp", "id.orig_p": 51250, "id.resp_h": "15.8.33.147", "dst": "15.8.33.147", "policy_items": [7, 6], "ts": 1340647604356, "p": 53, "id.orig_h": "128.2.2.14", "id.resp_p": 53, "peer_descr": "worker-1", "actions": ["Notice::ACTION_ALARM", "Notice::ACTION_LOG"], "msg": "plab.planetlab.org is pointing to a local host - 128.2.5.5.", "src": "128.2.2.14", "suppress_for": 3600.0}
+{"index": {"_index": "bro-06241900", "_type": "reporter"} }
+{"message": "processing suspended", "location": "", "ts": 1340647282484, "level": "Reporter::INFO"}
+{"index": {"_index": "bro-06241900", "_type": "reporter"} }
+{"message": "Fell back to GeoIP Country database", "location": "", "ts": 1340647439536, "level": "Reporter::WARNING"}
+{"index": {"_index": "bro-06241900", "_type": "smtp"} }
+{"mailfrom": "<bot@andrew.cmu.edu>", "trans_depth": 1, "from": "\"A robot\" <bot@andrew.cmu.edu>", "uid": "bJ80fNuYd4i", "to": ["anotherbot@google.net"], "id.orig_p": 46212, "id.resp_h": "176.46.24.119", "first_received": "from 128.2.1.1 (proxying for 192.168.24.13)        (SquirrelMail authenticated user bot@andrew.cmu.edu)        by webmail.andrew.cmu.edu with HTTP;        Mon, 25 Jun 2012 14:06:38 -0400", "msg_id": "<50170e817247841935e688ee39a357b8.squirrel@webmail.andrew.cmu.edu>", "ts": 1340647599579, "second_received": "from webmail.andrew.cmu.edu (WEBMAIL-03.ANDREW.CMU.EDU [128.2.105.111])\t(user=bot mech=GSSAPI (56 bits))\tby smtp.andrew.cmu.edu (8.14.4/8.14.4) with ESMTP id q5PI6cYu024152\tfor <anotherbot@google.net>; Mon, 25 Jun 2012 14:06:38 -0400", "id.orig_h": "128.2.11.95", "id.resp_p": 25, "is_webmail": 1, "rcptto": ["<anotherbot@google.net>"], "user_agent": "SquirrelMail/1.4.22", "date": "Mon, 25 Jun 2012 14:06:38 -0400", "path": ["192.168.172.18", "12.2.65.73", "128.2.103.12", "128.2.4.4"], "helo": "smtp.andrew.cmu.ed", "last_reply": "250 2.0.0 Si6f1j00d232CWw06i6fYH mail accepted for delivery", "subject": "[Fwd: Some Spam!]"}
+{"index": {"_index": "bro-06241900", "_type": "smtp"} }
+{"mailfrom": "<rudolph@cmu.edu>", "trans_depth": 1, "from": "\"Rudolph\" <rudolph@cmu.edu>", "uid": "XdFptTlDHEa", "to": ["\"Santa\" <santa4@aol.com>"], "id.orig_p": 58555, "id.resp_h": "23.167.15.33", "first_received": "from Blitzen (mail.aol.com [6.4.4.6])\t(user=rudolph mech=LOGIN (0 bits))\tby smtp.mail.edu (8.14.4/8.14.4) with ESMTP id q5PI6b2O014333\t(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)\tfor <santa@aol.com>; Mon, 25 Jun 2012 14:06:38 -0400", "msg_id": "<001c01cd52fd$425395b0$c6fac110$@cmu.edu>", "ts": 1340647600640, "last_reply": "250 ok:  Message 1796213216 accepted", "id.orig_h": "17.5.231.224", "id.resp_p": 25, "is_webmail": 0, "rcptto": ["<santa@att.com>"], "user_agent": "Microsoft Outlook 14.0", "date": "Mon, 25 Jun 2012 14:06:34 -0400", "path": ["172.43.243.2", "128.2.123.2", "27.8.13.224"], "helo": "smtp.mail.ed", "in_reply_to": "<020801cd52fb$9b1b20e0$d151f2a0$@com>", "subject": "RE: About..."}
+{"index": {"_index": "bro-06241900", "_type": "smtp_entities"} }
+{"excerpt": "", "trans_depth": 1, "uid": "XHtqpmt34X5", "id.orig_p": 35862, "id.resp_h": "128.2.67.132", "content_len": 39750, "ts": 1340647597467, "id.orig_h": "154.33.127.21", "id.resp_p": 25, "mime_type": "text/html"}
+{"index": {"_index": "bro-06241900", "_type": "smtp_entities"} }
+{"excerpt": "", "trans_depth": 1, "uid": "FYYqOdAqtR8", "id.orig_p": 58902, "id.resp_h": "193.54.168.226", "content_len": 411, "ts": 1340647598641, "id.orig_h": "128.236.98", "id.resp_p": 25, "mime_type": "text/plain"}
+{"index": {"_index": "bro-06241900", "_type": "software"} }
+{"name": "Firefox", "unparsed_version": "Mozilla/5.0 (Windows NT 5.1; rv:10.0.2) Gecko/20100101 Firefox/10.0.2", "version.minor": 0, "ts": 1340647282525, "host": "128.2.123.22", "version.minor2": 2, "software_type": "HTTP::BROWSER", "version.major": 10}
+{"index": {"_index": "bro-06241900", "_type": "software"} }
+{"name": "Safari", "unparsed_version": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/534.56.5 (KHTML, like Gecko) Version/5.1.6 Safari/534.56.5", "version.minor": 1, "ts": 1340647282525, "host": "128.53.122.196", "version.minor2": 6, "software_type": "HTTP::BROWSER", "version.major": 5}
+{"index": {"_index": "bro-06241900", "_type": "ssh"} }
+{"status": "failure", "direction": "INBOUND", "uid": "GjR1jckW1y6", "id.orig_p": 57971, "id.resp_h": "123.69.87.17", "ts": 1340647594375, "server": "SSH-2.0-OpenSSH_5.5p1 Debian-4ubuntu6", "id.orig_h": "122.75.87.119", "id.resp_p": 22, "client": "SSH-2.0-libssh-0.1", "resp_size": 1671}
+{"index": {"_index": "bro-06241900", "_type": "ssh"} }
+{"status": "failure", "direction": "INBOUND", "uid": "jMH9eIUdLe", "id.orig_p": 47751, "id.resp_h": "24.134.211.182", "ts": 1340647598344, "server": "SSH-2.0-OpenSSH_5.3p1 Debian-3ubuntu7", "id.orig_h": "210.17.148.14", "id.resp_p": 22, "client": "SSH-2.0-libssh-0.1", "resp_size": 1671}
+{"index": {"_index": "bro-06241900", "_type": "ssl"} }
+{"uid": "PLYYVXtxoS7", "server_name": "mail.google.com", "id.orig_p": 44929, "id.resp_h": "17.145.28.193", "ts": 1340647651797, "session_id": "c32fe4de2d28fc55c20cdc1693a41d9595feaf1f941c82537cbb25b89ca0267b", "id.orig_h": "128.2.99.138", "id.resp_p": 443, "version": "TLSv10", "cipher": "TLS_ECDHE_RSA_WITH_RC4_128_SHA"}
+{"index": {"_index": "bro-06241900", "_type": "ssl"} }
+{"not_valid_after": 1391057999000, "issuer_subject": "CN=Thawte SSL CA,O=Thawte\\, Inc.,C=US", "uid": "HBSDvWDLWSa", "server_name": "photos-5.dropbox.com", "id.orig_p": 57865, "id.resp_h": "123.121.12.17", "ts": 1340647651599, "id.orig_h": "128.2.237.18", "id.resp_p": 443, "version": "TLSv10", "cert_hash": "d7bc4836e22e4e6ece99996bf05a4638", "not_valid_before": 1322715600000, "validation_status": "ok", "cipher": "TLS_DHE_RSA_WITH_AES_256_CBC_SHA", "subject": "CN=*.dropbox.com,O=Dropbox\\, Inc.,L=San Francisco,ST=California,C=US"}
+{"index": {"_index": "bro-06241900", "_type": "syslog"} }
+{"uid": "5g5xqQAmdh2", "proto": "udp", "id.orig_p": 40629, "id.resp_h": "128.2.12.0", "facility": "LOCAL0", "ts": 1340647493276, "id.orig_h": "66.93.128.15", "id.resp_p": 514, "message": " IP: entry duplicated 2 times @2012-06-25-13:09:53", "severity": "WARNING"}
+{"index": {"_index": "bro-06241900", "_type": "syslog"} }
+{"uid": "lhsZfvPM2s5", "proto": "udp", "id.orig_p": 40631, "id.resp_h": "128.2.12.0", "facility": "LOCAL0", "ts": 1340647551462, "id.orig_h": "66.93.128.15", "id.resp_p": 514, "message": " IP: discard from 12.181.172.12 port 55556 to 66.93.182.15 port 54 TCP SYN (default) @2012-06-25-13:12:21", "severity": "WARNING"}
+{"index": {"_index": "bro-06241900", "_type": "tunnel"} }
+{"uid": "ltygZNzxov", "tunnel_type": "Tunnel::IP", "id.orig_p": 0, "id.resp_h": "128.2.15.155", "ts": 1340647599658, "id.orig_h": "94.25.201.137", "id.resp_p": 0, "action": "Tunnel::DISCOVER"}
+{"index": {"_index": "bro-06241900", "_type": "tunnel"} }
+{"uid": "fy89Hx63iid", "tunnel_type": "Tunnel::TEREDO", "id.orig_p": 64611, "id.resp_h": "65.123.18.128", "ts": 1340647602701, "id.orig_h": "128.2.195.21", "id.resp_p": 3544, "action": "Tunnel::DISCOVER"}
+{"index": {"_index": "bro-06241900", "_type": "weird"} }
+{"notice": 0, "uid": "42FJ0XejeT9", "id.orig_p": 4850, "id.resp_h": "69.123.24.83", "ts": 1340647598696, "id.orig_h": "128.2.18.19", "id.resp_p": 80, "peer": "worker-3", "name": "unescaped_special_URI_char"}
+{"index": {"_index": "bro-06241900", "_type": "weird"} }
+{"notice": 0, "uid": "9v5DdeLTzwd", "id.orig_p": 4378, "id.resp_h": "8.27.18.23", "ts": 1340647598924, "id.orig_h": "128.2.17.52", "id.resp_p": 80, "peer": "worker-3", "name": "inflate_failed"}

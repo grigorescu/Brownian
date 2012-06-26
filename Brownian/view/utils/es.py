@@ -1,4 +1,4 @@
-import requests, json
+import requests, json, datetime, string, pytz
 from django.conf import settings
 from broLogTypes import broLogs
 
@@ -15,6 +15,68 @@ def getIndices():
             indices.append({"time": index_name, "count": index_stats["total"]["docs"]["count"]})
     return indices
 
+def indexNameToDatetime(indexName):
+    """Convert a bro-201208121900 style-name to a datetime object.
+    """
+    indexTime = datetime.datetime.strptime(indexName.replace(settings.ELASTICSEARCH_INDEX_PREFIX, ""), "%Y%m%d%H%M")
+    return pytz.utc.localize(indexTime)
+
+def indicesFromTime(startTime):
+    """Create a comma-separated list of the indices one needs to query for the given time window.
+    """
+    endTime=pytz.timezone(settings.TIME_ZONE).localize(datetime.datetime.now())
+    number = ""
+    unit = ""
+    for i in range(len(startTime)):
+        if startTime[i] in string.ascii_letters:
+            unit = startTime[i:]
+            try:
+                number = int(number)
+            except:
+                raise ValueError("Format of time: 1m, 2days, etc.")
+            break
+        elif startTime[i] in string.whitespace:
+            continue
+        elif startTime[i] in string.digits:
+            number += startTime[i]
+        else:
+            raise ValueError("Format of time: 1m, 2days, etc.")
+
+    if not number or not unit or number < 1:
+        raise ValueError("Format of time: 1m, 2days, etc.")
+
+    units = {"day": ["day", "days", "d"],
+             "hour": ["hour", "hours", "h"],
+             "minute": ["minute", "minutes", "m"],
+             "second": ["second", "seconds", "s"]}
+
+    if unit in units["day"]:
+        then = endTime - datetime.timedelta(days=number)
+    elif unit in units["hour"]:
+        then = endTime - datetime.timedelta(hours=number)
+    elif unit in units["minute"]:
+        then = endTime - datetime.timedelta(minutes=number)
+    elif unit in units["second"]:
+        then = endTime - datetime.timedelta(seconds=number)
+    else:
+        raise ValueError("Possible time units: " + units.keys())
+
+    indices = [index["time"] for index in getIndices()]
+    indices.sort()
+    chosenIndices = []
+    import sys
+    for i in range(len(indices)):
+        indexStart = indexNameToDatetime(indices[i])
+        if indexStart >= then:
+            print >>sys.stderr, "I believe that " + indexStart.strftime('%a %b %d %H:%M:%S.%f') + " is >= " + then.strftime('%a %b %d %H:%M:%S.%f')
+            chosenIndices.append(indices[i])
+
+        # What if our start is between two indices?
+        if i < len(indices) - 1:
+            if indexStart < then and indexNameToDatetime(indices[i+1]) > then:
+                chosenIndices.append(indices[i])
+
+    return ",".join(chosenIndices)
 
 def queryEscape(query):
     """Certain chars need to be escaped
@@ -29,15 +91,15 @@ def queryEscape(query):
 
     return query
 
-def queryFromString(query):
+def queryFromString(query, index="_all"):
     """Execute a query across all types from a given query string.
     """
     queryString = ""
     # TODO - this is ugly - needs to be replaced with a count search type, with faceting per type.
     for i in types:
-        queryString += '{"index": "%s", "type": "%s"}\n' % (settings.ELASTICSEARCH_INDEX, i)
+        queryString += '{"index": "%s", "type": "%s"}\n' % (index, i)
         queryString += '{"query": {"query_string": {"query": "%s"}}, "size": %d}\n' % (query, settings.PAGE_SIZE)
-    result = Request().msearch_scan(queryString)
+    result = Request(index=index).msearch_scan(queryString)
 
     return result
 

@@ -9,7 +9,7 @@ PAGE_SIZE=25
 ELASTICSEARCH_SERVER = "localhost:9200"
 
 # Index name prefix
-ELASTICSEARCH_INDEX_PREFIX = "bro_"
+ELASTICSEARCH_INDEX_PREFIX = "bro-"
 
 # Don't ever show results for these types.
 ELASTICSEARCH_IGNORE_TYPES = [
