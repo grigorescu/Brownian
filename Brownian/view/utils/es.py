@@ -1,5 +1,70 @@
 import requests, json
 from django.conf import settings
+from broLogTypes import broLogs
+
+types = [type for type, fields in broLogs]
+
+def queryEscape(query):
+    """Certain chars need to be escaped
+    """
+    bad_chars = [("\\", "\\\\"),
+        ("\"", "\\\""),
+        ("[", "\u005b"),
+        ("]", "\u005d"),
+    ]
+    for char, replacement in bad_chars:
+        query = query.replace(char, replacement)
+
+    return query
+
+def queryFromString(query):
+    """Execute a query across all types from a given query string.
+    """
+    queryString = ""
+    # TODO - this is ugly - needs to be replaced with a count search type, with faceting per type.
+    for i in types:
+        queryString += '{"index": "%s", "type": "%s"}\n' % (settings.ELASTICSEARCH_INDEX, i)
+        queryString += '{"query": {"query_string": {"query": "%s"}}, "size": %d}\n' % (query, settings.PAGE_SIZE)
+    result = Request().msearch_scan(queryString)
+
+    return result
+
+def resultToTabbedTables(result):
+    """Convert an msearch result to a list of tables, sorted by type.
+    """
+    hits = []
+
+    for i in range(len(result["responses"])):
+        resultType = types[i]
+        resultAnswer = result["responses"][i]
+        header = [(field.name, field.type, field.description) for field in broLogs[i][1] if field.name not in settings.ELASTICSEARCH_IGNORE_COLUMNS.get(resultType, [])]
+        content = []
+
+        if resultType in settings.ELASTICSEARCH_IGNORE_TYPES:
+            continue
+        if "hits" not in resultAnswer.keys():
+            continue
+        if "hits" not in resultAnswer["hits"].keys():
+            continue
+        if len(resultAnswer["hits"]["hits"]) == 0:
+            continue
+
+        for hit in resultAnswer["hits"]["hits"]:
+            row = []
+            for column, fType, desc in header:
+                row.append((column, fType, hit["es_source"].get(column, "")))
+            content.append(row)
+
+            if len(hit["es_source"].keys()) > len(row):
+                assert "WARNING: Some fields weren't properly accounted for."
+                assert "Type: %s;\nKnown fields: %s.\nRecvd fields: %s." % (resultType, hit["es_source"].keys(), [x[0] for x in row])
+
+        hits.append({"header": header, "content": content, "type": resultType, "took": result["responses"][i]["took"],
+                     "total": result["responses"][i]["hits"]["total"]})
+
+    return hits
+
+
 
 class Request(object):
     """A single request to ElasticSearch

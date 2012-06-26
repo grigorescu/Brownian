@@ -3,7 +3,7 @@ setup(
     name = "Brownian",
     version = "0.1",
     packages = ["Brownian", "Brownian.view", "Brownian.view.templatetags", "Brownian.view.utils"],
-    install_requires = ["Django", "requests"],
+    install_requires = ["Django", "requests", "nose"],
     package_data = {'Brownian.view':
                         ['static/css/*.css',
                          'static/img/*.png',
@@ -13,4 +13,5 @@ setup(
                         ]},
     include_package_data = True,
     zip_safe = False,
+    test_suite = "Brownian.view.tests",
 )
