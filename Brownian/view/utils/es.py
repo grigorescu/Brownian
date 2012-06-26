@@ -4,6 +4,18 @@ from broLogTypes import broLogs
 
 types = [type for type, fields in broLogs]
 
+def getIndices():
+    """Get a list of all bro indexes
+    """
+    result = Request(index=None)._doRequest(operation="_stats", search_opts="clear=true&docs=true", verb="GET")
+    indices = []
+    for index_name, index_stats in result["es_all"]["indices"].items():
+        if index_name.startswith(settings.ELASTICSEARCH_INDEX_PREFIX):
+            index_name = str(index_name.replace("bro_", ""))
+            indices.append({"time": index_name, "count": index_stats["total"]["docs"]["count"]})
+    return indices
+
+
 def queryEscape(query):
     """Certain chars need to be escaped
     """
@@ -78,11 +90,14 @@ class Request(object):
         self.path = path
         self.data = {}
 
-    def _doRequest(self, data=None, operation="_search", search_opts=""):
+    def _doRequest(self, data=None, operation="_search", search_opts="", verb="POST"):
         if data:
             self.data = dict(self.data.items() + data.items())
 
-        result = requests.post(self.path + operation + "?" + search_opts, data=json.dumps(self.data)).text
+        if verb == "POST":
+            result = requests.post(self.path + operation + "?" + search_opts, data=json.dumps(self.data)).text
+        else:
+            result = requests.get(self.path + operation + "?" + search_opts).text
 
         # ElasticSearch internal fields are prefixed with _. This causes some issues w/ Django, so we prefix with es_ instead.
         self.result = json.loads(result.replace('"_', '"es_'))

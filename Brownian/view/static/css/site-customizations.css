@@ -23,3 +23,12 @@ body{
 .modal {
     width: 900px;
 }
+
+.chart rect{
+    stroke: #555555;
+    fill: #5bb75b;
+}
+.tooltip{
+    margin-top: 10px;
+    margin-left: 2px;
+}

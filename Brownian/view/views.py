@@ -4,7 +4,7 @@ import utils.es
 def home(request):
     """ This page is just a simple landing page.
     """
-    data = {}
+    data = {"indices": utils.es.getIndices()}
     return render(request, "home.html", data)
 
 def query(request):

@@ -8,8 +8,8 @@ PAGE_SIZE=25
 # Hostname and port of your ElasticSearch server
 ELASTICSEARCH_SERVER = "localhost:9200"
 
-# Index name - TODO this will be dynamically calculated once rotation is in place.
-ELASTICSEARCH_INDEX = "bro"
+# Index name prefix
+ELASTICSEARCH_INDEX_PREFIX = "bro_"
 
 # Don't ever show results for these types.
 ELASTICSEARCH_IGNORE_TYPES = [
@@ -110,6 +110,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 )
 
 LOGGING = {
