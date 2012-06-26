@@ -27,7 +27,7 @@ Please refer to that documentation for getting ElasticSearch setup, and receivin
 Requirements
 ------------
 
-* Python 2, version 2.6 or greater.
+* Python 2, version 2.5 or greater.
 * Brownian comes with it's own webserver, for testing purposes. For production use, you will want to configure Apache or a similar server. (TODO: Add instructions).
 
 Virtualenv Setup
