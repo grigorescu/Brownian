@@ -12,12 +12,12 @@ ELASTICSEARCH_SERVER = "localhost:9200"
 ELASTICSEARCH_INDEX = "bro"
 
 # Don't ever show results for these types.
-ELASTICSEARCH_IGNORE_TYPES = {
+ELASTICSEARCH_IGNORE_TYPES = [
     "communication",
     "loaded_scripts",
     "notice_policy",
     "reporter",
-}
+]
 
 # Hide these columns for these types.
 ELASTICSEARCH_IGNORE_COLUMNS = {
