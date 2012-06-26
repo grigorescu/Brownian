@@ -14,7 +14,7 @@ def query(request):
 
     params = request.GET
     # If we have a blank query, just return everything.
-    query = params.get("query")
+    query = params.get("query", "")
     if query == "": query = "*"
 
     data["query"] = query
