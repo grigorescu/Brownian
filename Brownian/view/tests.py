@@ -8,10 +8,8 @@ class nonElasticSearchTests(unittest.TestCase):
         self.client = Client()
 
     def testStatusCodes(self):
-        resp1 = self.client.get('/')
-        resp2 = self.client.get('/idontexist')
-        self.assertEqual(resp1.status_code, 200)
-        self.assertNotEqual(resp2.status_code, 200)
+        resp1 = self.client.get('/idontexist')
+        self.assertNotEqual(resp1.status_code, 200)
 
     def testQueryQuote(self):
         query = """ts:[* TO 1340647651797] AND !uid:"lkaub98ab" AND (host:"google.com" OR host:yahoo.com")"""
@@ -125,6 +123,16 @@ class elasticSearchTests(unittest.TestCase):
     def testStatusCode(self):
         data = {"query": "*", "openTab": "conn", "hits": self.result}
         request = self.factory.get("/query")
-
         self.assertEqual(render(request, "query.html", data).status_code, 200)
 
+        data = {"indices": [
+                    ("bro_062419", 812802),
+                    ("bro_062420", 187212),
+                    ("bro_062421", 457821),
+                    ("bro_062422", 172712),
+                    ("bro_062423", 927172),
+                    ("bro_062500", 182732),
+                    ]
+                }
+        request = self.factory.get("/")
+        self.assertEqual(render(request, "home.html", data).status_code, 200)
