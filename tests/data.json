@@ -31,13 +31,13 @@
 {"index": {"_index": "bro-06241900", "_type": "known_certs"} }
 {"issuer_subject": "CN=COMODO High-Assurance Secure Server CA,O=COMODO CA Limited,L=Salford,ST=Greater Manchester,C=GB", "port_num": 443, "ts": 1340647610354, "host": "128.2.229.61", "serial": "170031A4782B972E1ECE57371A12510A", "subject": "CN=hpp.web.cmu.edu,OU=PlatinumSSL,OU=Hosted by Carnegie Mellon University,OU=Health Professions Program,O=Carnegie Mellon University,streetAddress=5000 Forbes Ave,L=Pittsburgh,ST=PA,postalCode=15213,C=US"}
 {"index": {"_index": "bro-06241900", "_type": "known_hosts"} }
-{"host": "128.2.5.6", "ts": 1340647598892} }
+{"host": "128.2.5.6", "ts": 1340647598892}
 {"index": {"_index": "bro-06241900", "_type": "known_hosts"} }
-{"host": "128.2.6.5", "ts": 1340647599402} }
+{"host": "128.2.6.5", "ts": 1340647599402}
 {"index": {"_index": "bro-06241900", "_type": "known_services"} }
-{"port_proto": "tcp", "host": "128.2.46.19", "port_num": 3389, "ts": 1340647299382, "service": []} }
+{"port_proto": "tcp", "host": "128.2.46.19", "port_num": 3389, "ts": 1340647299382, "service": []}
 {"index": {"_index": "bro-06241900", "_type": "known_services"} }
-{"port_proto": "tcp", "host": "128.237.20.16", "port_num": 46657, "ts": 1340647300365, "service": []} }
+{"port_proto": "tcp", "host": "128.237.20.16", "port_num": 46657, "ts": 1340647300365, "service": []}
 {"index": {"_index": "bro-06241900", "_type": "notice"} }
 {"note": "HTTP::Incorrect_File_Type", "dropped": 0, "uid": "jFvD488oPPk", "proto": "tcp", "id.orig_p": 2899, "id.resp_h": "128.2.8.13", "dst": "128.2.8.13", "policy_items": [7, 6], "ts": 1340647599222, "p": 50308, "id.orig_h": "15.8.33.147", "id.resp_p": 50308, "peer_descr": "worker-3", "actions": ["Notice::ACTION_ALARM", "Notice::ACTION_LOG"], "msg": "application/x-dosexec GET http://128.2.8.13:50308/tcp/8679844E004FA5E5A28B1C15EF2839B6", "src": "15.8.33.147", "suppress_for": 3600.0}
 {"index": {"_index": "bro-06241900", "_type": "notice"} }
