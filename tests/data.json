@@ -5,7 +5,7 @@
 {"index": {"_index": "bro-06241900", "_type": "conn"} }
 {"resp_bytes": 45, "uid": "SpoGdOarGy3", "conn_state": "SF", "proto": "udp", "id.orig_p": 20961, "id.resp_h": "128.123.140.21", "orig_pkts": 1, "orig_ip_bytes": 70, "ts": 1340647618510, "id.orig_h": "192.92.82.251", "id.resp_p": 62011, "tunnel_parents": [], "resp_pkts": 1, "local_orig": 0, "missed_bytes": 0, "duration": 0.075358, "orig_bytes": 42, "resp_ip_bytes": 73, "history": "Dd"}
 {"index": {"_index": "bro-06241900", "_type": "conn"} }
-{"resp_bytes": 178, "uid": "Kv8BEzH3L7d", "conn_state": "SF", "proto": "udp", "id.orig_p": 22821, "id.resp_h": "128.0.100.9", "orig_pkts": 4, "orig_ip_bytes": 788, "ts": 1340647617494, "id.orig_h": "12.113.6.0", "id.resp_p": 53890, "tunnel_parents": [], "resp_pkts": 5, "local_orig": 0, "missed_bytes": 0, "duration": 0.876488, "orig_bytes": 676, "resp_ip_bytes": 318, "history": "Dd"}}
+{"resp_bytes": 178, "uid": "Kv8BEzH3L7d", "conn_state": "SF", "proto": "udp", "id.orig_p": 22821, "id.resp_h": "128.0.100.9", "orig_pkts": 4, "orig_ip_bytes": 788, "ts": 1340647617494, "id.orig_h": "12.113.6.0", "id.resp_p": 53890, "tunnel_parents": [], "resp_pkts": 5, "local_orig": 0, "missed_bytes": 0, "duration": 0.876488, "orig_bytes": 676, "resp_ip_bytes": 318, "history": "Dd"}
 {"index": {"_index": "bro-06241900", "_type": "dns"} }
 {"AA": 0, "RD": 1, "rcode": 0, "qclass_name": "C_INTERNET", "uid": "OgG6MWp32o1", "proto": "udp", "id.orig_p": 1087, "id.resp_h": "128.2.0.0", "rcode_name": "NOERROR", "ts": 1340647607992, "id.orig_h": "23.123.21.19", "id.resp_p": 53, "qclass": 1, "RA": 0, "qtype_name": "A", "query": "bro-ids.org", "Z": 0, "qtype": 1, "TC": 0, "trans_id": 1536}
 {"index": {"_index": "bro-06241900", "_type": "dns"} }
