@@ -19,7 +19,8 @@ Requirements
 ------------
 
 * Python 2, version 2.6 or greater.
-* Brownian comes with it's own webserver, for testing purposes. For production use, you will want to configure Apache or a similar server. (TODO: Add instructions).
+* Brownian comes with it's own webserver, for testing purposes.
+* For production use, (configure Apache with mod_wsgi)[https://docs.djangoproject.com/en/1.4/howto/deployment/wsgi/modwsgi/], and point it to Brownian/wsgi.py.
 
 Virtualenv Setup
 ----------------
