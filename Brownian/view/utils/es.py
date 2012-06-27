@@ -170,7 +170,9 @@ class Request(object):
 
     # TODO: Replace _doBulkRequest with a regular query, but with a search type of count with per-type faceting.
     def _doBulkRequest(self, data=None, operation="_search", search_opts=""):
+        import sys
         result = requests.post(self.path + operation + "?" + search_opts, data=data).text
+        print >>sys.stderr, result
         self.result = json.loads(result.replace('"_', '"es_'))
         if "error" in self.result.keys():
             raise IOError(self.result["error"])
