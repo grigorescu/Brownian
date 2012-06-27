@@ -1,4 +1,5 @@
 import requests, json, datetime, string, pytz
+import sys
 from django.conf import settings
 from broLogTypes import broLogs
 
@@ -170,10 +171,12 @@ class Request(object):
 
     # TODO: Replace _doBulkRequest with a regular query, but with a search type of count with per-type faceting.
     def _doBulkRequest(self, data=None, operation="_search", search_opts=""):
-        import sys
         result = requests.post(self.path + operation + "?" + search_opts, data=data).text
-        print >>sys.stderr, result
-        self.result = json.loads(result.replace('"_', '"es_'))
+        try:
+            self.result = json.loads(result.replace('"_', '"es_'))
+        except ValueError, e:
+            print >>sys.stderr, result
+            raise ValueError(e)
         if "error" in self.result.keys():
             raise IOError(self.result["error"])
 
