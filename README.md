@@ -15,12 +15,14 @@ This interface only works with Bro if you're using the new [ElasticSearch Loggin
 
 Please refer to that documentation for getting ElasticSearch setup, and receiving logs.
 
+It's also *highly* recommended to review the [ElasticSearch configuration tips](https://github.com/grigorescu/Brownian/wiki/ElasticSearch-Configuration).
+
 Requirements
 ------------
 
 * Python 2, version 2.6 or greater.
 * Brownian comes with it's own webserver, for testing purposes.
-* For production use, [configure Apache with mod_wsg](https://docs.djangoproject.com/en/1.4/howto/deployment/wsgi/modwsgi/), and point it to Brownian/wsgi.py.
+* For production use, [configure Apache with mod_wsgi](https://docs.djangoproject.com/en/1.4/howto/deployment/wsgi/modwsgi/), and point it to Brownian/wsgi.py.
 
 Virtualenv Setup
 ----------------
