@@ -8,15 +8,6 @@ Why Brownian?
 
 Brownian motion relates to the elastic collisions and random motion of particles. Brownian aims to help you leverage Bro and ElasticSearch to make sense of a massive amount of seemingly random data.
 
-TODO
-----
-
-A lot. This is very much a work in progress. Many features aren't working yet - I've tried to document them with either a TODO comment or an Issue on GitHub (or both).
-
-If you see something that's broken, or something that you'd like added, please create an issue.
-
-As always, fork, patch, and push away!
-
 Prerequisites
 -------------
 
@@ -67,3 +58,13 @@ Running Development Server
 $ export DJANGO_SETTINGS_MODULE=Brownian.settings
 $ python ./Brownian/bin/django-admin.py runserver
 ```
+
+TODO
+----
+
+This has basic functionality, but there are still a lot of improvements to be done.
+
+If you see something that's broken, or something that you'd like added, please create an issue.
+
+As always, fork, patch, and push away!
+
