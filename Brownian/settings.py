@@ -3,7 +3,7 @@
 # How many results constitute a page.
 PAGE_SIZE=25
 
-# ElasticSearch setttings
+# ElasticSearch settings
 
 # Hostname and port of your ElasticSearch server
 ELASTICSEARCH_SERVER = "localhost:9200"
@@ -120,7 +120,12 @@ LOGGING = {
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler'
-        }
+        },
+        'console':{
+            'level':'DEBUG',
+            'class':'logging.StreamHandler',
+            'formatter': 'simple'
+        },
     },
     'loggers': {
         'django.request': {
@@ -128,5 +133,9 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+        'elasticsearch_requests': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        }
     }
 }

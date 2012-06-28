@@ -1,18 +1,19 @@
 import requests, json, datetime, string, pytz
 from django.conf import settings
 from broLogTypes import broLogs
+import logging
 
 types = [type for type, fields in broLogs]
-
+logger = logging.getLogger('elasticsearch_requests')
 def getIndices():
     """Get a list of all bro indexes
     """
-    result = Request(index=None)._doRequest(operation="_stats", search_opts="clear=true&docs=true", verb="GET")
+    result = Request(index=None)._doRequest(operation="_stats", search_opts="clear=true", verb="GET")
     indices = []
     for index_name, index_stats in result["es_all"]["indices"].items():
         if index_name.startswith(settings.ELASTICSEARCH_INDEX_PREFIX):
-            index_name = str(index_name.replace("bro_", ""))
-            indices.append({"time": index_name, "count": index_stats["total"]["docs"]["count"]})
+            index_name = str(index_name.replace(settings.ELASTICSEARCH_INDEX_PREFIX, ""))
+            indices.append(index_name)
     return indices
 
 def indexNameToDatetime(indexName):
@@ -61,14 +62,12 @@ def indicesFromTime(startTime):
     else:
         raise ValueError("Possible time units: " + units.keys())
 
-    indices = [index["time"] for index in getIndices()]
+    indices = getIndices()
     indices.sort()
     chosenIndices = []
-    import sys
     for i in range(len(indices)):
         indexStart = indexNameToDatetime(indices[i])
         if indexStart >= then:
-            print >>sys.stderr, "I believe that " + indexStart.strftime('%a %b %d %H:%M:%S.%f') + " is >= " + then.strftime('%a %b %d %H:%M:%S.%f')
             chosenIndices.append(indices[i])
 
         # What if our start is between two indices?
@@ -157,8 +156,10 @@ class Request(object):
             self.data = dict(self.data.items() + data.items())
 
         if verb == "POST":
+            logger.debug("POST " + self.path + operation + "?" + search_opts)
             result = requests.post(self.path + operation + "?" + search_opts, data=json.dumps(self.data)).text
         else:
+            logger.debug("GET " + self.path + operation + "?" + search_opts)
             result = requests.get(self.path + operation + "?" + search_opts).text
 
         # ElasticSearch internal fields are prefixed with _. This causes some issues w/ Django, so we prefix with es_ instead.
@@ -171,6 +172,7 @@ class Request(object):
     # TODO: Replace _doBulkRequest with a regular query, but with a search type of count with per-type faceting.
     def _doBulkRequest(self, data=None, operation="_search", search_opts=""):
         result = requests.post(self.path + operation + "?" + search_opts, data=data).text
+        logger.debug("BULK " + self.path + operation + "?" + search_opts)
         self.result = json.loads(result.replace('"_', '"es_'))
         if "error" in self.result.keys():
             raise IOError(self.result["error"])
