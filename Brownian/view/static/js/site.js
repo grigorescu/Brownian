@@ -22,3 +22,11 @@ function appendToQuery(event, query, filter, operator){
     $(query).val(newQuery);
     return true;
 }
+
+function replaceQuery(event, query, filter){
+    if ($(query) == undefined){
+        return false;
+    }
+    $(query).val(filter);
+    return true;
+}

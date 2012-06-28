@@ -32,3 +32,7 @@ body{
     margin-top: 10px;
     margin-left: 2px;
 }
+
+td.fieldval{
+    white-space: nowrap;
+}

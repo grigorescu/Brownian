@@ -43,12 +43,20 @@
               {% for row in hit.content %}
                 <tr>
                   {% for key, type, val in row %}
-                    <td onclick="appendToQuery(event, '#querytext', '{{ key }}:&quot;{{ val }}&quot;');">
-                        {% if type == "time" %}
-                        {{ val|dateToDatetime }}
-                        {% else %}
-                        {{ val }}
-                        {% endif %}
+                      <!-- onclick="appendToQuery(event, '#querytext', '{{ key }}:&quot;{{ val }}&quot;');" -->
+                    <td class="fieldval">
+                        <div><ul class="nav nav-pills"><li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" data-target="#">
+                                {% if type == "time" %}
+                                    {{ val|dateToDatetime }}
+                                {% else %}
+                                    {{ val }}
+                                {% endif %}
+                                <b class="caret"></b></a><ul class="dropdown-menu">
+                            <li><a href="#" onclick="replaceQuery(event, '#querytext', '{{ key }}:&quot;{{ val }}&quot;');">Query just this field</a></li>
+                            <li><a href="#" onclick="appendToQuery(event, '#querytext', '{{ key }}:&quot;{{ val }}&quot;', 'AND');">AND query this field</a></li>
+                            <li><a href="#" onclick="appendToQuery(event, '#querytext', '{{ key }}:&quot;{{ val }}&quot;', 'OR');">OR query this field</a></li>
+                        </ul></li></ul></div>
                     </td>
                   {% endfor %}
                 </tr>
