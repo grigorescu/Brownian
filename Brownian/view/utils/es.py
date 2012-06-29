@@ -12,14 +12,16 @@ def getIndices():
     indices = []
     for index_name, index_stats in result["es_all"]["indices"].items():
         if index_name.startswith(settings.ELASTICSEARCH_INDEX_PREFIX):
-            index_name = str(index_name.replace(settings.ELASTICSEARCH_INDEX_PREFIX, ""))
             indices.append(index_name)
     return indices
 
 def indexNameToDatetime(indexName):
     """Convert a bro-201208121900 style-name to a datetime object.
     """
-    indexTime = datetime.datetime.strptime(indexName.replace(settings.ELASTICSEARCH_INDEX_PREFIX, ""), "%Y%m%d%H%M")
+    if indexName.startswith(settings.ELASTICSEARCH_INDEX_PREFIX) and not indexName.startswith(settings.ELASTICSEARCH_INDEX_PREFIX + "-"):
+        return pytz.timezone(settings.TIME_ZONE).localize(datetime.datetime.now())
+
+    indexTime = datetime.datetime.strptime(indexName.replace(settings.ELASTICSEARCH_INDEX_PREFIX + "-", ""), "%Y%m%d%H%M")
     return pytz.utc.localize(indexTime)
 
 def indicesFromTime(startTime):
@@ -63,10 +65,12 @@ def indicesFromTime(startTime):
         raise ValueError("Possible time units: " + units.keys())
 
     indices = getIndices()
+
     indices.sort()
     chosenIndices = []
     for i in range(len(indices)):
         indexStart = indexNameToDatetime(indices[i])
+
         if indexStart >= then:
             chosenIndices.append(indices[i])
 
@@ -75,7 +79,7 @@ def indicesFromTime(startTime):
             if indexStart < then and indexNameToDatetime(indices[i+1]) > then:
                 chosenIndices.append(indices[i])
 
-    return ",".join(chosenIndices)
+    return chosenIndices
 
 def queryEscape(query):
     """Certain chars need to be escaped
@@ -157,6 +161,7 @@ class Request(object):
 
         if verb == "POST":
             logger.debug("POST " + self.path + operation + "?" + search_opts)
+            logger.debug("      " + self.data)
             result = requests.post(self.path + operation + "?" + search_opts, data=json.dumps(self.data)).text
         else:
             logger.debug("GET " + self.path + operation + "?" + search_opts)
@@ -173,6 +178,7 @@ class Request(object):
     def _doBulkRequest(self, data=None, operation="_search", search_opts=""):
         result = requests.post(self.path + operation + "?" + search_opts, data=data).text
         logger.debug("BULK " + self.path + operation + "?" + search_opts)
+        logger.debug("      " + data)
         self.result = json.loads(result.replace('"_', '"es_'))
         if "error" in self.result.keys():
             raise IOError(self.result["error"])

@@ -24,7 +24,10 @@ def query(request):
     if time == "": time = "15m"
     data["time"] = time
 
-    result = utils.es.queryFromString(utils.es.queryEscape(query), index=utils.es.indicesFromTime(time))
+    indices = ",".join(utils.es.indicesFromTime(time))
+    import sys
+    print >>sys.stderr, "*********" + indices
+    result = utils.es.queryFromString(utils.es.queryEscape(query), index=indices)
     data["hits"] = utils.es.resultToTabbedTables(result)
 
     # To make the Javascript easier, we strip off the # from the currently open tab.
