@@ -59,7 +59,7 @@ Running Development Server
 --------------------------
 ```bash
 $ export DJANGO_SETTINGS_MODULE=Brownian.settings
-$ python ./Brownian/bin/django-admin.py runserver
+$ python ./bin/django-admin.py runserver
 ```
 
 TODO
