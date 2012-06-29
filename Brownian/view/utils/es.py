@@ -79,6 +79,12 @@ def indicesFromTime(startTime):
             if indexStart < then and indexNameToDatetime(indices[i+1]) > then:
                 chosenIndices.append(indices[i])
 
+    # Finally, if we have no indices, we include the last one, as we don't know when it ended
+    if len(chosenIndices) == 0:
+        chosenIndices.append(indices[-1])
+    elif len(chosenIndices) == 1 and chosenIndices[0] == settings.ELASTICSEARCH_INDEX_PREFIX:
+        chosenIndices.append(indices[-1])
+
     return chosenIndices
 
 def queryEscape(query):

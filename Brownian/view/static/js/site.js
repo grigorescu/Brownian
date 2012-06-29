@@ -1,18 +1,20 @@
 /** Local JS functions **/
 
-function appendToQuery(event, query, filter, operator){
+function appendToQuery(query, filter, operator, negated){
     if (operator == undefined){
         operator = "AND"
     }
+    if (negated == undefined){
+        negated = false;
+    }
+
     if ($(query) == undefined){
         return false;
     }
 
     var currentQuery = $(query).val();
     var newQuery = '';
-
-    if (event.shiftKey){
-        <!-- If the user shift+clicked, we negate it. -->
+    if (negated){
         newQuery = '!';
     }
     newQuery += filter;
@@ -23,10 +25,18 @@ function appendToQuery(event, query, filter, operator){
     return true;
 }
 
-function replaceQuery(event, query, filter){
+function replaceQuery(query, filter, negated){
     if ($(query) == undefined){
         return false;
     }
-    $(query).val(filter);
+    if (negated == undefined){
+        negated = false;
+    }
+    if (negated){
+        $(query).val('!' + filter);
+    }
+    else {
+        $(query).val(filter);
+    }
     return true;
 }

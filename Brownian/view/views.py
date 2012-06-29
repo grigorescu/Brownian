@@ -25,8 +25,7 @@ def query(request):
     data["time"] = time
 
     indices = ",".join(utils.es.indicesFromTime(time))
-    import sys
-    print >>sys.stderr, "*********" + indices
+    data["query"] = query
     result = utils.es.queryFromString(utils.es.queryEscape(query), index=indices)
     data["hits"] = utils.es.resultToTabbedTables(result)
 

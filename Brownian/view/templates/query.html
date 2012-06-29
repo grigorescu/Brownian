@@ -1,4 +1,5 @@
 {% extends "include/head.html" %}
+{% load humanize %}
 {% load es_extras %}
 {% block title %}Query{% endblock %}
 {% block container %}
@@ -18,19 +19,22 @@
       <label for="querytext"></label><input type="text" class="input-xxxlarge" placeholder="Query" name="query" id="querytext" value="{{ query }}">
         <a data-toggle="syntaxmodal" href="#" onclick="$('#syntaxmodal').modal();" ><i class="icon-question-sign"></i></a>
       <button class="btn btn-primary" type="submit" onclick='$("#opentab").val($("li.tab.active").children().attr("href"))'>Search</button>
-      <button class="btn btn-danger" onclick='$("#querytext").val("");$("#opentab").val($("li.tab.active").children().attr("href"))'>Clear</button>
+      <button class="btn btn-warning" type="button" onclick='$("#querytext").val($("#origQuery").val());$("#opentab").val($("li.tab.active").children().attr("href"))'>Revert</button>
+      <button class="btn btn-danger" type="button" onclick='$("#querytext").val("");$("#opentab").val($("li.tab.active").children().attr("href"))'>Clear</button>
       <input type="hidden" name="openTab" id="opentab" value="">
+      <input type="hidden" name="originalQuery" id="origQuery" value="{{ query }}">
     </form>
   </div>
   <div class="well tabbable tabs-left">
     <ul id="resultTabs" class="nav nav-tabs">
       {% for hit in hits %}
-        <li class="tab{% if hit.type == openTab %} active{% endif %}">
-          <a href="#{{ hit.type }}" data-toggle="tab">{{ hit.type }} ({{ hit.total }})</a>
+        <li style="padding:3px" class="tab{% if hit.type == openTab %} active{% endif %}">
+          <a href="#{{ hit.type }}" data-toggle="tab"><span style="float:left">{{ hit.type }}</span>&nbsp;<span style="float: right" class="badge">{{ hit.total|intcomma }}</span>
+          <br/></a>
         </li>
       {% endfor %}
     </ul>
-    <div id="results" class="tab-content">
+    <div id="results" class="tab-content" style="padding-bottom:100px">
       {% for hit in hits %}
         <div class="tab-pane fade{% if hit.type == openTab %} in active{% endif %}" id="{{ hit.type }}">
           <table class="table table-condensed table-striped">
@@ -43,20 +47,42 @@
               {% for row in hit.content %}
                 <tr>
                   {% for key, type, val in row %}
-                      <!-- onclick="appendToQuery(event, '#querytext', '{{ key }}:&quot;{{ val }}&quot;');" -->
                     <td class="fieldval">
-                        <div><ul class="nav nav-pills"><li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" data-target="#">
+                        <ul class="nav nav-pills" style="margin-bottom: 0"><li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" style="padding:0;margin:1">
                                 {% if type == "time" %}
                                     {{ val|dateToDatetime }}
                                 {% else %}
                                     {{ val }}
                                 {% endif %}
-                                <b class="caret"></b></a><ul class="dropdown-menu">
-                            <li><a href="#" onclick="replaceQuery(event, '#querytext', '{{ key }}:&quot;{{ val }}&quot;');">Query just this field</a></li>
-                            <li><a href="#" onclick="appendToQuery(event, '#querytext', '{{ key }}:&quot;{{ val }}&quot;', 'AND');">AND query this field</a></li>
-                            <li><a href="#" onclick="appendToQuery(event, '#querytext', '{{ key }}:&quot;{{ val }}&quot;', 'OR');">OR query this field</a></li>
-                        </ul></li></ul></div>
+                                <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Include...</a>
+                                <ul class="dropdown-menu sub-menu">
+                                <li><a href="#" onclick="replaceQuery('#querytext', '{{ key }}:&quot;{{ val }}&quot;', false);">Replace</a></li>
+                                <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:&quot;{{ val }}&quot;', 'AND', false);">AND</a></li>
+                                <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:&quot;{{ val }}&quot;', 'OR', false);">OR</a></li>
+                                {% if type == "addr" %}
+                                    <li><a href="#" onclick="replaceQuery('#querytext', '(bound:&quot;{{ val }}&quot; OR dst:&quot;{{ val }}&quot; OR dst_addr:&quot;{{ val }}&quot; OR host:&quot;{{ val }}&quot; OR id.orig_h:&quot;{{ val }}&quot; OR id.resp_h:&quot;{{ val }}&quot; OR request:&quot;{{ val }}&quot; OR src:&quot;{{ val }}&quot; OR src_addr:&quot;{{ val }}&quot; OR x_originating_ip:&quot;{{ val }}&quot;)', false);">Replace any IP field</a></li>
+                                    <li><a href="#" onclick="appendToQuery('#querytext', '(bound:&quot;{{ val }}&quot; OR dst:&quot;{{ val }}&quot; OR dst_addr:&quot;{{ val }}&quot; OR host:&quot;{{ val }}&quot; OR id.orig_h:&quot;{{ val }}&quot; OR id.resp_h:&quot;{{ val }}&quot; OR request:&quot;{{ val }}&quot; OR src:&quot;{{ val }}&quot; OR src_addr:&quot;{{ val }}&quot; OR x_originating_ip:&quot;{{ val }}&quot;)', false);">AND any IP field</a></li>
+                                    <li><a href="#" onclick="appendToQuery('#querytext', '(bound:&quot;{{ val }}&quot; OR dst:&quot;{{ val }}&quot; OR dst_addr:&quot;{{ val }}&quot; OR host:&quot;{{ val }}&quot; OR id.orig_h:&quot;{{ val }}&quot; OR id.resp_h:&quot;{{ val }}&quot; OR request:&quot;{{ val }}&quot; OR src:&quot;{{ val }}&quot; OR src_addr:&quot;{{ val }}&quot; OR x_originating_ip:&quot;{{ val }}&quot;)', false);">OR any IP field</a></li>
+                                {% endif %}
+                                </ul>
+                                </li>
+                                <li><a href="#">Exclude...</a>
+                                    <ul class="dropdown-menu sub-menu" style="margin-top: 25px">
+                                        <li><a href="#" onclick="replaceQuery('#querytext', '{{ key }}:&quot;{{ val }}&quot;', true);">Replace</a></li>
+                                        <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:&quot;{{ val }}&quot;', 'AND', true);">AND</a></li>
+                                        <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:&quot;{{ val }}&quot;', 'OR', true);">OR</a></li>
+                                        {% if type == "addr" %}
+                                            <li><a href="#" onclick="replaceQuery('#querytext', '(bound:&quot;{{ val }}&quot; OR dst:&quot;{{ val }}&quot; OR dst_addr:&quot;{{ val }}&quot; OR host:&quot;{{ val }}&quot; OR id.orig_h:&quot;{{ val }}&quot; OR id.resp_h:&quot;{{ val }}&quot; OR request:&quot;{{ val }}&quot; OR src:&quot;{{ val }}&quot; OR src_addr:&quot;{{ val }}&quot; OR x_originating_ip:&quot;{{ val }}&quot;)', true);">Replace any IP field</a></li>
+                                            <li><a href="#" onclick="appendToQuery('#querytext', '(bound:&quot;{{ val }}&quot; OR dst:&quot;{{ val }}&quot; OR dst_addr:&quot;{{ val }}&quot; OR host:&quot;{{ val }}&quot; OR id.orig_h:&quot;{{ val }}&quot; OR id.resp_h:&quot;{{ val }}&quot; OR request:&quot;{{ val }}&quot; OR src:&quot;{{ val }}&quot; OR src_addr:&quot;{{ val }}&quot; OR x_originating_ip:&quot;{{ val }}&quot;)', true);">AND any IP field</a></li>
+                                            <li><a href="#" onclick="appendToQuery('#querytext', '(bound:&quot;{{ val }}&quot; OR dst:&quot;{{ val }}&quot; OR dst_addr:&quot;{{ val }}&quot; OR host:&quot;{{ val }}&quot; OR id.orig_h:&quot;{{ val }}&quot; OR id.resp_h:&quot;{{ val }}&quot; OR request:&quot;{{ val }}&quot; OR src:&quot;{{ val }}&quot; OR src_addr:&quot;{{ val }}&quot; OR x_originating_ip:&quot;{{ val }}&quot;)', true);">OR any IP field</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li></ul>
                     </td>
                   {% endfor %}
                 </tr>
@@ -74,13 +100,13 @@
         </div>
         <div class="modal-body">
             <p>
-            <table class="table table-condensed table-bordered">
-            <tr><td><pre>(host:"google.com" OR host:"yahoo.com") AND id.resp_p:80</pre></td><td>Matches google.com or yahoo.com on port 80</td></tr>
-            <tr><td><pre>host:"ns?.*.cn"</pre></td><td>Matches ns1.mail.cn, ns2.mail.cn, but not ns01.mail.cn</td></tr>
-            <tr><td><pre>subject:"viagra~"</pre></td><td>Fuzzy search: vi4gra, viagr4, etc.</td></tr>
-            <tr><td><pre>subject:"buy viagra"~5</pre></td><td>Distance search: buy and viagra, no more than 5 words away.</td></tr>
-            <tr><td><pre>ts:[1340666078821 TO *] AND from:[alice@cmu.edu TO bob@cmu.edu]</pre></td><td>Search from a given timestamp to now, <br/>where the from address is alphabetically between alice and bob.</td></tr>
-            </table>
+                <table class="table table-condensed table-bordered">
+                    <tr><td><pre>(host:"google.com" OR host:"yahoo.com") AND id.resp_p:80</pre></td><td>Matches google.com or yahoo.com on port 80</td></tr>
+                    <tr><td><pre>host:"ns?.*.cn"</pre></td><td>Matches ns1.mail.cn, ns2.mail.cn, but not ns01.mail.cn</td></tr>
+                    <tr><td><pre>subject:"viagra~"</pre></td><td>Fuzzy search: vi4gra, viagr4, etc.</td></tr>
+                    <tr><td><pre>subject:"buy viagra"~5</pre></td><td>Distance search: buy and viagra, no more than 5 words away.</td></tr>
+                    <tr><td><pre>ts:[1340666078821 TO *] AND from:[alice@cmu.edu TO bob@cmu.edu]</pre></td><td>Search from a given timestamp to now, <br/>where the from address is alphabetically between alice and bob.</td></tr>
+                </table>
             </p>
         </div>
         <div class="modal-footer">

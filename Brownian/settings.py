@@ -1,7 +1,7 @@
 # Common Application Settings
 
 # How many results constitute a page.
-PAGE_SIZE=25
+PAGE_SIZE=30
 
 # ElasticSearch settings
 
@@ -9,15 +9,14 @@ PAGE_SIZE=25
 ELASTICSEARCH_SERVER = "localhost:9200"
 
 # Index name prefix
-ELASTICSEARCH_INDEX_PREFIX = "bro-"
+ELASTICSEARCH_INDEX_PREFIX = "bro"
 
 # Don't ever show results for these types.
 ELASTICSEARCH_IGNORE_TYPES = [
     "communication",
     "loaded_scripts",
     "notice_policy",
-    "reporter",
-]
+    ]
 
 # Hide these columns for these types.
 ELASTICSEARCH_IGNORE_COLUMNS = {
@@ -143,7 +142,7 @@ LOGGING = {
         },
         'elasticsearch_requests': {
             'handlers': ['console'],
-            'level': 'DEBUG',
+            'level': 'INFO',
         }
     }
 }
