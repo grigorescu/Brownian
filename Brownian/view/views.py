@@ -25,9 +25,9 @@ def query(request):
     data["time"] = time
 
     indices = ",".join(utils.es.indicesFromTime(time))
+    data["indices"] = indices
     data["query"] = query
-    result = utils.es.queryFromString(utils.es.queryEscape(query), index=indices)
-    data["hits"] = utils.es.resultToTabbedTables(result)
+    data["hits"] = utils.es.getCounts(utils.es.queryEscape(query), index=indices)
 
     # To make the Javascript easier, we strip off the # from the currently open tab.
     # If we don't have an open tab, default to conn.
@@ -38,4 +38,4 @@ def query(request):
         if data["hits"]: data["openTab"] = data["hits"][0]["type"]
         else: data["openTab"] = "conn"
 
-    return render(request, "query.html", data)
+    return render(request, "home.html", data)

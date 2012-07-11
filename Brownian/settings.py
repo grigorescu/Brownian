@@ -21,25 +21,10 @@ ELASTICSEARCH_IGNORE_TYPES = [
 # Hide these columns for these types.
 ELASTICSEARCH_IGNORE_COLUMNS = {
     "conn": ["missed_bytes", ],
-    "dns": [],
-    "dpd": [],
     "ftp": ["mime_desc", ],
-    "http": [],
-    "irc": [],
-    "known_certs": [],
-    "known_hosts": [],
-    "known_services": [],
     "notice": ["actions", "dropped", "peer_descr", "policy_items", "suppress_for", ],
     "notice_alarm": ["actions", "dropped", "peer_descr", "policy_items", "suppress_for", ],
-    "notice_policy": [],
-    "smtp": [],
     "smtp_entities": ["excerpt", ],
-    "socks": [],
-    "software": [],
-    "ssh": [],
-    "ssl": [],
-    "syslog": [],
-    "tunnel": [],
     "weird": ["peer"],
 }
 
@@ -77,6 +62,7 @@ SECRET_KEY = '62a=4)pj*u&amp;*aj*1d4f+!tpq5uf@!82t2cx(pu7)_12=)afv6$'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.eggs.Loader',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -100,6 +86,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'Brownian.urls'
 WSGI_APPLICATION = 'Brownian.wsgi.application'
+DAJAXICE_MEDIA_PREFIX="dajaxice"
 
 INSTALLED_APPS = (
     'Brownian.view',
@@ -110,6 +97,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'dajaxice',
 )
 
 LOGGING = {
@@ -142,7 +130,11 @@ LOGGING = {
         },
         'elasticsearch_requests': {
             'handlers': ['console'],
-            'level': 'INFO',
-        }
+            'level': 'ERROR',
+        },
+#        'dajaxice': {
+#            'handlers': ['console'],
+#            'level': 'ERROR',
+#            }
     }
 }

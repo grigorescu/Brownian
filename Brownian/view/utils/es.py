@@ -3,7 +3,6 @@ from django.conf import settings
 from broLogTypes import broLogs
 import logging
 
-types = [type for type, fields in broLogs]
 logger = logging.getLogger('elasticsearch_requests')
 def getIndices():
     """Get a list of all bro indexes
@@ -100,54 +99,69 @@ def queryEscape(query):
 
     return query
 
-def queryFromString(query, index="_all"):
-    """Execute a query across all types from a given query string.
-    """
-    queryString = ""
-    # TODO - this is ugly - needs to be replaced with a count search type, with faceting per type.
-    for i in types:
-        queryString += '{"index": "%s", "type": "%s"}\n' % (index, i)
-        queryString += '{"query": {"query_string": {"query": "%s"}}, "size": %d}\n' % (query, settings.PAGE_SIZE)
-    result = Request(index=index).msearch_scan(queryString)
-
-    return result
-
-def resultToTabbedTables(result):
-    """Convert an msearch result to a list of tables, sorted by type.
+def getCounts(query, index="_all", type=None):
+    """Using a facet of types, return dict of type and count.
     """
     hits = []
 
-    for i in range(len(result["responses"])):
-        resultType = types[i]
-        resultAnswer = result["responses"][i]
-        header = [(field.name, field.type, field.description) for field in broLogs[i][1] if field.name not in settings.ELASTICSEARCH_IGNORE_COLUMNS.get(resultType, [])]
-        content = []
+    data = {"query":
+            {"constant_score":
+             {"filter":
+              {"query":
+               {"query_string": {"query": query}}}}},
+             "facets": {"term": {"terms": {"field": "_type", "size": 50, "order": "term"}}},
+             "size": 0
+            }
+    result = Request(index=index, type=type)._doRequest(data=data)
 
-        if resultType in settings.ELASTICSEARCH_IGNORE_TYPES:
-            continue
-        if "hits" not in resultAnswer.keys():
-            continue
-        if "hits" not in resultAnswer["hits"].keys():
-            continue
-        if len(resultAnswer["hits"]["hits"]) == 0:
-            continue
-
-        for hit in resultAnswer["hits"]["hits"]:
-            row = []
-            for column, fType, desc in header:
-                row.append((column, fType, hit["es_source"].get(column, "")))
-            content.append(row)
-
-            if len(hit["es_source"].keys()) > len(row):
-                assert "WARNING: Some fields weren't properly accounted for."
-                assert "Type: %s;\nKnown fields: %s.\nRecvd fields: %s." % (resultType, hit["es_source"].keys(), [x[0] for x in row])
-
-        hits.append({"header": header, "content": content, "type": resultType, "took": result["responses"][i]["took"],
-                     "total": result["responses"][i]["hits"]["total"]})
+    for i in result["facets"]["term"]["terms"]:
+        count, type = i.itervalues()
+        if type not in settings.ELASTICSEARCH_IGNORE_TYPES:
+            hits.append({"type": type, "total": count})
 
     return hits
 
+def doQuery(query, index="_all", type=None, start=0):
+    """Short wrapper for simple queries.
+    """
+    data = {"query":
+            {"constant_score":
+             {"filter":
+              {"query":
+               {"query_string": {"query": query}}}}},
+            "size": settings.PAGE_SIZE,
+            "from": start,
+            }
+    result = Request(index=index, type=type)._doRequest(data=data)
+    return result
 
+def resultToTable(result, type):
+    """Convert JSON result to a dict for use in HTML table template.
+    """
+    logger.debug(result)
+    header = [(field.name, field.type, field.description) for field in broLogs[type] if field.name not in settings.ELASTICSEARCH_IGNORE_COLUMNS.get(type, [])]
+    content = []
+
+    if type in settings.ELASTICSEARCH_IGNORE_TYPES:
+        return {}
+    if "hits" not in result.keys():
+        return {}
+    if "hits" not in result["hits"].keys():
+        return {}
+    if len(result["hits"]["hits"]) == 0:
+        return {}
+
+    for hit in result["hits"]["hits"]:
+        row = []
+        for column, fType, desc in header:
+            row.append((column, fType, hit["es_source"].get(column, "")))
+        content.append(row)
+
+        if len(hit["es_source"].keys()) > len(row):
+            assert "WARNING: Some fields weren't properly accounted for."
+            assert "Type: %s;\nKnown fields: %s.\nRecvd fields: %s." % (type, hit["es_source"].keys(), [x[0] for x in row])
+
+    return {"header": header, "content": content, "took": result["took"]}
 
 class Request(object):
     """A single request to ElasticSearch
@@ -167,7 +181,7 @@ class Request(object):
 
         if verb == "POST":
             logger.debug("POST " + self.path + operation + "?" + search_opts)
-            logger.debug("      " + self.data)
+            logger.debug("      " + json.dumps(self.data))
             result = requests.post(self.path + operation + "?" + search_opts, data=json.dumps(self.data)).text
         else:
             logger.debug("GET " + self.path + operation + "?" + search_opts)

@@ -8,20 +8,20 @@ class Field(object):
         self.type = type
         self.description = description
 
-broLogs = [
-    ("capture_loss", [
+broLogs = {
+    "capture_loss": [
         Field("ts", "time", "Timestamp for when the measurement occurred."),
         Field("ts_delta", "interval", "The time delay between this measurement and the last."),
         Field("peer", "string", "In the event that there are multiple Bro instances logging to the same host, this distinguishes each peer with its individual name."),
         Field("gaps", "count", "Number of missed ACKs from the previous measurement interval."),
         Field("acks", "count", "Total number of ACKs seen in the previous measurement interval."),
         Field("percent_lost", "string", "Percentage of ACKs seen where the data being ACKed wasn't seen."),
-    ]),
-    ("cluster", [
+    ],
+    "cluster": [
         Field("ts", "time", "The time at which a cluster message was generated."),
         Field("message", "string", "A message indicating information about the cluster's operation."),
-    ]),
-    ("communication", [
+    ],
+    "communication": [
         Field("ts", "time", "The network time at which a communication event occurred."),
         Field("peer", "string", "The peer name (if any) for which a communication event is concerned."),
         Field("src_name", "string", "Where the communication event message originated from, that is, either from the scripting layer or inside the Bro process."),
@@ -30,8 +30,8 @@ broLogs = [
         Field("connected_peer_port", "port", "TODO: currently unused."),
         Field("level", "string", "The severity of the communication event message."),
         Field("message", "string", "A message describing the communication event between Bro or Broccoli instances."),
-    ]),
-    ("conn", [
+    ],
+    "conn": [
         Field("ts", "time", "This is the time of the first packet."),
         Field("uid", "string", "A unique identifier of the connection."),
         Field("id.orig_h", "addr", "The originating endpoint's address."),
@@ -52,8 +52,8 @@ broLogs = [
         Field("orig_ip_bytes", "count", "Number IP level bytes the originator sent (as seen on the wire, taken from IP total_length header field). Only set if use_conn_size_analyzer = T"),
         Field("resp_pkts", "count", "Number of packets the responder sent. See orig_pkts."),
         Field("resp_ip_bytes", "count", "Number IP level bytes the responder sent. See orig_pkts."),
-    ]),
-    ("dns", [
+    ],
+    "dns": [
         Field("ts", "time", "The earliest time at which a DNS protocol message over the associated connection is observed."),
         Field("uid", "string", "A unique identifier of the connection over which DNS messages are being transferred."),
         Field("id.orig_h", "addr", "The originating endpoint's address."),
@@ -80,8 +80,8 @@ broLogs = [
         Field("ready", "bool", "This value indicates if this request/response pair is ready to be logged."),
         Field("total_answers", "count", "The total number of resource records in a reply message's answer section."),
         Field("total_replies", "count", "The total number of resource records in a reply message's answer, authority, and additional sections."),
-    ]),
-    ("dpd", [
+    ],
+    "dpd": [
         Field("ts", "time", "Timestamp for when protocol analysis failed."),
         Field("uid", "string", "Connection unique ID."),
         Field("id.orig_h", "addr", "The originating endpoint's address."),
@@ -92,8 +92,8 @@ broLogs = [
         Field("analyzer", "string", "The analyzer that generated the violation."),
         Field("failure_reason", "string", "The textual reason for the analysis failure."),
         Field("disabled_aids", "set", "Disabled analyzer IDs. This is only for internal tracking so as to not attempt to disable analyzers multiple times."),
-    ]),
-    ("ftp", [
+    ],
+    "ftp": [
         Field("ts", "time", "Timestamp for when the command was sent."),
         Field("uid", "string", "Connection unique ID."),
         Field("id.orig_h", "addr", "The originating endpoint's address."),
@@ -115,8 +115,8 @@ broLogs = [
         Field("pending_commands", "FTP", "Queue for commands that have been sent but not yet responded to are tracked here."),
         Field("passive", "bool", "Indicates if the session is in active or passive mode."),
         Field("capture_password", "bool", "Determines if the password will be captured for this request."),
-    ]),
-    ("http", [
+    ],
+    "http": [
         Field("ts", "time", "Timestamp for when the request happened."),
         Field("uid", "string", "Connection unique ID."),
         Field("id.orig_h", "addr", "The originating endpoint's address."),
@@ -141,8 +141,8 @@ broLogs = [
         Field("password", "string", "Password if basic-auth is performed for the request."),
         Field("capture_password", "bool", "Determines if the password will be captured for this request."),
         Field("proxied", "set", "All of the headers that may indicate if the request was proxied."),
-    ]),
-    ("irc", [
+    ],
+    "irc": [
         Field("ts", "time", "Timestamp for when the command was seen."),
         Field("uid", "string", "Connection unique ID."),
         Field("id.orig_h", "addr", "The originating endpoint's address."),
@@ -154,42 +154,42 @@ broLogs = [
         Field("command", "string", "Command given by the client."),
         Field("value", "string", "Value for the command given by the client."),
         Field("addl", "string", "Any additional data for the command."),
-    ]),
-    ("known_certs", [
+    ],
+    "known_certs": [
         Field("ts", "time", "The timestamp when the certificate was detected."),
         Field("host", "addr", "The address that offered the certificate."),
         Field("port_num", "port", "If the certificate was handed out by a server, this is the port that the server waslistening on."),
         Field("subject", "string", "Certificate subject."),
         Field("issuer_subject", "string", "Certificate issuer subject."),
         Field("serial", "string", "Serial number for the certificate."),
-    ]),
-    ("known_hosts", [
+    ],
+    "known_hosts": [
         Field("ts", "time", "The timestamp at which the host was detected."),
         Field("host", "addr", "The address that was detected originating or responding to a TCP connection."),
-    ]),
-    ("known_services", [
+    ],
+    "known_services": [
         Field("ts", "time", "The time at which the service was detected."),
         Field("host", "addr", "The host address on which the service is running."),
         Field("port_num", "port", "The port number on which the service is running."),
         Field("port_proto", "transport_proto", "The transport-layer protocol which the service uses."),
         Field("service", "set", "A set of protocols that match the service's connection payloads."),
-    ]),
-    ("intel", [
+    ],
+    "intel": [
         Field("ts", "time", "The current network time."),
         Field("level", "string", "Represents the severity of the message. This value should be one of: info, warn, error"),
         Field("message", "string", "The message."),
-    ]),
-    ("loaded_scripts", [
+    ],
+    "loaded_scripts": [
         Field("name", "string", "Name of the script loaded potentially with spaces included before the file name to indicate load depth. The convention is two spaces per level of depth."),
-    ]),
-    ("metrics", [
+    ],
+    "metrics": [
         Field("ts", "time", "Timestamp at which the metric was broken."),
         Field("metric_id", "Metrics", "What measurement the metric represents."),
         Field("filter_name", "string", "The name of the filter being logged. Metrics::ID values can have multiple filters which represent different perspectives on the data so this is necessary to understand the value."),
         Field("index", "Metrics", "What the metric value applies to."),
         Field("value", "count", "The simple numeric value of the metric."),
-    ]),
-    ("notice", [
+    ],
+    "notice": [
         Field("ts", "time", "An absolute time indicating when the notice occurred, defaults to the current network time."),
         Field("uid", "string", "A connection UID which uniquely identifies the endpoints concerned with the notice."),
         Field("id.orig_h", "addr", "The originating endpoint's address."),
@@ -214,8 +214,8 @@ broLogs = [
         Field("email_delay_tokens", "set", "Adding a string \"token\" to this set will cause the notice framework's built-in emailing functionality to delay sending the email until either the token has been removed or the email has been delayed for Notice::max_email_delay."),
         Field("identifier", "string", "This field is to be provided when a notice is generated for the purpose of deduplicating notices. The identifier string should be unique for a single instance of the notice. This field should be filled out in almost all cases when generating notices to define when a notice is conceptually a duplicate of a previous notice. For example, an SSL certificate that is going to expire soon should always have the same identifier no matter the client IP address that connected and resulted in the certificate being exposed. In this case, the resp_h, resp_p, and hash of the certificate would be used to create this value. The hash of the cert is included because servers can return multiple certificates on the same port. Another example might be a host downloading a file which triggered a notice because the MD5 sum of the file it downloaded was known by some set of intelligence. In that case, the orig_h (client) and MD5 sum would be used in this field to dedup because if the same file is downloaded over and over again you really only want to know about it a single time. This makes it possible to send those notices to email without worrying so much about sending thousands of emails."),
         Field("suppress_for", "interval", "This field indicates the length of time that this unique notice should be suppressed. This field is automatically filled out and should not be written to by any other script."),
-    ]),
-    ("notice_alarm", [
+    ],
+    "notice_alarm": [
         Field("ts", "time", "An absolute time indicating when the notice occurred, defaults to the current network time."),
         Field("uid", "string", "A connection UID which uniquely identifies the endpoints concerned with the notice."),
         Field("id.orig_h", "addr", "The originating endpoint's address."),
@@ -240,29 +240,29 @@ broLogs = [
         Field("email_delay_tokens", "set", "Adding a string \"token\" to this set will cause the notice framework's built-in emailing functionality to delay sending the email until either the token has been removed or the email has been delayed for Notice::max_email_delay."),
         Field("identifier", "string", "This field is to be provided when a notice is generated for the purpose of deduplicating notices. The identifier string should be unique for a single instance of the notice. This field should be filled out in almost all cases when generating notices to define when a notice is conceptually a duplicate of a previous notice. For example, an SSL certificate that is going to expire soon should always have the same identifier no matter the client IP address that connected and resulted in the certificate being exposed. In this case, the resp_h, resp_p, and hash of the certificate would be used to create this value. The hash of the cert is included because servers can return multiple certificates on the same port. Another example might be a host downloading a file which triggered a notice because the MD5 sum of the file it downloaded was known by some set of intelligence. In that case, the orig_h (client) and MD5 sum would be used in this field to dedup because if the same file is downloaded over and over again you really only want to know about it a single time. This makes it possible to send those notices to email without worrying so much about sending thousands of emails."),
         Field("suppress_for", "interval", "This field indicates the length of time that this unique notice should be suppressed. This field is automatically filled out and should not be written to by any other script."),
-    ]),
-    ("notice_policy", [
+    ],
+    "notice_policy": [
         Field("position", "count", "This is the exact positional order in which the Notice::PolicyItem records are checked. This is set internally by the notice framework."),
         Field("priority", "count", "Define the priority for this check. Items are checked in ordered from highest value (10) to lowest value (0)."),
         Field("action", "Notice", "An action given to the notice if the predicate return true."),
         Field("pred", "function", "The pred (predicate) field is a function that returns a boolean T or F value. If the predicate function return true, the action in this record is applied to the notice that is given as an argument to the predicate function. If no predicate is supplied, it's assumed that the PolicyItem always applies."),
         Field("halt", "bool", "Indicates this item should terminate policy processing if the predicate returns T."),
         Field("suppress_for", "interval", "This defines the length of time that this particular notice should be suppressed."),
-    ]),
-    ("packet_filter", [
+    ],
+    "packet_filter": [
         Field("ts", "time", "The time at which the packet filter installation attempt was made."),
         Field("node", "string", "This is a string representation of the node that applied this packet filter. It's mostly useful in the context of dynamically changing filters on clusters."),
         Field("filter", "string", "The packet filter that is being set."),
         Field("init", "bool", "Indicate if this is the filter set during initialization."),
         Field("success", "bool", "Indicate if the filter was applied successfully."),
-    ]),
-    ("reporter", [
+    ],
+    "reporter": [
         Field("ts", "time", "The network time at which the reporter event was generated."),
         Field("level", "Reporter", "The severity of the reporter message."),
         Field("message", "string", "An info/warning/error message that could have either been generated from the internal Bro core or at the scripting-layer."),
         Field("location", "string", "This is the location in a Bro script where the message originated. Not all reporter messages will have locations in them though."),
-    ]),
-    ("signatures", [
+    ],
+    "signatures": [
         Field("ts", "time", "The network time at which a signature matching type of event to be logged has occurred."),
         Field("src_addr", "addr", "The host which triggered the signature match event."),
         Field("src_port", "port", "The host port on which the signature-matching activity occurred."),
@@ -274,8 +274,8 @@ broLogs = [
         Field("sub_msg", "string", "Extracted payload data or extra message."),
         Field("sig_count", "count", "Number of sigs, usually from summary count."),
         Field("host_count", "count", "Number of hosts, from a summary count."),
-    ]),
-    ("smtp", [
+    ],
+    "smtp": [
         Field("ts", "time", "Timestamp when the message was first seen."),
         Field("uid", "string", "Connection unique ID."),
         Field("id.orig_h", "addr", "The originating endpoint's address."),
@@ -301,8 +301,8 @@ broLogs = [
         Field("user_agent", "string", "Value of the User-Agent header from the client."),
         Field("progress_received_from", "bool", "Indicates if the \"Received: from\" headers should still be processed."),
         Field("has_client_activity", "bool", "Indicates if client activity has been seen, but not yet logged."),
-    ]),
-    ("smtp_entities", [
+    ],
+    "smtp_entities": [
         Field("ts", "time", "Timestamp when the MIME content transfer began."),
         Field("uid", "string", "Connection unique ID."),
         Field("id.orig_h", "addr", "The originating endpoint's address."),
@@ -318,8 +318,8 @@ broLogs = [
         Field("calculating_md5", "bool", "This boolean value indicates if an MD5 sum is being calculated for the current file transfer."),
         Field("extract_file", "bool", "Optionally write the file to disk. Must be set prior to first data chunk being seen in an event."),
         Field("extraction_file", "file", "Store the file handle here for the file currently being extracted."),
-    ]),
-    ("socks", [
+    ],
+    "socks": [
         Field("ts", "time", "Timestamp when the proxy connection was first detected."),
         Field("uid", "string", "Connection unique ID."),
         Field("id.orig_h", "addr", "The originating endpoint's address."),
@@ -333,8 +333,8 @@ broLogs = [
         Field("request_p", "port", "Client requested port."),
         Field("bound", "SOCKS::Address", "Server bound address.  Could be an address, a name or both."),
         Field("bound_p", "port", "Server bound port."),
-    ]),
-    ("software", [
+    ],
+    "software": [
         Field("ts", "time", "Timestamp when the software was first detected."),
         Field("host", "addr", "The IP address detected running the software."),
         Field("host_p", "port", "The port detected running the software."),
@@ -347,8 +347,8 @@ broLogs = [
         Field("unparsed_version", "string", "The full unparsed version string found because the version parsing doesn't always work reliably in all cases and this acts as a fallback in the logs."),
         Field("force_log", "bool", "This can indicate that this software being detected should definitely be sent onward to the logging framework. By default, only software that is \"interesting\" due to a change in version or it being currently unknown is sent to the logging framework. This can be set to T to force the record to be sent to the logging framework if some amount of this tracking needs to happen in a specific way to the software."),
         Field("url", "string", "Most root URL where the software was discovered."),
-    ]),
-    ("ssh", [
+    ],
+    "ssh": [
         Field("ts", "time", "Timestamp when the SSH connection was first detected."),
         Field("uid", "string", "Connection unique ID."),
         Field("id.orig_h", "addr", "The originating endpoint's address."),
@@ -361,8 +361,8 @@ broLogs = [
         Field("server", "string", "Software string given by the server."),
         Field("resp_size", "count", "Amount of data returned from the server. This is currently the only measure of the success heuristic and it is logged to assist analysts looking at the logs to make their own determination about the success on a case-by-case basis."),
         Field("done", "bool", "Indicate if the SSH session is done being watched."),
-    ]),
-    ("ssl", [
+    ],
+    "ssl": [
         Field("ts", "time", "Timestamp when the SSL connection was first detected."),
         Field("uid", "string", "Connection unique ID."),
         Field("id.orig_h", "addr", "The originating endpoint's address."),
@@ -380,8 +380,8 @@ broLogs = [
         Field("cert", "string", "Full binary server certificate stored in DER format."),
         Field("cert_chain", "vector", "Chain of certificates offered by the server to validate its complete signing chain."),
         Field("analyzer_id", "count", "The analyzer ID used for the analyzer instance attached to each connection. It is not used for logging since it's a meaningless arbitrary number."),
-    ]),
-    ("stats", [
+    ],
+    "stats": [
         Field("ts", "time", "Timestamp for the measurement."),
         Field("peer", "string", "Peer that generated this log. Mostly for clusters."),
         Field("mem", "count", "Amount of memory currently in use in MB."),
@@ -392,8 +392,8 @@ broLogs = [
         Field("pkts_recv", "count", "Number of packets received since the last stats interval if reading live traffic."),
         Field("pkts_dropped", "count", "Number of packets dropped since the last stats interval if reading live traffic."),
         Field("pkts_link", "count", "Number of packets seen on the link since the last stats interval if reading live traffic."),
-    ]),
-    ("syslog", [
+    ],
+    "syslog": [
         Field("ts", "time", "Timestamp when the syslog message was seen."),
         Field("uid", "string", "Connection unique ID."),
         Field("id.orig_h", "addr", "The originating endpoint's address."),
@@ -404,8 +404,8 @@ broLogs = [
         Field("facility", "string", "Syslog facility for the message."),
         Field("severity", "string", "Syslog severity for the message."),
         Field("message", "string", "The plain text message."),
-    ]),
-    ("tunnel", [
+    ],
+    "tunnel": [
         Field("ts", "time", "Timestamp when some tunnel activity occurred."),
         Field("uid", "string", "Unique ID for the tunnel - may correspond to connection uid or be non-existant"),
         Field("id.orig_h", "addr", "The originating endpoint's address."),
@@ -414,8 +414,8 @@ broLogs = [
         Field("id.resp_p", "port", "The responding endpoint's port - 0 in the case of an IP tunnel."),
         Field("tunnel_type", "Tunnel::Type", "The type of tunnel."),
         Field("action", "Action", "The type of activity that occured."),
-    ]),
-    ("weird", [
+    ],
+    "weird": [
         Field("ts", "time", "Timestamp when the weird occurred."),
         Field("uid", "string", "If a connection is associated with this weird, this will be the connection's unique ID."),
         Field("id.orig_h", "addr", "The originating endpoint's address - optional."),
@@ -426,5 +426,5 @@ broLogs = [
         Field("addl", "string", "Additional information accompanying the weird if any."),
         Field("notice", "bool", "Indicate if this weird was also turned into a notice."),
         Field("peer", "string", "The peer that originated this weird. This is helpful in cluster deployments if a particular cluster node is having trouble to help identify which node is having trouble."),
-    ]),
-]
+    ],
+}

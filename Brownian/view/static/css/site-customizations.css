@@ -39,6 +39,11 @@ tr, td, table{
     border-collapse:collapse;
 }
 
+.loader{
+    margin-left: 40%;
+    margin-top: 30%;
+}
+
 .dropdown-menu .sub-menu {
     left: 100%;
     position: absolute;
