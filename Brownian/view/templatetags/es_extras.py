@@ -37,26 +37,28 @@ class Paginate(template.Node):
                     <ul>'
 
         start = int(self.start.resolve(context))
+        total = int(self.total.resolve(context))
         page = (start/settings.PAGE_SIZE) + 1
         onclick = """onclick="replaceContents('<img class=&quot;loader&quot; src=&quot;/static/img/ajax-loader.gif&quot;>');Dajaxice.Brownian.view.getData(replaceContents, {'type': '%s', 'query': '%s', 'indices': '%s', """ % (self.openTab.resolve(context), self.query.resolve(context), self.indices.resolve(context)) + """'start': '%s'});" """
-        if page == 1:
+        if page == 1 and total > settings.PAGE_SIZE:
             result += '<li class="disabled"><a href="#">&laquo;</a></li>'
             result += '<li class="disabled"><a href="#">&lsaquo;</a></li>'
-        else:
+        elif total > settings.PAGE_SIZE:
             result += '<li><a href="#"' + onclick % 0 + '>&laquo;</a></li>'
             result += '<li><a href="#"' + onclick % settings.PAGE_SIZE*(page-1) + '>&lsaquo;</a></li>'
             result += '<li><a href="#"' + onclick % settings.PAGE_SIZE*(page-1) + '>' + str(page - 1) + '</a></li>'
 
-        result += '<li class="active"><a href="#">' + str(page) + '</a></li>'
+        if total > settings.PAGE_SIZE:
+            result += '<li class="active"><a href="#">' + str(page) + '</a></li>'
 
-        if (start + settings.PAGE_SIZE) < self.total:
+        if (start + settings.PAGE_SIZE) < total:
             result += '<li><a href="#"' + onclick % (settings.PAGE_SIZE*page) + '>' + str(page + 1) + '</a></li>'
-            if (start + 2*settings.PAGE_SIZE) < self.total:
+            if (start + 2*settings.PAGE_SIZE) < total:
                 result += '<li><a href="#"' + onclick % (settings.PAGE_SIZE*(page+1)) + '>' + str(page + 2) + '</a></li>'
-                if (start + 3*settings.PAGE_SIZE) < self.total:
+                if (start + 3*settings.PAGE_SIZE) < total:
                         result += '<li><a href="#"' + onclick % (settings.PAGE_SIZE*(page+2)) + '>' + str(page + 3) + '</a></li>'
 
-        if (start + settings.PAGE_SIZE) < self.total:
+        if (start + settings.PAGE_SIZE) < total:
             result += '<li><a href="#"' + onclick % (settings.PAGE_SIZE*page) + '>&rsaquo;</a></li>'
 
         result += '</ul>\
