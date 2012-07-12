@@ -130,11 +130,11 @@ LOGGING = {
         },
         'elasticsearch_requests': {
             'handlers': ['console'],
-            'level': 'ERROR',
+            'level': 'DEBUG',
         },
-#        'dajaxice': {
-#            'handlers': ['console'],
-#            'level': 'ERROR',
-#            }
+        'dajaxice': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            }
     }
 }
