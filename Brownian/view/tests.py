@@ -22,9 +22,9 @@ class elasticSearchTests(unittest.TestCase):
 
     def testStatusCodes(self):
         resp1 = self.client.get('/')
-        resp2 = self.client.get('/*')
-        resp3 = self.client.get('/uid:GjR1jckW1y6')
-        resp4 = self.client.get('/uid:GjR1jckW1y6%20AND%20status:failed')
+        resp2 = self.client.get('/?query=*')
+        resp3 = self.client.get('/?query=uid:GjR1jckW1y6')
+        resp4 = self.client.get('/?query=uid:GjR1jckW1y6%20AND%20status:failed')
         resp5 = self.client.get('/nope')
         self.assertEqual(resp1.status_code, 200)
         self.assertEqual(resp2.status_code, 200)
