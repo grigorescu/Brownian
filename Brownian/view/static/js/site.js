@@ -32,11 +32,12 @@ function replaceQuery(query, filter, negated){
     if (negated == undefined){
         negated = false;
     }
+    var newQuery = filter;
     if (negated){
-        $(query).val('!' + filter);
+        $(query).val('!' + newQuery);
     }
     else {
-        $(query).val(filter);
+        $(query).val(newQuery);
     }
     return true;
 }
