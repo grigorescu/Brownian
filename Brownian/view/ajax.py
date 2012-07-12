@@ -5,7 +5,7 @@ import utils.es
 @dajaxice_register
 def getData(request, type, query, indices, start=0):
     data = {}
-    result = utils.es.doQuery(utils.es.queryEscape(query), index=indices, type=type)
+    result = utils.es.doQuery(utils.es.queryEscape(query), index=indices, type=type, start=start)
     data['took'] = result['took']
     data['start'] = start
     data['openTab'] = type

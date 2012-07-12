@@ -44,8 +44,8 @@ class Paginate(template.Node):
             result += '<li class="disabled"><a href="#">&lsaquo;</a></li>'
         elif total > settings.PAGE_SIZE:
             result += '<li><a href="#"' + onclick % 0 + '>&laquo;</a></li>'
-            result += '<li><a href="#"' + onclick % settings.PAGE_SIZE*(page-1) + '>&lsaquo;</a></li>'
-            result += '<li><a href="#"' + onclick % settings.PAGE_SIZE*(page-1) + '>' + str(page - 1) + '</a></li>'
+            result += '<li><a href="#"' + onclick % (settings.PAGE_SIZE*(page-2)) + '>&lsaquo;</a></li>'
+            result += '<li><a href="#"' + onclick % (settings.PAGE_SIZE*(page-2)) + '>' + str(page - 1) + '</a></li>'
 
         if total > settings.PAGE_SIZE:
             result += '<li class="active"><a href="#">' + str(page) + '</a></li>'
