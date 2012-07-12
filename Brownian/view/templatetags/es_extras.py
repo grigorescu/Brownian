@@ -1,4 +1,3 @@
-from coverage import start
 from django import template
 from django.conf import settings
 import datetime
