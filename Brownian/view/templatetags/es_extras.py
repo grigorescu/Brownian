@@ -16,7 +16,7 @@ def dateToDatetime(value):
 @register.filter(name='tsRange')
 def tsRange(ts, value):
     """Converts timestamp to range[ts - value TO ts + value] with value in millis."""
-    if not value:
+    if not value or not ts:
         return ""
 
     time = int(ts)
