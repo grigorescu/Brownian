@@ -22,9 +22,9 @@ class elasticSearchTests(unittest.TestCase):
 
     def testStatusCodes(self):
         resp1 = self.client.get('/')
-        resp2 = self.client.get('/query/')
-        resp3 = self.client.get('/query/*')
-        resp4 = self.client.get('/query/uid:GjR1jckW1y6')
+        resp2 = self.client.get('/*')
+        resp3 = self.client.get('/uid:GjR1jckW1y6')
+        resp4 = self.client.get('/uid:GjR1jckW1y6%20AND%20status:failed')
         resp5 = self.client.get('/nope')
         self.assertEqual(resp1.status_code, 200)
         self.assertEqual(resp2.status_code, 200)
@@ -138,17 +138,5 @@ class JSONTests(unittest.TestCase):
 
     def testStatusCode(self):
         data = {"query": "*", "openTab": "conn", "hits": self.result}
-        request = self.factory.get("/query")
-        self.assertEqual(render(request, "query.html", data).status_code, 200)
-
-        data = {"indices": [
-                    ("bro_06241900", 812802),
-                    ("bro_06242000", 187212),
-                    ("bro_06242100", 457821),
-                    ("bro_06242200", 172712),
-                    ("bro_06242300", 927172),
-                    ("bro_06250000", 182732),
-                    ]
-                }
         request = self.factory.get("/")
         self.assertEqual(render(request, "home.html", data).status_code, 200)

@@ -1,12 +1,6 @@
 from django.shortcuts import render
 import utils.es
 
-def home(request):
-    """ This page is just a simple landing page.
-    """
-    data = {}
-    return render(request, "home.html", data)
-
 def query(request):
     """ This page is the main query interface.
     """

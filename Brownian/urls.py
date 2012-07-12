@@ -5,6 +5,5 @@ dajaxice_autodiscover()
 
 urlpatterns = patterns('',
     (r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
-    url(r'^$', 'Brownian.view.views.home'),
-    url(r'^query/*', 'Brownian.view.views.query'),
+    url(r'^$', 'Brownian.view.views.query'),
 )
