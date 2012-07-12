@@ -13,7 +13,7 @@ class nonElasticSearchTests(unittest.TestCase):
 
     def testQueryQuote(self):
         query = """ts:[* TO 1340647651797] AND !uid:"lkaub98ab" AND (host:"google.com" OR host:yahoo.com")"""
-        expectedResult = 'ts:\\u005b* TO 1340647651797\\u005d AND !uid:\\"lkaub98ab\\" AND (host:\\"google.com\\" OR host:yahoo.com\\")'
+        expectedResult = 'ts:[* TO 1340647651797] AND !uid:\\"lkaub98ab\\" AND (host:\\"google.com\\" OR host:yahoo.com\\")'
         self.assertEqual(utils.es.queryEscape(query), expectedResult)
 
 class elasticSearchTests(unittest.TestCase):

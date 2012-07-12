@@ -15,6 +15,7 @@ ELASTICSEARCH_INDEX_PREFIX = "bro"
 ELASTICSEARCH_IGNORE_TYPES = [
     "communication",
     "loaded_scripts",
+    "notice_alarm",
     "notice_policy",
     ]
 

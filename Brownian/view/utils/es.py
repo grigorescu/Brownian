@@ -91,8 +91,6 @@ def queryEscape(query):
     """
     bad_chars = [("\\", "\\\\"),
         ("\"", "\\\""),
-        ("[", "\u005b"),
-        ("]", "\u005d"),
         ("::", "\\:\\:")
     ]
     for char, replacement in bad_chars:

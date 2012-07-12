@@ -13,6 +13,17 @@ def dateToDatetime(value):
     date = datetime.datetime.utcfromtimestamp(float(str(value))/1000)
     return pytz.utc.localize(date).astimezone(pytz.timezone(settings.TIME_ZONE)).strftime('%a %b %d %H:%M:%S.%f')[:-3]
 
+@register.filter(name='tsRange')
+def tsRange(ts, value):
+    """Converts timestamp to range[ts - value TO ts + value] with value in millis."""
+    if not value:
+        return ""
+
+    time = int(ts)
+    val = int(value)
+
+    return "[%d TO %d]" % (time - val, time + val)
+
 def genPagination(parser, token):
     """Generates pagination given the current location, and the total number of items."""
 
