@@ -21,6 +21,7 @@ def query(request):
     indices = ",".join(utils.es.indicesFromTime(time))
     data["indices"] = indices
     data["query"] = query
+    data["start"] = 0
     data["hits"] = utils.es.getCounts(utils.es.queryEscape(query), index=indices)
 
     # To make the Javascript easier, we strip off the # from the currently open tab.
