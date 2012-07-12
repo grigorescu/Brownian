@@ -1,4 +1,6 @@
 Django==1.4
+django-dajax==0.8.4
+django-dajaxice==0.2
 nose==1.1.2
 requests==0.13.1
 pytz==2012c
