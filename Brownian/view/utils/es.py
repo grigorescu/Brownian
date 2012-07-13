@@ -130,6 +130,7 @@ def doQuery(query, index="_all", type=None, start=0):
                {"query_string": {"query": query}}}}},
             "size": settings.PAGE_SIZE,
             "from": start,
+            "sort": "ts",
             }
     result = Request(index=index, type=type)._doRequest(data=data)
     return result
