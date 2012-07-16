@@ -67,6 +67,7 @@ Running the Production Server with Apache
 1. Install mod_wsgi
 + Edit line 4 of Brownian/lib/python2.7/site-packages/Brownian/wsgi.py to the location of your virtualenv directory.
 + Edit your Apache config to include:
+
 ```conf
 WSGIPassAuthorization on
 WSGIScriptAlias "/Brownian" "/opt/Brownian/lib/python2.7/site-packages/Brownian/wsgi.py
