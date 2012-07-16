@@ -55,17 +55,31 @@ Configuration
 + Change TIME_ZONE in settings.py to your desired timezone.
 + Review the other settings at the top of settings.py and configure them as desired.
 
-Running Development Server
---------------------------
+Running the Development Server
+------------------------------
 ```bash
 $ export DJANGO_SETTINGS_MODULE=Brownian.settings
 $ python ./bin/django-admin.py runserver
 ```
 
-TODO
-----
+Running the Production Server with Apache
+-----------------------------------------
+1. Install mod_wsgi
++ Edit line 4 of Brownian/lib/python2.7/site-packages/Brownian/wsgi.py to the location of your virtualenv directory.
++ Edit your Apache config to include:
+```conf
+WSGIPassAuthorization on
+WSGIScriptAlias "/Brownian" "/opt/Brownian/lib/python2.7/site-packages/Brownian/wsgi.py
 
-This has basic functionality, but there are still a lot of improvements to be done.
+# Optional - Permissions
+<Directory /opt/Brownian/lib/python2.7/site-packages/Brownian>
+Allow from ...
+... Blah blah ...
+</Directory>
+```
+
+Issues
+------
 
 If you see something that's broken, or something that you'd like added, please create an issue.
 
