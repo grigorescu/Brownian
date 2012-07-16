@@ -65,12 +65,13 @@ $ python ./bin/django-admin.py runserver
 Running the Production Server with Apache
 -----------------------------------------
 1. Install mod_wsgi
-+ Edit line 4 of Brownian/lib/python2.7/site-packages/Brownian/wsgi.py to the location of your virtualenv directory.
++ Edit BROWNIAN_PATH at the top of Brownian/lib/python2.7/site-packages/Brownian/wsgi.py to the location of your virtualenv directory.
++ If you're not using Python 2.7, edit PYTHON_VER at the top of wsgi.py.
 + Edit your Apache config to include:
 
 ```conf
 WSGIPassAuthorization on
-WSGIScriptAlias "/Brownian" "/opt/Brownian/lib/python2.7/site-packages/Brownian/wsgi.py
+WSGIScriptAlias "/Brownian" "/opt/Brownian/lib/python2.7/site-packages/Brownian/wsgi.py"
 
 # Optional - Permissions
 <Directory /opt/Brownian/lib/python2.7/site-packages/Brownian>
@@ -78,6 +79,8 @@ Allow from ...
 ... Blah blah ...
 </Directory>
 ```
+
+Finally, restart Apache, and you should be good to go.
 
 Issues
 ------

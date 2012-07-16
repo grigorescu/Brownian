@@ -1,9 +1,13 @@
-import site
+BROWNIAN_PATH = '/opt/Brownian'
+PYTHON_VER = '2.7'
 
-# Change this to where you installed Brownian
-site.addsitedir('/opt/Brownian/lib/python2.7/site-packages/Brownian/wsgi.py')
+import sys
 
-import os
+sys.path.insert(0, BROWNIAN_PATH + '/lib/python' + PYTHON_VER + '/site-packages')
+
+import site, os
+
+site.addsitedir(BROWNIAN_PATH + '/lib/python' + PYTHON_VER + '/site-packages/Brownian/wsgi.py')
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Brownian.settings")
 
