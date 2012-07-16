@@ -73,6 +73,13 @@ Running the Production Server with Apache
 WSGIPassAuthorization on
 WSGIScriptAlias "/Brownian" "/opt/Brownian/lib/python2.7/site-packages/Brownian/wsgi.py"
 
+# Static content - CSS, Javascript, images, etc.
+Alias /static/ /opt/Brownian/lib/python2.7/site-packages/Brownian/view/static/
+<Directory /opt/Brownian/lib/python2.7/site-packages/Brownian/view/static>
+  Order allow,deny
+  Allow from all
+</Directory>
+
 # Optional - Permissions
 <Directory /opt/Brownian/lib/python2.7/site-packages/Brownian>
 Allow from ...
