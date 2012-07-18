@@ -1,7 +1,11 @@
 # Common Application Settings
 
-# How many results constitute a page.
+# How many results per page.
 PAGE_SIZE=30
+
+# When running in an actual web server, edit this to the directory Brownian is being installed in.
+# e.g. https://server/Brownian -> DAJAXICE_MEDIA_PREFIX="Brownian/dajaxice"
+DAJAXICE_MEDIA_PREFIX="dajaxice"
 
 # ElasticSearch settings
 
@@ -87,7 +91,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'Brownian.urls'
 WSGI_APPLICATION = 'Brownian.wsgi.application'
-DAJAXICE_MEDIA_PREFIX="dajaxice"
 
 INSTALLED_APPS = (
     'Brownian.view',

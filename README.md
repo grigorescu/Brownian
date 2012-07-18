@@ -67,6 +67,7 @@ Running the Production Server with Apache
 1. Install mod_wsgi
 + Edit BROWNIAN_PATH at the top of Brownian/lib/python2.7/site-packages/Brownian/wsgi.py to the location of your virtualenv directory.
 + If you're not using Python 2.7, edit PYTHON_VER at the top of wsgi.py.
++ If you're not installing Brownian to the server's root directory, edit DAJAXICE_MEDIA_PREFIX in settings.py.
 + Edit your Apache config to include:
 
 ```conf

@@ -18,7 +18,8 @@
                 Brownian
             </a>
             <ul class="nav">
-                <li{% if request.path == "/" %} class="active"{%endif%}><a href="/">Query</a></li>
+                {% url query as url_query %}
+                <li{% if request.path == url_query %} class="active"{%endif%}><a href={{ url_query }}>Query</a></li>
                 <!-- TODO: Create alerts page -->
             </ul>
         </div>
