@@ -47,6 +47,15 @@ ADMINS = ( # ('Your Name', 'your_email@example.com'),
 
 MANAGERS = ADMINS
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'Brownian_temp_data'
+        },
+    }
+
+SESSION_COOKIE_AGE = 300
+
 LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = False

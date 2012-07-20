@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import utils.es
+import requests
 
 def query(request):
     """ This page is the main query interface.
@@ -17,12 +18,24 @@ def query(request):
     time = params.get("time", "")
     if time == "": time = "15m"
     data["time"] = time
+    if request.session.get('indices', False):
+        indices = request.session.get('indices')
+    else:
+        try:
+            indices = utils.es.getIndices()
+        except requests.ConnectionError:
+            return "Error - could not connect to ElasticSearch server to fetch indices."
+        request.session['indices'] = indices
 
-    indices = ",".join(utils.es.indicesFromTime(time))
-    data["indices"] = indices
+    result = utils.es.indicesFromTime(time, indices)
+    selectedIndices = ",".join(result)
+    data["indices"] = selectedIndices
     data["query"] = query
     data["start"] = 0
-    data["hits"] = utils.es.getCounts(utils.es.queryEscape(query), index=indices)
+    try:
+        data["hits"] = utils.es.getCounts(utils.es.queryEscape(query), index=selectedIndices)
+    except requests.ConnectionError:
+        return "Error - could not connect to ElasticSearch server for query."
 
     # To make the Javascript easier, we strip off the # from the currently open tab.
     # If we don't have an open tab, default to conn.

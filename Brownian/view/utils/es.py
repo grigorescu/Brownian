@@ -4,14 +4,16 @@ from broLogTypes import broLogs
 import logging
 
 logger = logging.getLogger('elasticsearch_requests')
+
 def getIndices():
-    """Get a list of all bro indexes
+    """Get a list of all bro indices
     """
-    result = Request(index=None)._doRequest(operation="_stats", search_opts="clear=true", verb="GET")
+    result = Request(index="@bro-meta")._doRequest({"size": 65535})
     indices = []
-    for index_name, index_stats in result["es_all"]["indices"].items():
-        if index_name.startswith(settings.ELASTICSEARCH_INDEX_PREFIX):
-            indices.append(index_name)
+    for hit in result["hits"]["hits"]:
+        if hit["es_source"]["name"].startswith(settings.ELASTICSEARCH_INDEX_PREFIX):
+            indices.append(hit["es_source"])
+
     return indices
 
 def indexNameToDatetime(indexName):
@@ -21,68 +23,59 @@ def indexNameToDatetime(indexName):
         return pytz.timezone(settings.TIME_ZONE).localize(datetime.datetime.now())
 
     indexTime = datetime.datetime.strptime(indexName.replace(settings.ELASTICSEARCH_INDEX_PREFIX + "-", ""), "%Y%m%d%H%M")
-    return pytz.utc.localize(indexTime)
+    return pytz.timezone(settings.TIME_ZONE).localize(indexTime)
 
-def indicesFromTime(startTime):
+def indicesFromTime(startTime, indices):
     """Create a comma-separated list of the indices one needs to query for the given time window.
     """
     endTime=pytz.timezone(settings.TIME_ZONE).localize(datetime.datetime.now())
-    number = ""
-    unit = ""
-    for i in range(len(startTime)):
-        if startTime[i] in string.ascii_letters:
-            unit = startTime[i:]
-            try:
-                number = int(number)
-            except:
+
+    if startTime == "all":
+        return [index["name"] for index in indices]
+    else:
+        number = ""
+        unit = ""
+        for i in range(len(startTime)):
+            if startTime[i] in string.ascii_letters:
+                unit = startTime[i:]
+                try:
+                    number = int(number)
+                except:
+                    raise ValueError("Format of time: 1m, 2days, etc.")
+                break
+            elif startTime[i] in string.whitespace:
+                continue
+            elif startTime[i] in string.digits:
+                number += startTime[i]
+            else:
                 raise ValueError("Format of time: 1m, 2days, etc.")
-            break
-        elif startTime[i] in string.whitespace:
-            continue
-        elif startTime[i] in string.digits:
-            number += startTime[i]
-        else:
+
+        if not number or not unit or number < 1:
             raise ValueError("Format of time: 1m, 2days, etc.")
 
-    if not number or not unit or number < 1:
-        raise ValueError("Format of time: 1m, 2days, etc.")
+        units = {"day": ["day", "days", "d"],
+                 "hour": ["hour", "hours", "h"],
+                 "minute": ["minute", "minutes", "m"],
+                 "second": ["second", "seconds", "s"]}
 
-    units = {"day": ["day", "days", "d"],
-             "hour": ["hour", "hours", "h"],
-             "minute": ["minute", "minutes", "m"],
-             "second": ["second", "seconds", "s"]}
+        if unit in units["day"]:
+            then = endTime - datetime.timedelta(days=number)
+        elif unit in units["hour"]:
+            then = endTime - datetime.timedelta(hours=number)
+        elif unit in units["minute"]:
+            then = endTime - datetime.timedelta(minutes=number)
+        elif unit in units["second"]:
+            then = endTime - datetime.timedelta(seconds=number)
+        else:
+            raise ValueError("Possible time units: " + units.keys())
 
-    if unit in units["day"]:
-        then = endTime - datetime.timedelta(days=number)
-    elif unit in units["hour"]:
-        then = endTime - datetime.timedelta(hours=number)
-    elif unit in units["minute"]:
-        then = endTime - datetime.timedelta(minutes=number)
-    elif unit in units["second"]:
-        then = endTime - datetime.timedelta(seconds=number)
-    else:
-        raise ValueError("Possible time units: " + units.keys())
-
-    indices = getIndices()
-
-    indices.sort()
     chosenIndices = []
-    for i in range(len(indices)):
-        indexStart = indexNameToDatetime(indices[i])
+    for index in indices:
+        indexStart = pytz.timezone(settings.TIME_ZONE).localize(datetime.datetime.utcfromtimestamp(index["start"]))
+        indexEnd = pytz.timezone(settings.TIME_ZONE).localize(datetime.datetime.utcfromtimestamp(index["end"]))
 
-        if indexStart >= then:
-            chosenIndices.append(indices[i])
-
-        # What if our start is between two indices?
-        if i < len(indices) - 1:
-            if indexStart < then and indexNameToDatetime(indices[i+1]) > then:
-                chosenIndices.append(indices[i])
-
-    # Finally, if we have no indices, we include the last one, as we don't know when it ended
-    if len(chosenIndices) == 0:
-        chosenIndices.append(indices[-1])
-    elif len(chosenIndices) == 1 and chosenIndices[0] == settings.ELASTICSEARCH_INDEX_PREFIX:
-        chosenIndices.append(indices[-1])
+        if (indexStart >= then and indexEnd <= endTime) or (indexStart < then and indexStart < endTime and indexEnd >= then):
+                chosenIndices.append(index["name"])
 
     return chosenIndices
 
@@ -174,6 +167,7 @@ class Request(object):
                 path += type + "/"
         self.path = path
         self.data = {}
+        self.requests_config = {"max_retries": 0}
 
     def _doRequest(self, data=None, operation="_search", search_opts="", verb="POST"):
         if data:
@@ -182,10 +176,11 @@ class Request(object):
         if verb == "POST":
             logger.debug("POST " + self.path + operation + "?" + search_opts)
             logger.debug("      " + json.dumps(self.data))
-            result = requests.post(self.path + operation + "?" + search_opts, data=json.dumps(self.data)).text
+            result = requests.post(self.path + operation + "?" + search_opts, data=json.dumps(self.data), config=self.requests_config).text
+
         else:
             logger.debug("GET " + self.path + operation + "?" + search_opts)
-            result = requests.get(self.path + operation + "?" + search_opts).text
+            result = requests.get(self.path + operation + "?" + search_opts, config=self.requests_config).text
 
         # ElasticSearch internal fields are prefixed with _. This causes some issues w/ Django, so we prefix with es_ instead.
         self.result = json.loads(result.replace('"_', '"es_'))
@@ -194,20 +189,6 @@ class Request(object):
 
         return self.result
 
-    # TODO: Replace _doBulkRequest with a regular query, but with a search type of count with per-type faceting.
-    def _doBulkRequest(self, data=None, operation="_search", search_opts=""):
-        result = requests.post(self.path + operation + "?" + search_opts, data=data).text
-        logger.debug("BULK " + self.path + operation + "?" + search_opts)
-        logger.debug("      " + data)
-        self.result = json.loads(result.replace('"_', '"es_'))
-        if "error" in self.result.keys():
-            raise IOError(self.result["error"])
-
-        return self.result
-
     queryAll = lambda self: self._doRequest({"size": settings.PAGE_SIZE})
     query = lambda self, query: self._doRequest({"query": query, "size": settings.PAGE_SIZE})
-    scan = lambda self, query: self._doRequest({"query": query}, search_opts="search_type=scan&scroll=10m&size=%d" % settings.PAGE_SIZE)
-    msearch_scan = lambda self, data: self._doBulkRequest(data, operation="_msearch")
-    facetsOnly = lambda self, facetQuery: self._doRequest({"facets": facetQuery, "size": 0})
 

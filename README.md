@@ -20,9 +20,9 @@ It's also *highly* recommended to review the [ElasticSearch configuration tips](
 Requirements
 ------------
 
-* Python 2, version 2.6 or greater.
+* Python version 2.6 or 2.7.
 * Brownian comes with it's own webserver, for testing purposes.
-* For production use, [configure Apache with mod_wsgi](https://docs.djangoproject.com/en/1.4/howto/deployment/wsgi/modwsgi/), and point it to Brownian/wsgi.py.
+* For production use, Apache with mod_wsgi is recommended.
 
 Virtualenv Setup
 ----------------
@@ -46,49 +46,53 @@ Installation
 $ pip install git+https://github.com/grigorescu/Brownian.git
 ```
 
-The files are installed in ./lib/python2.7/site-packages/Brownian.
+The files are installed in ./lib/python2.X/site-packages/Brownian.
 
 Configuration
 -------------
 
-1. Change ELASTICSEARCH_SERVER in Brownian/lib/python2.7/site-packages/Brownian/settings.py to your server's hostname and port.
-+ Change TIME_ZONE in settings.py to your desired timezone.
+1. Change ```ELASTICSEARCH_SERVER``` in Brownian/lib/python2.X/site-packages/Brownian/settings.py to your server's hostname and port.
++ Change ```TIME_ZONE``` in settings.py to your desired timezone.
 + Review the other settings at the top of settings.py and configure them as desired.
 
 Running the Development Server
 ------------------------------
 ```bash
 $ export DJANGO_SETTINGS_MODULE=Brownian.settings
+$ python ./bin/django-admin.py syncdb
 $ python ./bin/django-admin.py runserver
 ```
 
 Running the Production Server with Apache
 -----------------------------------------
 1. Install mod_wsgi
-+ Edit BROWNIAN_PATH at the top of Brownian/lib/python2.7/site-packages/Brownian/wsgi.py to the location of your virtualenv directory.
-+ If you're not using Python 2.7, edit PYTHON_VER at the top of wsgi.py.
-+ If you're not installing Brownian to the server's root directory, edit DAJAXICE_MEDIA_PREFIX in settings.py.
++ Edit ```BROWNIAN_PATH``` at the top of Brownian/lib/python2.X/site-packages/Brownian/wsgi.py to the location of your virtualenv directory.
++ If you're not using Python 2.7, edit ```PYTHON_VER``` at the top of wsgi.py.
++ If you're not installing Brownian to the server's root directory, edit ```DAJAXICE_MEDIA_PREFIX``` in settings.py.
++ In your virtualenv, run ```./bin/django-admin.py syncdb```.
 + Edit your Apache config to include:
 
 ```conf
 WSGIPassAuthorization on
-WSGIScriptAlias "/Brownian" "/opt/Brownian/lib/python2.7/site-packages/Brownian/wsgi.py"
+WSGIScriptAlias "/Brownian" "/opt/Brownian/lib/python2.X/site-packages/Brownian/wsgi.py"
 
 # Static content - CSS, Javascript, images, etc.
-Alias /static/ /opt/Brownian/lib/python2.7/site-packages/Brownian/view/static/
-<Directory /opt/Brownian/lib/python2.7/site-packages/Brownian/view/static>
+Alias /static/ /opt/Brownian/lib/python2.X/site-packages/Brownian/view/static/
+<Directory /opt/Brownian/lib/python2.X/site-packages/Brownian/view/static>
   Order allow,deny
   Allow from all
 </Directory>
 
 # Optional - Permissions
-<Directory /opt/Brownian/lib/python2.7/site-packages/Brownian>
+<Directory /opt/Brownian/lib/python2.X/site-packages/Brownian>
 Allow from ...
 ... Blah blah ...
 </Directory>
 ```
 
 Finally, restart Apache, and you should be good to go.
+
+For more information, see: https://docs.djangoproject.com/en/1.4/howto/deployment/wsgi/modwsgi/
 
 Issues
 ------
