@@ -41,3 +41,11 @@ function replaceQuery(query, filter, negated){
     }
     return true;
 }
+
+function replaceSort(tab, value, direction){
+    var replacement = '{"' + value + '": {"order": "' + direction + "\"}}'});";
+    var action = $(tab).attr('onclick').replace(/'sort': .*/, "'sort': '" + replacement);
+    eval(action);
+
+    return true;
+}

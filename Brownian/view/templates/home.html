@@ -2,7 +2,7 @@
 {% load humanize %}
 {% block title %}Query{% endblock %}
 {% block container %}
-  <div class="well container-fluid">
+    <div class="well container-fluid" xmlns="http://www.w3.org/1999/html">
     <form id="queryform" class="form-search form-horizontal" action="">
       <label for="timeinput"></label><select name="time" id="timeinput" class="span2">
         <option value="15m" {% if time == "15m" %} selected="true" {% endif %}>Last 15m</option>
@@ -28,7 +28,7 @@
     <ul id="resultTabs" class="nav nav-tabs">
       {% for hit in hits %}
         <li style="padding:3px" class="tab{% if hit.type == openTab %} active{% endif %}">
-          <a href="#{{ hit.type }}" data-toggle="tab" onclick="replaceContents('<img class=&quot;loader&quot; src=&quot;/static/img/ajax-loader.gif&quot;>');Dajaxice.Brownian.view.getData(replaceContents, {'type': '{{ hit.type }}', 'query': '{{ query }}', 'indices': '{{ indices }}'});"><span style="float:left">{{ hit.type }}</span>&nbsp;<span style="float: right" class="badge">{{ hit.total|intcomma }}</span>
+          <a href="#{{ hit.type }}" data-toggle="tab" id="{{ hit.type }}_tab" onclick="replaceContents('<img class=&quot;loader&quot; src=&quot;/static/img/ajax-loader.gif&quot;>');Dajaxice.Brownian.view.getData(replaceContents, {'type': '{{ hit.type }}', 'query': '{{ query }}', 'indices': '{{ indices }}', 'sort': '{&quot;ts&quot;: {&quot;order&quot: &quot;ASC&quot;}}'});"><span style="float:left">{{ hit.type }}</span>&nbsp;<span style="float: right" class="badge">{{ hit.total|intcomma }}</span>
           <br/></a>
         </li>
       {% endfor %}
@@ -43,7 +43,6 @@
             <h4>Syntax Cheatsheet</h4>
         </div>
         <div class="modal-body">
-            <p>
                 <table class="table table-condensed table-bordered">
                     <tr><td><pre>(host:"google.com" OR host:"yahoo.com") AND id.resp_p:80</pre></td><td>Matches google.com or yahoo.com on port 80</td></tr>
                     <tr><td><pre>host:"ns?.*.cn"</pre></td><td>Matches ns1.mail.cn, ns2.mail.cn, but not ns01.mail.cn</td></tr>
@@ -51,7 +50,6 @@
                     <tr><td><pre>subject:"buy viagra"~5</pre></td><td>Distance search: buy and viagra, no more than 5 words away.</td></tr>
                     <tr><td><pre>ts:[1340666078821 TO *] AND from:[alice@cmu.edu TO bob@cmu.edu]</pre></td><td>Search from a given timestamp to now, <br/>where the from address is alphabetically between alice and bob.</td></tr>
                 </table>
-            </p>
         </div>
         <div class="modal-footer">
                 <a href="http://lucene.apache.org/core/3_6_0/queryparsersyntax.html">More info</a>
@@ -62,6 +60,6 @@
         function replaceContents(data){
             $('#results').html(data);
         }
-        Dajaxice.Brownian.view.getData(replaceContents, {'type': '{{ openTab }}', 'query': '{{ query }}', 'indices': '{{ indices }}'});
+        Dajaxice.Brownian.view.getData(replaceContents, {'type': '{{ openTab }}', 'query': '{{ query }}', 'indices': '{{ indices }}', 'sort': '{"ts": {"order": "DESC"}}'});
     </script>
 {% endblock %}

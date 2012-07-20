@@ -2,15 +2,20 @@ from dajaxice.decorators import dajaxice_register
 from django.template.loader import render_to_string
 import utils.es
 import requests
+import ast
 
 @dajaxice_register
-def getData(request, type, query, indices, start=0):
+def getData(request, type, query, indices, sort, start=0):
     data = {}
+    sort = ast.literal_eval(sort)
     try:
-        result = utils.es.doQuery(utils.es.queryEscape(query), index=indices, type=type, start=start)
+        result = utils.es.doQuery(utils.es.queryEscape(query), index=indices, type=type, start=start, sort=sort)
     except requests.ConnectionError:
         return "Error - Could not connect to ElasticSearch server for AJAX query."
     data['took'] = result['took']
+    sortField, sortOrder = sort.items()[0]
+    sortOrder = sortOrder['order']
+    data['sort'] = {"field": sortField, "order": sortOrder}
     data['start'] = start
     data['openTab'] = type
     data['query'] = query.replace('"', "&quot;")

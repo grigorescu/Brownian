@@ -32,6 +32,7 @@ def query(request):
     data["indices"] = selectedIndices
     data["query"] = query
     data["start"] = 0
+
     try:
         data["hits"] = utils.es.getCounts(utils.es.queryEscape(query), index=selectedIndices)
     except requests.ConnectionError:

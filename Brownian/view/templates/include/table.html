@@ -2,7 +2,29 @@
 <table class="table table-condensed table-striped">
     <thead>
     {% for attr, type, desc in table.header %}
-        <th><a class="popover_links" rel="popover" data-content="{{ desc }}" data-original-title="{{ attr }}" href="#">{{ attr }}</a></th>
+        <th><a class="popover_links" rel="popover" data-content="{{ desc }}" data-original-title="{{ attr }}" href="#">{{ attr }}</a><br/>
+        <!-- {{ type }} -->
+        {% if type == "time" or type == "port" or type == "transport_proto" or type == "count"%}
+            <a
+            {% if sort.field == attr %}
+            {% if sort.order == "ASC" %}
+                style="background-color: #fceb96;"
+            {% endif %}
+            {% endif %}
+            href="#" onclick="replaceSort('#{{ openTab }}_tab', '{{ attr }}', 'ASC');">
+                <i class="icon-chevron-up"></i></a>
+            <a
+                    {% if sort.field == attr %}
+                        {% if sort.order == "DESC" %}
+                            style="background-color: #fceb96;"
+                        {% endif %}
+                    {% endif %}
+                            href="#" onclick="replaceSort('#{{ openTab }}_tab', '{{ attr }}', 'DESC');">
+                <i class="icon-chevron-down"></i></a>
+        {% else %}
+        &nbsp;
+        {% endif %}
+            </th>
     {% endfor %}
     </thead>
     <tbody>
