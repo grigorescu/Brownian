@@ -49,7 +49,7 @@ class Paginate(template.Node):
         start = int(self.start.resolve(context))
         total = int(self.total.resolve(context))
         page = (start/settings.PAGE_SIZE) + 1
-        onclick = """onclick="replaceContents('<img class=&quot;loader&quot; src=&quot;{{ STATIC_URL }}img/ajax-loader.gif&quot;>');Dajaxice.Brownian.view.getData(replaceContents, {'type': '%s', 'query': '%s', 'indices': '%s', """ % (self.openTab.resolve(context), self.query.resolve(context), self.indices.resolve(context)) + """'start': '%s'});" """
+        onclick = """onclick="replaceContents('<img class=&quot;loader&quot; src=&quot;""" + settings.STATIC_URL + """img/ajax-loader.gif&quot;>');Dajaxice.Brownian.view.getData(replaceContents, {'type': '%s', 'query': '%s', 'indices': '%s', """ % (self.openTab.resolve(context), self.query.resolve(context), self.indices.resolve(context)) + """'start': '%s'});" """
         if page == 1 and total > settings.PAGE_SIZE:
             result += '<li class="disabled"><a href="#">&laquo;</a></li>'
             result += '<li class="disabled"><a href="#">&lsaquo;</a></li>'

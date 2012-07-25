@@ -1,4 +1,10 @@
 {% load es_extras %}
+{% if error %}
+<div class="alert span4">
+    <button class="close" data-dismiss="alert">×</button>
+    <strong>Error!</strong> {{ error }}
+</div>
+{% endif %}
 <table class="table table-condensed table-striped">
     <thead>
     {% for attr, type, desc in table.header %}

@@ -33,6 +33,10 @@ def query(request):
     data["query"] = query
     data["start"] = 0
 
+    if not selectedIndices:
+        data["error"] = "No indices found in that time range."
+        return render(request, "home.html", data)
+
     try:
         data["hits"] = utils.es.getCounts(utils.es.queryEscape(query), index=selectedIndices)
     except requests.ConnectionError:

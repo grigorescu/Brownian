@@ -14,7 +14,6 @@ before_script:
   - ES_PATH=$PWD/elasticsearch-0.19.7 ./elasticsearch-0.19.7/bin/elasticsearch
   - sleep 15
   - curl -s -XPOST localhost:9200/_bulk --data-binary @tests/data.json
-  - ls -lR .
-  - DJANGO_SETTINGS_MODULE="Brownian.settings" ./bin/manage.py syncdb
+  - DJANGO_SETTINGS_MODULE="Brownian.settings" ./manage.py syncdb
 
 script: DJANGO_SETTINGS_MODULE="Brownian.settings" nosetests
