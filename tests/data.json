@@ -1,3 +1,5 @@
+{"index": {"_index": "@bro-meta", "_type": "index", "_id": "bro-06241900-0.0-10800.0"} }
+{"name": "bro-06241900", "start": }
 {"index": {"_index": "bro-06241900", "_type": "communication"} }
 {"peer": "worker-1", "src_name": "child", "message": "selects=3000000 canwrites=0 timeouts=2986503", "ts": 1340647604358, "level": "info"}
 {"index": {"_index": "bro-06241900", "_type": "communication"} }

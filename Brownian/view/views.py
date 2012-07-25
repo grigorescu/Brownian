@@ -24,7 +24,7 @@ def query(request):
         try:
             indices = utils.es.getIndices()
         except requests.ConnectionError:
-            return "Error - could not connect to ElasticSearch server to fetch indices."
+            raise requests.ConnectionError("Could not connect to ElasticSearch server to fetch indices.")
         request.session['indices'] = indices
 
     result = utils.es.indicesFromTime(time, indices)
@@ -36,7 +36,7 @@ def query(request):
     try:
         data["hits"] = utils.es.getCounts(utils.es.queryEscape(query), index=selectedIndices)
     except requests.ConnectionError:
-        return "Error - could not connect to ElasticSearch server for query."
+        raise requests.ConnectionError("Could not connect to ElasticSearch server for query.")
 
     # To make the Javascript easier, we strip off the # from the currently open tab.
     # If we don't have an open tab, default to conn.

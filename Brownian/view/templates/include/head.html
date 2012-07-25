@@ -2,15 +2,15 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/site-customizations.css">
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/js/site.js"></script>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/site-customizations.css">
+    <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}js/site.js"></script>
     {% dajaxice_js_import %}
     <title>Brownian - {% block title %}{% endblock %}</title>
 </head>
-<body background="/static/img/gradient.png">
+<body background="{{ STATIC_URL }}img/gradient.png">
 <div class="navbar">
     <div class="navbar-inner">
         <div class="container">

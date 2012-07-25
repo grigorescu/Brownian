@@ -65,6 +65,8 @@ USE_TZ = True
 MEDIA_ROOT = ''
 MEDIA_URL = ''
 STATIC_ROOT = ''
+
+# Trailing slash, please:
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ( )
 STATICFILES_FINDERS = (
