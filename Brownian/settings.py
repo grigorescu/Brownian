@@ -10,7 +10,7 @@ DAJAXICE_MEDIA_PREFIX="dajaxice"
 # ElasticSearch settings
 
 # Hostname and port of your ElasticSearch server
-ELASTICSEARCH_SERVER = "sensor-06.iso.cmu.local:9200"
+ELASTICSEARCH_SERVER = "localhost:9200"
 
 # Index name prefix
 ELASTICSEARCH_INDEX_PREFIX = "bro"
