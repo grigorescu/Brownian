@@ -69,7 +69,9 @@ Running the Production Server with Apache
 + Edit ```BROWNIAN_PATH``` at the top of Brownian/lib/python2.X/site-packages/Brownian/wsgi.py to the location of your virtualenv directory.
 + If you're not using Python 2.7, edit ```PYTHON_VER``` at the top of wsgi.py.
 + If you're not installing Brownian to the server's root directory, edit ```DAJAXICE_MEDIA_PREFIX``` in settings.py.
++ If you'd like to have your static files somewhere other than ```/static```, change ```STATIC_URL``` in settings.py. Please make sure to leave a trailing slash.
 + In your virtualenv, run ```./bin/django-admin.py syncdb```.
++ In settings.py, modify the ```DATABASES``` setting to have the full path to your newly created SQLite file, at the root of your virtualenv. Make sure that both the file and the parent directory are writable by Apache.
 + Edit your Apache config to include:
 
 ```conf

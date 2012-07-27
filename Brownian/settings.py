@@ -50,7 +50,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'Brownian_temp_data'
+        'NAME': '/opt/Brownian/Brownian_temp_data'
         },
     }
 
