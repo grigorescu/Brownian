@@ -71,8 +71,8 @@ def indicesFromTime(startTime, indices):
 
     chosenIndices = []
     for index in indices:
-        indexStart = pytz.timezone(settings.TIME_ZONE).localize(datetime.datetime.utcfromtimestamp(index["start"]))
-        indexEnd = pytz.timezone(settings.TIME_ZONE).localize(datetime.datetime.utcfromtimestamp(index["end"]))
+        indexStart = pytz.utc.localize(datetime.datetime.utcfromtimestamp(index["start"]))
+        indexEnd = pytz.utc.localize(datetime.datetime.utcfromtimestamp(index["end"]))
 
         if (indexStart >= then and indexEnd <= endTime) or (indexStart < then and indexStart < endTime and indexEnd >= then):
                 chosenIndices.append(index["name"])
