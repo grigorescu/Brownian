@@ -11,7 +11,7 @@ Brownian motion relates to the elastic collisions and random motion of particles
 Prerequisites
 -------------
 
-This interface only works with Bro if you're using the new [ElasticSearch Logging](http://git.bro-ids.org/bro.git/blob/refs/heads/topic/seth/elasticsearch:/doc/logging-elasticsearch.rst) plugin.
+This interface only works with Bro if you're using the new [ElasticSearch Logging](http://git.bro-ids.org/bro.git/blob/HEAD:/doc/logging-elasticsearch.rst) plugin.
 
 Please refer to that documentation for getting ElasticSearch setup, and receiving logs.
 
