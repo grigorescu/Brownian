@@ -115,7 +115,7 @@
     {% endfor %}
     </tbody>
 </table>
-{% paginate start total openTab query indices %}
+{% paginate start total openTab query indices sort.field sort.order %}
 <script>
     $('.popover_links').popover({placement:'bottom'});
     Dajaxice.Brownian.view.updateIndices(jQuery.noop);

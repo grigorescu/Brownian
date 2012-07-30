@@ -28,19 +28,29 @@ def genPagination(parser, token):
     """Generates pagination given the current location, and the total number of items."""
 
     try:
-        tag_name, start, total, openTab, query, indices = token.split_contents()
+        tokens = token.split_contents()
+        tag_name = tokens[0]
+        start = tokens[1]
+        total = tokens[2]
+        openTab = tokens[3]
+        query = tokens[4]
+        indices = tokens[5]
+        sortField = tokens[6]
+        sortOrder = tokens[7]
     except ValueError:
-        raise template.TemplateSyntaxError("%r tag requires arguments (location, total, openTab, query, indices)." % token.contents.split(0))
+        raise template.TemplateSyntaxError("%r tag requires arguments (location, total, openTab, query, indices, sortField, sortOrder)." % tag_name)
 
-    return Paginate(start, total, openTab, query, indices)
+    return Paginate(start, total, openTab, query, indices, sortField, sortOrder)
 
 class Paginate(template.Node):
-    def __init__(self, start, total, openTab, query, indices):
+    def __init__(self, start, total, openTab, query, indices, sortField, sortOrder):
         self.start = template.Variable(start)
         self.total = template.Variable(total)
         self.openTab = template.Variable(openTab)
         self.query = template.Variable(query)
         self.indices = template.Variable(indices)
+        self.sortField = template.Variable(sortField)
+        self.sortOrder = template.Variable(sortOrder)
 
     def render(self, context):
         result = '<div class="pagination pagination-centered">\
@@ -49,7 +59,7 @@ class Paginate(template.Node):
         start = int(self.start.resolve(context))
         total = int(self.total.resolve(context))
         page = (start/settings.PAGE_SIZE) + 1
-        onclick = """onclick="replaceContents('<img class=&quot;loader&quot; src=&quot;""" + settings.STATIC_URL + """img/ajax-loader.gif&quot;>');Dajaxice.Brownian.view.getData(replaceContents, {'type': '%s', 'query': '%s', 'indices': '%s', """ % (self.openTab.resolve(context), self.query.resolve(context), self.indices.resolve(context)) + """'start': '%s'});" """
+        onclick = """onclick="replaceContents('<img class=&quot;loader&quot; src=&quot;""" + settings.STATIC_URL + """img/ajax-loader.gif&quot;>');Dajaxice.Brownian.view.getData(replaceContents, {'type': '%s', 'query': '%s', 'indices': '%s', """ % (self.openTab.resolve(context), self.query.resolve(context), self.indices.resolve(context)) + """'sort': {&quot;%s&quot;: {&quot;order&quot;: &quot;%s&quot;}}, """ % (self.sortField.resolve(context), self.sortOrder.resolve(context)) + """'start': '%s'});" """
         if page == 1 and total > settings.PAGE_SIZE:
             result += '<li class="disabled"><a href="#">&laquo;</a></li>'
             result += '<li class="disabled"><a href="#">&lsaquo;</a></li>'

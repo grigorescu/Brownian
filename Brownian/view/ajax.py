@@ -7,7 +7,12 @@ import ast
 @dajaxice_register
 def getData(request, type, query, indices, sort, start=0):
     data = {}
-    sort = ast.literal_eval(sort)
+
+    try:
+        sort = ast.literal_eval(str(sort))
+    except ValueError:
+        raise ValueError(sort)
+
     try:
         result = utils.es.doQuery(utils.es.queryEscape(query), index=indices, type=type, start=start, sort=sort)
     except requests.ConnectionError:
