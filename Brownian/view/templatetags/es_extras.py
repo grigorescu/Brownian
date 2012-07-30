@@ -8,12 +8,20 @@ register = template.Library()
 @register.filter(name='dateToDatetimeWithoutYear')
 def dateToDatetimeWithoutYear(value):
     """Don't include the year - useful for timestamps and other situations where the year is implied."""
-    return dateToDatetime(value).strftime('%a %b %d %H:%M:%S.%f')[:-3]
+    result = dateToDatetime(value)
+    if not result:
+        return ""
+    else:
+        return result.strftime('%a %b %d %H:%M:%S.%f')[:-3]
 
 @register.filter(name='dateToDatetimeWithYear')
 def dateToDatetimeWithYear(value):
     """Include the year - useful for SSL cert before/after dates."""
-    return dateToDatetime(value).strftime('%a %b %d %Y %H:%M:%S.%f')[:-3]
+    result = dateToDatetime(value)
+    if not result:
+        return ""
+    else:
+        return result.strftime('%a %b %d %Y %H:%M:%S.%f')[:-3]
 
 def dateToDatetime(value):
     """Converts milliseconds since epoch that ElasticSearch uses to printable string ."""
