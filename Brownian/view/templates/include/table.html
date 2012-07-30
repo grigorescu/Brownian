@@ -40,8 +40,10 @@
                 <td class="fieldval">
                     <ul class="nav nav-pills" style="margin-bottom: 0"><li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" style="padding:0;margin:1">
-                            {% if type == "time" %}
-                                {{ val|dateToDatetime }}
+                            {% if type == "time" and key == "ts" %}
+                                {{ val|dateToDatetimeWithoutYear }}
+                            {% elif type == "time" %}
+                                {{ val|dateToDatetimeWithYear }}
                             {% else %}
                                 {{ val }}
                             {% endif %}

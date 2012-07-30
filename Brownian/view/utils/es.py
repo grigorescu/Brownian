@@ -82,9 +82,7 @@ def indicesFromTime(startTime, indices):
 def queryEscape(query):
     """Certain chars need to be escaped
     """
-    bad_chars = [("\\", "\\\\"),
-        ("\"", "\\\""),
-        ("::", "\\:\\:")
+    bad_chars = [ ("&quot;", '"')
     ]
     for char, replacement in bad_chars:
         query = query.replace(char, replacement)
