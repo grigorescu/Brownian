@@ -5,13 +5,13 @@
     <div class="well container-fluid" xmlns="http://www.w3.org/1999/html">
     <form id="queryform" class="form-search form-horizontal" action="">
       <label for="timeinput"></label><select name="time" id="timeinput" class="span2">
-        <option value="15m" {% if time == "15m" %} selected="true" {% endif %}>Last 15m</option>
-        <option value="1h" {% if time == "1h" %} selected="true" {% endif %}>Last 1h</option>
-        <option value="4h" {% if time == "4h" %} selected="true" {% endif %}>Last 4h</option>
-        <option value="12h" {% if time == "12h" %} selected="true" {% endif %}>Last 12h</option>
-        <option value="1d" {% if time == "1d" %} selected="true" {% endif %}>Last 1d</option>
-        <option value="2d" {% if time == "2d" %} selected="true" {% endif %}>Last 2d</option>
-        <option value="7d" {% if time == "7d" %} selected="true" {% endif %}>Last 7d</option>
+        <option value="15m" {% if time == "15m" %} selected="selected" {% endif %}>Last 15m</option>
+        <option value="1h" {% if time == "1h" %} selected="selected" {% endif %}>Last 1h</option>
+        <option value="4h" {% if time == "4h" %} selected="selected" {% endif %}>Last 4h</option>
+        <option value="12h" {% if time == "12h" %} selected="selected" {% endif %}>Last 12h</option>
+        <option value="1d" {% if time == "1d" %} selected="selected" {% endif %}>Last 1d</option>
+        <option value="2d" {% if time == "2d" %} selected="selected" {% endif %}>Last 2d</option>
+        <option value="7d" {% if time == "7d" %} selected="selected" {% endif %}>Last 7d</option>
         <option value="all">All Time</option>
         <!-- TODO <option value="custom">Custom</option> -->
       </select>
