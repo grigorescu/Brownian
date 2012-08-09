@@ -11,7 +11,7 @@ before_script:
   - sudo apt-get update
   - sudo apt-get install openjdk-7-jre-headless
   - PWD=`pwd`
-  - sed -ie 's/\/opt\/Brownian\//\/home\/vagrant\/builds\/grigorescu\/Brownian\//' settings.py
+  - sed -ie 's/\/opt\/Brownian\//\/home\/vagrant\/builds\/grigorescu\/Brownian\//' /home/vagrant/builds/grigorescu/Brownian/settings.py
   - ES_PATH=$PWD/elasticsearch-0.19.7 ./elasticsearch-0.19.7/bin/elasticsearch
   - sleep 15
   - curl -s -XPOST localhost:9200/_bulk --data-binary @tests/data.json
