@@ -12,8 +12,8 @@ class nonElasticSearchTests(unittest.TestCase):
         self.assertNotEqual(resp1.status_code, 200)
 
     def testQueryQuote(self):
-        query = """ts:[* TO 1340647651797] AND !uid:"lkaub98ab" AND (host:"google.com" OR host:yahoo.com")"""
-        expectedResult = 'ts:[* TO 1340647651797] AND !uid:\\"lkaub98ab\\" AND (host:\\"google.com\\" OR host:yahoo.com\\")'
+        query = """ts:[* TO 1340647651797] AND !uid:&quot;lkaub98ab&quot; AND (host:"google.com" OR host:yahoo.com") AND notice:&quot;SSL::Invalid_Server_Cert&quot;"""
+        expectedResult = 'ts:[* TO 1340647651797] AND !uid:"lkaub98ab" AND (host:"google.com" OR host:yahoo.com") AND notice:"SSL::Invalid_Server_Cert"'
         self.assertEqual(utils.es.queryEscape(query), expectedResult)
 
 class elasticSearchTests(unittest.TestCase):
