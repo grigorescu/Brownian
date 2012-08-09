@@ -1,7 +1,7 @@
 Brownian [![Build Status](https://secure.travis-ci.org/grigorescu/Brownian.png)](http://travis-ci.org/grigorescu/Brownian)
 ================================
 
-Brownian is a web interface for viewing and interacting with [Bro IDS](http://bro-ids.org/) logs. [Screenshots](http://imgur.com/a/vfhCf)!
+Brownian is a web interface for viewing and interacting with [Bro IDS](http://bro-ids.org/) logs. Try it out on a [live demo](http://brownian.bro-ids.org/?time=all).
 
 Why Brownian?
 -------------
@@ -70,8 +70,8 @@ Running the Production Server with Apache
 + If you're not using Python 2.7, edit ```PYTHON_VER``` at the top of wsgi.py.
 + If you're not installing Brownian to the server's root directory, edit ```DAJAXICE_MEDIA_PREFIX``` in settings.py.
 + If you'd like to have your static files somewhere other than ```/static```, change ```STATIC_URL``` in settings.py. Please make sure to leave a trailing slash.
-+ In your virtualenv, run ```./bin/django-admin.py syncdb```.
-+ In settings.py, modify the ```DATABASES``` setting to have the full path to your newly created SQLite file, at the root of your virtualenv. Make sure that both the file and the parent directory are writable by Apache.
++ In settings.py, modify the ```DATABASES``` setting to the path you'd like a small SQLite database created (your Apache user will need write permissions to both the file and the parent directory).
++ To create the database, in your virtualenv, run ```./bin/django-admin.py syncdb```.
 + Edit your Apache config to include:
 
 ```conf
