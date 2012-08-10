@@ -12,7 +12,7 @@
         <option value="1d" {% if time == "1d" %} selected="selected" {% endif %}>Last 1d</option>
         <option value="2d" {% if time == "2d" %} selected="selected" {% endif %}>Last 2d</option>
         <option value="7d" {% if time == "7d" %} selected="selected" {% endif %}>Last 7d</option>
-        <option value="all">All Time</option>
+        <option value="all" {% if time == "all" %} selected="selected" {% endif %}>All Time</option>
         <!-- TODO <option value="custom">Custom</option> -->
       </select>
       <label for="querytext"></label><input type="text" class="input-xxxlarge" placeholder="Query" name="query" id="querytext" value="{{ query }}">
