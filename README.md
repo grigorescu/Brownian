@@ -59,6 +59,9 @@ Running the Development Server
 ------------------------------
 ```bash
 $ export DJANGO_SETTINGS_MODULE=Brownian.settings
+```
+In settings.py, modify the ```DATABASES``` setting to the path you'd like a small SQLite database created (your user will need write permissions to both the file and the parent directory).
+```bash
 $ python ./bin/django-admin.py syncdb
 $ python ./bin/django-admin.py runserver
 ```

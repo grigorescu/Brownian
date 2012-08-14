@@ -50,6 +50,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
+        # The full path to your SQLite database *file*
         'NAME': '/opt/Brownian/Brownian_temp_data'
         },
     }
