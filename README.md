@@ -30,11 +30,11 @@ Virtualenv Setup
 It is advised to run Brownian in a [virtualenv](http://www.virtualenv.org/en/latest/index.html) - an isolated Python environment with its own set of libraries.
 This will prevent system upgrades from modifying the globally installed libraries and potentially breaking Brownian.
 
-1. For installing virtualenv, please see: (http://www.virtualenv.org/en/latest/index.html#installation).
-+ Once installed, create and switch to your environment:
+1. Download the latest [virtualenv.py](https://raw.github.com/pypa/virtualenv/master/virtualenv.py).
++ Create and switch to your environment:
 
 ```bash
-$ virtualenv Brownian
+$ python ./virtualenv.py Brownian
 $ cd Brownian
 $ source ./bin/activate
 ```
