@@ -1,3 +1,5 @@
+var applicationPath = '/Brownian';
+
 var Dajaxice = {
     Brownian: {
         view: {
@@ -39,7 +41,7 @@ var Dajaxice = {
         var send_data = 'argv='+encodeURIComponent(JSON.stringify(argv));
         var oXMLHttpRequest = new XMLHttpRequest;
 
-        oXMLHttpRequest.open(method, '/dajaxice/'+dajaxice_function+'/');
+        oXMLHttpRequest.open(method, applicationPath + '/dajaxice/'+dajaxice_function+'/');
         oXMLHttpRequest.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         oXMLHttpRequest.setRequestHeader("X-CSRFToken", Dajaxice.get_cookie('csrftoken'));
         oXMLHttpRequest.onreadystatechange = function() {

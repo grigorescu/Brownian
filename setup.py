@@ -1,7 +1,7 @@
 from setuptools import setup
 setup(
     name = "Brownian",
-    version = "0.4-r85",
+    version = "0.4-r86",
     packages = ["Brownian", "Brownian.view", "Brownian.view.templatetags", "Brownian.view.utils"],
     install_requires = ["Django==1.4.1", "django-dajax==0.9.1", "django-dajaxice==0.5", "requests==0.13.6", "nose", "pytz"],
     package_data = {'Brownian.view':
@@ -9,6 +9,7 @@ setup(
                          'static/img/*.png',
                          'static/img/*.gif',
                          'static/js/*.js',
+                         'static/dajaxice/*.js',
                          'templates/*.html',
                          'templates/include/*.html',
                         ]},

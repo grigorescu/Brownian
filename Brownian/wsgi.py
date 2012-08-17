@@ -1,7 +1,8 @@
 BROWNIAN_PATH = '/opt/Brownian'
-PYTHON_VER = '2.7'
 
 import sys
+version = sys.version_info
+PYTHON_VER = "%d.%d" % (version[0], version[1])
 
 sys.path.insert(0, BROWNIAN_PATH + '/lib/python' + PYTHON_VER + '/site-packages')
 
