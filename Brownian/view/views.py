@@ -1,6 +1,6 @@
 from django.shortcuts import render
 import utils.es
-import requests
+from django.conf import settings
 
 def query(request):
     """ This page is the main query interface.
@@ -16,15 +16,17 @@ def query(request):
 
     # If we have a blank time window, just return the past 15 minutes.
     time = params.get("time", "")
-    if time == "": time = "15m"
+    if time == "": time = settings.DEFAULT_TIME_RANGE
     data["time"] = time
     if request.session.get('indices', False):
         indices = request.session.get('indices')
     else:
         try:
             indices = utils.es.getIndices()
-        except requests.ConnectionError:
-            raise requests.ConnectionError("Could not connect to ElasticSearch server to fetch indices.")
+        except:
+            data["error"] = "Could not connect to server - please check ELASTICSEARCH_SERVER in settings.py"
+            indices = []
+            return render(request, "home.html", data)
         request.session['indices'] = indices
 
     result = utils.es.indicesFromTime(time, indices)
@@ -34,13 +36,14 @@ def query(request):
     data["start"] = 0
 
     if not selectedIndices:
-        data["error"] = "No indices found in that time range."
+        data["error"] = "No indices found in that time range - please adjust your time range."
         return render(request, "home.html", data)
 
     try:
         data["hits"] = utils.es.getCounts(utils.es.queryEscape(query), index=selectedIndices)
-    except requests.ConnectionError:
-        raise requests.ConnectionError("Could not connect to ElasticSearch server for query.")
+    except:
+        data["error"] = "Could not connect to ElasticSearch server for query - please check ElasticSearch cluster health."
+        return render(request, "home.html", data)
 
     # To make the Javascript easier, we strip off the # from the currently open tab.
     # If we don't have an open tab, default to conn.

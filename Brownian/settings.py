@@ -3,9 +3,11 @@
 # How many results per page.
 PAGE_SIZE=30
 
-# When running in an actual web server, edit this to the directory Brownian is being installed in.
-# e.g. https://server/Brownian -> DAJAXICE_MEDIA_PREFIX="Brownian/dajaxice"
-DAJAXICE_MEDIA_PREFIX="dajaxice"
+# Default time range. Options are: "15m", "1h", "4h", "12h", "1d", "2d", "7d", "all"
+DEFAULT_TIME_RANGE="1h"
+
+# URL base for static files - trailing slash, please:
+STATIC_URL = '/static/'
 
 # ElasticSearch settings
 
@@ -37,7 +39,15 @@ ELASTICSEARCH_IGNORE_COLUMNS = {
 
 TIME_ZONE = 'US/Eastern'
 
-# Django settings for Brownian project.
+# Database config
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        # The full path to your SQLite database *file*
+        'NAME': '/Users/vladg/Projects/Brownian/Brownian_temp_data'
+    },
+    }
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -45,15 +55,12 @@ TEMPLATE_DEBUG = DEBUG
 ADMINS = ( # ('Your Name', 'your_email@example.com'),
  )
 
-MANAGERS = ADMINS
+# End of commonly modified settings
+#
+###################################
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        # The full path to your SQLite database *file*
-        'NAME': '/opt/Brownian/Brownian_temp_data'
-        },
-    }
+
+MANAGERS = ADMINS
 
 SESSION_COOKIE_AGE = 300
 
@@ -67,12 +74,11 @@ MEDIA_ROOT = ''
 MEDIA_URL = ''
 STATIC_ROOT = ''
 
-# Trailing slash, please:
-STATIC_URL = '/static/'
 STATICFILES_DIRS = ( )
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'dajaxice.finders.DajaxiceFinder',
 )
 
 SECRET_KEY = '62a=4)pj*u&amp;*aj*1d4f+!tpq5uf@!82t2cx(pu7)_12=)afv6$'

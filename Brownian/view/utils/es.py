@@ -8,6 +8,7 @@ logger = logging.getLogger('elasticsearch_requests')
 def getIndices():
     """Get a list of all bro indices
     """
+
     result = Request(index="@bro-meta")._doRequest({"size": 65535})
     indices = []
     for hit in result["hits"]["hits"]:

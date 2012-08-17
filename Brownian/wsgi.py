@@ -7,7 +7,7 @@ sys.path.insert(0, BROWNIAN_PATH + '/lib/python' + PYTHON_VER + '/site-packages'
 
 import site, os
 
-site.addsitedir(BROWNIAN_PATH + '/lib/python' + PYTHON_VER + '/site-packages/Brownian/wsgi.py')
+site.addsitedir(BROWNIAN_PATH + '/lib/python' + PYTHON_VER + '/site-packages')
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Brownian.settings")
 
