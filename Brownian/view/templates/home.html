@@ -2,6 +2,7 @@
 {% load humanize %}
 {% block title %}Query{% endblock %}
 {% block container %}
+    {% load staticfiles %}
     <div class="well container-fluid" xmlns="http://www.w3.org/1999/html">
     <form id="queryform" class="form-search form-horizontal" action="">
       <label for="timeinput"></label><select name="time" id="timeinput" class="span2">
@@ -34,13 +35,13 @@
     <ul id="resultTabs" class="nav nav-tabs">
       {% for hit in hits %}
         <li style="padding:3px" class="tab{% if hit.type == openTab %} active{% endif %}">
-          <a href="#{{ hit.type }}" data-toggle="tab" id="{{ hit.type }}_tab" onclick="replaceContents('<img class=&quot;loader&quot; src=&quot;{{ STATIC_URL }}img/ajax-loader.gif&quot;>');Dajaxice.Brownian.view.getData(replaceContents, {'type': '{{ hit.type }}', 'query': '{{ query }}', 'indices': '{{ indices }}', 'sort': '{&quot;ts&quot;: {&quot;order&quot: &quot;ASC&quot;}}'});"><span style="float:left">{{ hit.type }}</span>&nbsp;<span style="float: right" class="badge">{{ hit.total|intcomma }}</span>
+          <a href="#{{ hit.type }}" data-toggle="tab" id="{{ hit.type }}_tab" onclick="replaceContents('<img class=&quot;loader&quot; src=&quot;{% static "img/ajax-loader.gif" %}&quot;>');Dajaxice.Brownian.view.getData(replaceContents, {'type': '{{ hit.type }}', 'query': '{{ query }}', 'indices': '{{ indices }}', 'sort': '{&quot;ts&quot;: {&quot;order&quot: &quot;ASC&quot;}}'});"><span style="float:left">{{ hit.type }}</span>&nbsp;<span style="float: right" class="badge">{{ hit.total|intcomma }}</span>
           <br/></a>
         </li>
       {% endfor %}
     </ul>
     <div id="results" class="tab-content" style="padding-bottom:100px">
-        <img class="loader" src="{{ STATIC_URL }}img/ajax-loader.gif">
+        <img class="loader" src="{% static "img/ajax-loader.gif" %}">
     </div>
   </div>
     <div class="modal hide" id="syntaxmodal">
