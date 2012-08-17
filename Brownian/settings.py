@@ -45,7 +45,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         # The full path to your SQLite database *file*
-        'NAME': '/Users/vladg/Projects/Brownian/Brownian_temp_data'
+        'NAME': '/opt/Brownian/Brownian_temp_data'
     },
     }
 
