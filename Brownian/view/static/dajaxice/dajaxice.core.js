@@ -1,5 +1,3 @@
-var applicationPath = '/Brownian';
-
 var Dajaxice = {
     Brownian: {
         view: {

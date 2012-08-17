@@ -63,7 +63,7 @@
         </div>
     </div>
     <script>
-        $('.popover_links').popover({placement:'bottom'});
+        var applicationPath = "{{ root }}";
         function replaceContents(data){
             $('#results').html(data);
         }

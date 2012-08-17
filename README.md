@@ -94,12 +94,9 @@ Allow from ...
 
 Finally, restart Apache, and you should be good to go.
 
-For more information, see: https://docs.djangoproject.com/en/1.4/howto/deployment/wsgi/modwsgi/
+If you'd like to have your static files somewhere other than ```/static```, change ```STATIC_URL``` in settings.py. Please make sure to leave a trailing slash.
 
-Installing Under a Custom Web Path (not /Brownian)
---------------------------------------------------
-1. Modify ```applicationPath``` in Brownian/view/static/dajaxice/dajaxice.core.js
-+ If you'd like to have your static files somewhere other than ```/static```, change ```STATIC_URL``` in settings.py. Please make sure to leave a trailing slash.
+For more information, see: https://docs.djangoproject.com/en/1.4/howto/deployment/wsgi/modwsgi/
 
 Issues
 ------

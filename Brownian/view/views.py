@@ -34,6 +34,7 @@ def query(request):
     data["indices"] = selectedIndices
     data["query"] = query
     data["start"] = 0
+    data["root"] = request.path
 
     if not selectedIndices:
         data["error"] = "No indices found in that time range - please adjust your time range."
