@@ -1,7 +1,7 @@
 from setuptools import setup
 setup(
     name = "Brownian",
-    version = "0.4-r81",
+    version = "0.4-r82",
     packages = ["Brownian", "Brownian.view", "Brownian.view.templatetags", "Brownian.view.utils"],
     install_requires = ["Django==1.4", "django-dajax==0.8.4", "django-dajaxice==0.2", "requests", "nose", "pytz"],
     package_data = {'Brownian.view':
