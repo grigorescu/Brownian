@@ -30,6 +30,13 @@ def dateToDatetime(value):
     date = datetime.datetime.utcfromtimestamp(float(str(value))/1000)
     return pytz.utc.localize(date).astimezone(pytz.timezone(settings.TIME_ZONE))
 
+@register.filter(name='hexEncode')
+def hexEncode(value):
+    """Some replaces."""
+    if isinstance(value, unicode):
+        value = value.encode('ascii', 'backslashreplace')
+    return value
+
 @register.filter(name='tsRange')
 def tsRange(ts, value):
     """Converts timestamp to range[ts - value TO ts + value] with value in millis."""

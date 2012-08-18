@@ -133,7 +133,7 @@ def doQuery(query, index="_all", sort=None, type=None, start=0):
 def resultToTable(result, type):
     """Convert JSON result to a dict for use in HTML table template.
     """
-    logger.debug(result)
+
     header = [(field.name, field.type, field.description) for field in broLogs[type] if field.name not in settings.ELASTICSEARCH_IGNORE_COLUMNS.get(type, [])]
     content = []
 
@@ -156,6 +156,7 @@ def resultToTable(result, type):
             assert "WARNING: Some fields weren't properly accounted for."
             assert "Type: %s;\nKnown fields: %s.\nRecvd fields: %s." % (type, hit["es_source"].keys(), [x[0] for x in row])
 
+    logger.debug(content)
     return {"header": header, "content": content, "took": result["took"]}
 
 class Request(object):

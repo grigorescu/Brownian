@@ -1,4 +1,5 @@
 {% load es_extras %}
+{% load humanize %}
 {% if error %}
 <div class="alert span4">
     <button class="close" data-dismiss="alert">×</button>
@@ -35,8 +36,8 @@
     <tbody>{% for row in table.content %}<tr>{% for key, type, val in row %}
                 <td class="fieldval">
                     <ul class="nav nav-pills" style="margin-bottom: 0"><li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" style="padding:0;margin:1px;">
-                            {% if type == "time" and key == "ts" %} {{ val|dateToDatetimeWithoutYear }}{% elif type == "time" %}{{ val|dateToDatetimeWithYear }}{% else %}{{ val }}{% endif %}<b class="caret"></b>
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" style="padding:0;margin:1px;" title="{% if type == "time" and key == "ts" %} {{ val|dateToDatetimeWithoutYear }}{% elif type == "time" %}{{ val|dateToDatetimeWithYear }}{% elif type == "count" %}{{ val|intcomma }}{% else %}{{ val|hexEncode }}{% endif %}">
+                            {% if type == "time" and key == "ts" %} {{ val|dateToDatetimeWithoutYear }}{% elif type == "time" %}{{ val|dateToDatetimeWithYear }}{% elif type == "count" %}{{ val|intcomma }}{% else %}{{ val|hexEncode|truncatechars:75 }}{% endif %}<b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu"><li><a href="#" onclick="appendToQuery('{{ key }}:&quot;{{ val }}&quot;');">Include</a></li>
                             {% if type == "addr" and val %}<li><a href="#" onclick="appendToQuery(ipanywhere(&quot;{{ val }}&quot;));">Include in any IP field</a></li>{% endif %}
