@@ -6,7 +6,7 @@ python:
 install: pip install -r requirements.txt --use-mirrors
 
 before_script:
-  - wget https://github.com/downloads/elasticsearch/elasticsearch/elasticsearch-0.19.7.tar.gz
+  - wget https://github.com/downloads/elasticsearch/elasticsearch/elasticsearch-0.19.8.tar.gz
   - tar xvzf elasticsearch-0.19.7.tar.gz
   - sudo apt-get update
   - sudo apt-get install openjdk-7-jre-headless
