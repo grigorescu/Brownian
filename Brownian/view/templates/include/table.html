@@ -8,8 +8,7 @@
 <table class="table table-condensed table-striped">
     <thead>
     {% for attr, type, desc in table.header %}
-        <th><a class="popover_links" rel="popover" data-content="{{ desc }}" data-original-title="{{ attr }}" href="#">{{ attr }}</a><br/>
-        <!-- {{ type }} -->
+        <th><a rel="popover" data-content="{{ desc }}" data-original-title="{{ attr }}" href="#">{{ attr }}</a><br/>
         {% if type == "time" or type == "port" or type == "transport_proto" or type == "count"%}
             <a
             {% if sort.field == attr %}
@@ -33,90 +32,18 @@
             </th>
     {% endfor %}
     </thead>
-    <tbody>
-    {% for row in table.content %}
-        <tr>
-            {% for key, type, val in row %}
+    <tbody>{% for row in table.content %}<tr>{% for key, type, val in row %}
                 <td class="fieldval">
                     <ul class="nav nav-pills" style="margin-bottom: 0"><li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" style="padding:0;margin:1">
-                            {% if type == "time" and key == "ts" %}
-                                {{ val|dateToDatetimeWithoutYear }}
-                            {% elif type == "time" %}
-                                {{ val|dateToDatetimeWithYear }}
-                            {% else %}
-                                {{ val }}
-                            {% endif %}
-                            <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Include...</a>
-                                <ul class="dropdown-menu sub-menu">
-                                    <li><a href="#" onclick="replaceQuery('#querytext', '{{ key }}:&quot;{{ val }}&quot;', false);">Replace</a></li>
-                                    <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:&quot;{{ val }}&quot;', 'AND', false);">AND</a></li>
-                                    <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:&quot;{{ val }}&quot;', 'OR', false);">OR</a></li>
-                                    {% if type == "addr" %}
-                                        {%  if val %}
-                                        <li><a href="#" onclick="replaceQuery('#querytext', '(bound:&quot;{{ val }}&quot; OR dst:&quot;{{ val }}&quot; OR dst_addr:&quot;{{ val }}&quot; OR host:&quot;{{ val }}&quot; OR id.orig_h:&quot;{{ val }}&quot; OR id.resp_h:&quot;{{ val }}&quot; OR request:&quot;{{ val }}&quot; OR src:&quot;{{ val }}&quot; OR src_addr:&quot;{{ val }}&quot; OR x_originating_ip:&quot;{{ val }}&quot;)', false);">Replace any IP field</a></li>
-                                        <li><a href="#" onclick="appendToQuery('#querytext', '(bound:&quot;{{ val }}&quot; OR dst:&quot;{{ val }}&quot; OR dst_addr:&quot;{{ val }}&quot; OR host:&quot;{{ val }}&quot; OR id.orig_h:&quot;{{ val }}&quot; OR id.resp_h:&quot;{{ val }}&quot; OR request:&quot;{{ val }}&quot; OR src:&quot;{{ val }}&quot; OR src_addr:&quot;{{ val }}&quot; OR x_originating_ip:&quot;{{ val }}&quot;)', 'AND', false);">AND any IP field</a></li>
-                                        <li><a href="#" onclick="appendToQuery('#querytext', '(bound:&quot;{{ val }}&quot; OR dst:&quot;{{ val }}&quot; OR dst_addr:&quot;{{ val }}&quot; OR host:&quot;{{ val }}&quot; OR id.orig_h:&quot;{{ val }}&quot; OR id.resp_h:&quot;{{ val }}&quot; OR request:&quot;{{ val }}&quot; OR src:&quot;{{ val }}&quot; OR src_addr:&quot;{{ val }}&quot; OR x_originating_ip:&quot;{{ val }}&quot;)', 'OR', false);">OR any IP field</a></li>
-                                        {% endif %}
-                                    {% endif %}
-                                    {% if type == "time" %}
-                                        {%  if val %}
-                                        <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:{{ val|tsRange:"25" }}', 'AND', false);">AND &plusmn; 25ms</a></li>
-                                        <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:{{ val|tsRange:"500" }}', 'AND', false);">AND &plusmn; 500ms</a></li>
-                                        <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:{{ val|tsRange:"10000" }}', 'AND', false);">AND &plusmn; 10s</a></li>
-                                        <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:{{ val|tsRange:"60000" }}', 'AND', false);">AND &plusmn; 1m</a></li>
-                                        <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:{{ val|tsRange:"300000" }}', 'AND', false);">AND &plusmn; 5m</a></li>
-                                        {% endif %}
-                                    {% endif %}
-                                </ul>
-                            </li>
-                            <li><a href="#">Exclude...</a>
-                                <ul class="dropdown-menu sub-menu" style="margin-top: 25px">
-                                    <li><a href="#" onclick="replaceQuery('#querytext', '{{ key }}:&quot;{{ val }}&quot;', true);">Replace</a></li>
-                                    <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:&quot;{{ val }}&quot;', 'AND', true);">AND</a></li>
-                                    <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:&quot;{{ val }}&quot;', 'OR', true);">OR</a></li>
-                                    {% if type == "addr" %}
-                                        {%  if val %}
-                                        <li><a href="#" onclick="replaceQuery('#querytext', '(bound:&quot;{{ val }}&quot; OR dst:&quot;{{ val }}&quot; OR dst_addr:&quot;{{ val }}&quot; OR host:&quot;{{ val }}&quot; OR id.orig_h:&quot;{{ val }}&quot; OR id.resp_h:&quot;{{ val }}&quot; OR request:&quot;{{ val }}&quot; OR src:&quot;{{ val }}&quot; OR src_addr:&quot;{{ val }}&quot; OR x_originating_ip:&quot;{{ val }}&quot;)', true);">Replace any IP field</a></li>
-                                        <li><a href="#" onclick="appendToQuery('#querytext', '(bound:&quot;{{ val }}&quot; OR dst:&quot;{{ val }}&quot; OR dst_addr:&quot;{{ val }}&quot; OR host:&quot;{{ val }}&quot; OR id.orig_h:&quot;{{ val }}&quot; OR id.resp_h:&quot;{{ val }}&quot; OR request:&quot;{{ val }}&quot; OR src:&quot;{{ val }}&quot; OR src_addr:&quot;{{ val }}&quot; OR x_originating_ip:&quot;{{ val }}&quot;)', 'AND', true);">AND any IP field</a></li>
-                                        <li><a href="#" onclick="appendToQuery('#querytext', '(bound:&quot;{{ val }}&quot; OR dst:&quot;{{ val }}&quot; OR dst_addr:&quot;{{ val }}&quot; OR host:&quot;{{ val }}&quot; OR id.orig_h:&quot;{{ val }}&quot; OR id.resp_h:&quot;{{ val }}&quot; OR request:&quot;{{ val }}&quot; OR src:&quot;{{ val }}&quot; OR src_addr:&quot;{{ val }}&quot; OR x_originating_ip:&quot;{{ val }}&quot;)', 'OR', true);">OR any IP field</a></li>
-                                        {% endif %}
-                                    {% endif %}
-                                    {% if type == "time" %}
-                                        {% if val %}
-                                        <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:{{ val|tsRange:"25" }}', 'AND', true);">AND &plusmn; 25ms</a></li>
-                                        <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:{{ val|tsRange:"500" }}', 'AND', true);">AND &plusmn; 500ms</a></li>
-                                        <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:{{ val|tsRange:"10000" }}', 'AND', true);">AND &plusmn; 10s</a></li>
-                                        <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:{{ val|tsRange:"60000" }}', 'AND', true);">AND &plusmn; 1m</a></li>
-                                        <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:{{ val|tsRange:"300000" }}', 'AND', true);">AND &plusmn; 5m</a></li>
-                                        {% endif %}
-                                    {% endif %}
-                                </ul>
-                            </li>
-                            <li><a href="#">Is NULL...</a>
-                                <ul class="dropdown-menu sub-menu" style="margin-top: 50px">
-                                    <li><a href="#" onclick="replaceQuery('#querytext', '{{ key }}:*', true);">Replace</a></li>
-                                    <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:*', 'AND', true);">AND</a></li>
-                                    <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:*', 'OR', true);">OR</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Is not NULL...</a>
-                                <ul class="dropdown-menu sub-menu" style="margin-top: 75px">
-                                    <li><a href="#" onclick="replaceQuery('#querytext', '{{ key }}:*', false);">Replace</a></li>
-                                    <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:*', 'AND', false);">AND</a></li>
-                                    <li><a href="#" onclick="appendToQuery('#querytext', '{{ key }}:*', 'OR', false);">OR</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li></ul>
-                </td>
-            {% endfor %}
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" style="padding:0;margin:1px;">
+                            {% if type == "time" and key == "ts" %} {{ val|dateToDatetimeWithoutYear }}{% elif type == "time" %}{{ val|dateToDatetimeWithYear }}{% else %}{{ val }}{% endif %}<b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu"><li><a href="#" onclick="appendToQuery('{{ key }}:&quot;{{ val }}&quot;');">Include</a></li>
+                            {% if type == "addr" and val %}<li><a href="#" onclick="appendToQuery(ipanywhere(&quot;{{ val }}&quot;));">Include in any IP field</a></li>{% endif %}
+                            {% if type == "time" and val %}<li><a href="#" onclick="appendToQuery('{{ key }}:{{ val|tsRange:"500" }}');">Timestamp &plusmn; 500ms</a></li>{% endif %}
+                            <li><a href="#" onclick="appendToQuery('{{ key }}:&quot;{{ val }}&quot;', true);">Exclude</a></li></ul></li></ul></td>
+            {% endfor %}</tr>{% endfor %}</tbody></table>
+
 {% paginate start total openTab query indices sort.field sort.order %}
 <script>
     //$('.popover_links').popover({placement:'bottom'});

@@ -1,11 +1,15 @@
 /** Local JS functions **/
 
-function appendToQuery(query, filter, operator, negated){
+function appendToQuery(filter, negated, query, operator){
     if (operator == undefined){
         operator = "AND"
     }
     if (negated == undefined){
         negated = false;
+    }
+
+    if (query == undefined){
+        query = "#querytext";
     }
 
     if ($(query) == undefined){
@@ -40,6 +44,10 @@ function replaceQuery(query, filter, negated){
         $(query).val(newQuery);
     }
     return true;
+}
+
+function ipanywhere(ip){
+    return '(bound"' + ip + '" OR dst:"' + ip + '" OR dst_addr:"' + ip + '" OR host:"' + ip + '" OR id.orig_h:"' + ip + '" OR id.resp_h:"' + ip + '" OR request:"' + ip + '" OR src:"' + ip + '" OR src_addr:"' + ip + '" OR x_originating_ip:"' + ip + '")'
 }
 
 function replaceSort(tab, value, direction){

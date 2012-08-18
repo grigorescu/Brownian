@@ -7,12 +7,12 @@ install: pip install -r requirements.txt --use-mirrors
 
 before_script:
   - wget https://github.com/downloads/elasticsearch/elasticsearch/elasticsearch-0.19.8.tar.gz
-  - tar xvzf elasticsearch-0.19.7.tar.gz
+  - tar xvzf elasticsearch-0.19.8.tar.gz
   - sudo apt-get update
   - sudo apt-get install openjdk-7-jre-headless
   - PWD=`pwd`
   - sed -ie 's/\/opt\/Brownian\//\/home\/vagrant\/builds\/grigorescu\/Brownian\//' Brownian/settings.py
-  - ES_PATH=$PWD/elasticsearch-0.19.7 ./elasticsearch-0.19.7/bin/elasticsearch
+  - ES_PATH=$PWD/elasticsearch-0.19.8 ./elasticsearch-0.19.7/bin/elasticsearch
   - sleep 15
   - curl -s -XPOST localhost:9200/_bulk --data-binary @tests/data.json
   - DJANGO_SETTINGS_MODULE="Brownian.settings" python ./manage.py syncdb --noinput
