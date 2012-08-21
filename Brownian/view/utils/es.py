@@ -112,7 +112,7 @@ def getCounts(query, index="_all", type=None):
 
     return hits
 
-def doQuery(query, index="_all", sort=None, type=None, start=0):
+def doQuery(query, index="_all", sort=None, type=None, start=0, facets={}, size=settings.PAGE_SIZE):
     """Short wrapper for simple queries.
     """
     if not sort:
@@ -123,9 +123,10 @@ def doQuery(query, index="_all", sort=None, type=None, start=0):
              {"filter":
               {"query":
                {"query_string": {"query": query}}}}},
-            "size": settings.PAGE_SIZE,
+            "size": size,
             "from": start,
             "sort": sort,
+            "facets": facets,
             }
     result = Request(index=index, type=type)._doRequest(data=data)
     return result

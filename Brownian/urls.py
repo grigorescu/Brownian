@@ -7,6 +7,7 @@ dajaxice_autodiscover()
 urlpatterns = patterns('',
     url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
     url(r'^$', 'Brownian.view.views.query', name='query'),
+    url(r'^alerts/$', 'Brownian.view.views.alerts', name='alerts'),
 )
 
 urlpatterns += staticfiles_urlpatterns()

@@ -1,0 +1,57 @@
+{% extends "include/head.html" %}
+{% load humanize %}
+{% block title %}Alerted IPs{% endblock %}
+{% block container %}
+{% load staticfiles %}
+    <div class="container-fluid span12" xmlns="http://www.w3.org/1999/html">
+    <div class="span2">&nbsp;</div>
+    <div class="well span4">
+        <form id="queryform" class="form-search form-horizontal" action="">
+            <label for="timeinput"></label><select name="time" id="timeinput" class="span2">
+            <option value="15m" {% if time == "15m" %} selected="selected" {% endif %}>Last 15m</option>
+            <option value="1h" {% if time == "1h" %} selected="selected" {% endif %}>Last 1h</option>
+            <option value="4h" {% if time == "4h" %} selected="selected" {% endif %}>Last 4h</option>
+            <option value="12h" {% if time == "12h" %} selected="selected" {% endif %}>Last 12h</option>
+            <option value="1d" {% if time == "1d" %} selected="selected" {% endif %}>Last 1d</option>
+            <option value="2d" {% if time == "2d" %} selected="selected" {% endif %}>Last 2d</option>
+            <option value="7d" {% if time == "7d" %} selected="selected" {% endif %}>Last 7d</option>
+            <option value="all" {% if time == "all" %} selected="selected" {% endif %}>All Time</option>
+            <!-- TODO <option value="custom">Custom</option> -->
+        </select>
+            <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+    </div>
+        {% if error %}
+        <div class="alert alert-error">
+            <button class="close" data-dismiss="alert">×</button>
+            <strong>Error!</strong> {{ error }}
+        </div>
+        {% endif %}
+    </div>
+    <div class="well container-fluid span4" xmlns="http://www.w3.org/1999/html">
+        <h3 style="text-align: center;">Top Alerted IPs</h3>
+        <table class="table table-condensed table-striped span3">
+            <thead><th>IP</th><th>Count</th></thead>
+            <tbody>
+                {% url query as url_query %}
+                {% for ip in facets.ips.terms %}
+                    <tr><td><a href="{{ url_query }}?query=src%3A&quot;{{ ip.term }}&quot;+OR+dst%3A&quot;{{ ip.term }}&quot;&openTab=%23notice">{{ ip.term }}</a></td><td>{{ ip.count }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="well container-fluid span4" xmlns="http://www.w3.org/1999/html">
+        <h3 style="text-align: center;">Top Alerted Ports</h3>
+        <table class="table table-condensed table-striped span3">
+            <thead><th>Port</th><th>Count</th></thead>
+            <tbody>
+            {% url query as url_query %}
+            {% for port in facets.ports.terms %}
+                <tr><td><a href="{{ url_query }}?query=p%3A&quot;{{ port.term }}&quot;&openTab=%23notice">{{ port.term }}</a></td><td>{{ port.count }}</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

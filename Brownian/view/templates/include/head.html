@@ -21,6 +21,8 @@
             <ul class="nav">
                 {% url query as url_query %}
                 <li{% if request.path == url_query %} class="active"{%endif%}><a href={{ url_query }}>Query</a></li>
+                {% url alerts as url_alerts %}
+                <li{% if request.path == url_alerts %} class="active"{%endif%}><a href={{ url_alerts }}>Alerts</a></li>
                 <!-- TODO: Create alerts page -->
             </ul>
         </div>

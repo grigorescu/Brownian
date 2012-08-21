@@ -56,3 +56,41 @@ def query(request):
         else: data["openTab"] = "conn"
 
     return render(request, "home.html", data)
+
+def alerts(request):
+
+    data = {}
+
+    params = request.GET
+
+    # If we have a blank time window, just return the past 15 minutes.
+    time = params.get("time", "")
+    if time == "": time = settings.DEFAULT_TIME_RANGE
+    data["time"] = time
+    if request.session.get('indices', False):
+        indices = request.session.get('indices')
+    else:
+        try:
+            indices = utils.es.getIndices()
+        except:
+            data["error"] = "Could not connect to server - please check ELASTICSEARCH_SERVER in settings.py"
+            indices = []
+            return render(request, "alerts.html", data)
+        request.session['indices'] = indices
+
+    result = utils.es.indicesFromTime(time, indices)
+    selectedIndices = ",".join(result)
+    data["indices"] = selectedIndices
+    data["query"] = query
+    data["start"] = 0
+    data["root"] = request.path
+
+    if not selectedIndices:
+        data["error"] = "No indices found in that time range - please adjust your time range."
+        return render(request, "alerts.html", data)
+    facets = {"ips": {"terms": {"field": ["src", "dst"], "size": 25}},
+              "ports": {"terms": {"field": "p", "size": 25}},
+              }
+    data['facets'] = utils.es.doQuery("*", index=selectedIndices, size=0, type="notice", facets=facets)['facets']
+
+    return render(request, "alerts.html", data)
