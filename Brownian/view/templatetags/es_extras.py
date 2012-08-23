@@ -30,6 +30,12 @@ def dateToDatetime(value):
     date = datetime.datetime.utcfromtimestamp(float(str(value))/1000)
     return pytz.utc.localize(date).astimezone(pytz.timezone(settings.TIME_ZONE))
 
+@register.filter(name='sumAvailable')
+def sumAvailable(value):
+    """Sum available_in_bytes over all partitions."""
+    result = [x['available_in_bytes'] for x in value]
+    return sum(result)
+
 @register.filter(name='hexEncode')
 def hexEncode(value):
     """Some replaces."""

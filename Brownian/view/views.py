@@ -29,6 +29,7 @@ def query(request):
             return render(request, "home.html", data)
         request.session['indices'] = indices
 
+    data["health"]= utils.es.getHealth()
     result = utils.es.indicesFromTime(time, indices)
     selectedIndices = ",".join(result)
     data["indices"] = selectedIndices
@@ -78,6 +79,7 @@ def alerts(request):
             return render(request, "alerts.html", data)
         request.session['indices'] = indices
 
+    data['health'] = utils.es.getHealth()
     result = utils.es.indicesFromTime(time, indices)
     selectedIndices = ",".join(result)
     data["indices"] = selectedIndices
@@ -94,3 +96,16 @@ def alerts(request):
     data['facets'] = utils.es.doQuery("*", index=selectedIndices, size=0, type="notice", facets=facets)['facets']
 
     return render(request, "alerts.html", data)
+
+def health(request):
+    data = {}
+
+    try:
+        data['health'] = utils.es.getHealth()
+        data['shards'] = utils.es.getShardInfo()
+        data['nodes'] = utils.es.getNodeInfo()
+    except:
+        data["error"] = "Could not connect to server - please check ELASTICSEARCH_SERVER in settings.py"
+        return render(request, "health.html", data)
+
+    return render(request, "health.html", data)

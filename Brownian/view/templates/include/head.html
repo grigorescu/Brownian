@@ -12,7 +12,7 @@
     <title>Brownian - {% block title %}{% endblock %}</title>
 </head>
 <body background="{% static "img/gradient.png" %}">
-<div class="navbar">
+<div class="navbar navbar-inverse">
     <div class="navbar-inner">
         <div class="container">
             <a class="brand" href="#">
@@ -22,8 +22,19 @@
                 {% url query as url_query %}
                 <li{% if request.path == url_query %} class="active"{%endif%}><a href={{ url_query }}>Query</a></li>
                 {% url alerts as url_alerts %}
-                <li{% if request.path == url_alerts %} class="active"{%endif%}><a href={{ url_alerts }}>Alerts</a></li>
-                <!-- TODO: Create alerts page -->
+                <li {% if request.path == url_alerts %} class="active"{%endif%}><a href={{ url_alerts }}>Notices</a></li>
+            </ul>
+            <ul class="nav pull-right">
+                {% url health as url_health %}
+                <li class="btn{% if health.status == "green" %} btn-success{% elif health.status == "yellow" %} btn-warning{% else %} btn-danger{% endif %}" style="padding-left:8px;padding-right:8px;">
+                    <a href="{{ url_health }}" style="padding:0">
+                    {%  if request.path == url_health %}
+                    <i class="icon-heart icon-white"></i>
+                    {% else %}
+                    <i class="icon-heart"></i>
+                    {% endif %}
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

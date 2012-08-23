@@ -3,8 +3,14 @@
 {% block title %}Alerted IPs{% endblock %}
 {% block container %}
 {% load staticfiles %}
-    <div class="container-fluid span12" xmlns="http://www.w3.org/1999/html">
+    <div class="container" xmlns="http://www.w3.org/1999/html">
     <div class="span2">&nbsp;</div>
+        {% if error %}
+            <div class="alert alert-error">
+                <button class="close" data-dismiss="alert">×</button>
+                <strong>Error!</strong> {{ error }}
+            </div>
+        {% else %}
     <div class="well span4">
         <form id="queryform" class="form-search form-horizontal" action="">
             <label for="timeinput"></label><select name="time" id="timeinput" class="span2">
@@ -21,12 +27,6 @@
             <button class="btn btn-primary" type="submit">Search</button>
         </form>
     </div>
-        {% if error %}
-        <div class="alert alert-error">
-            <button class="close" data-dismiss="alert">×</button>
-            <strong>Error!</strong> {{ error }}
-        </div>
-        {% endif %}
     </div>
     <div class="well container-fluid span4" xmlns="http://www.w3.org/1999/html">
         <h3 style="text-align: center;">Top Notice IP Addresses</h3>
@@ -53,5 +53,5 @@
             </tbody>
         </table>
     </div>
-
+    {% endif %}
 {% endblock %}

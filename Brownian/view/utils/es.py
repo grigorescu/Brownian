@@ -160,6 +160,25 @@ def resultToTable(result, type):
     logger.debug(content)
     return {"header": header, "content": content, "took": result["took"]}
 
+def getHealth():
+    """Return cluster health information.
+    """
+
+    health = Request(index="_cluster")._doRequest(operation="health", verb="GET")
+    return health
+
+def getShardInfo():
+    """Return shard health information.
+    """
+    shards = Request()._doRequest(operation="_stats", verb="GET", search_opts="clear=true")
+    return shards
+
+def getNodeInfo():
+    """Return node health information.
+    """
+    nodes = Request(index="_nodes")._doRequest(operation="stats", verb="GET", search_opts="clear=true&os=true&fs=true")
+    return nodes['nodes']
+
 class Request(object):
     """A single request to ElasticSearch
     """
