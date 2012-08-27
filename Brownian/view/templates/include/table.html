@@ -9,7 +9,7 @@
 <table class="table table-condensed table-striped">
     <thead>
     {% for attr, type, desc in table.header %}
-        <th><a rel="popover" data-content="{{ desc }}" data-original-title="{{ attr }}" href="#">{{ attr }}</a><br/>
+        <th><a rel="popover" data-trigger='hover' data-content="{{ desc }}" href="#">{{ attr }}</a><br/>
         {% if type == "time" or type == "port" or type == "transport_proto" or type == "count"%}
             <a
             {% if sort.field == attr %}
@@ -47,7 +47,7 @@
 
 {% paginate start total openTab query indices sort.field sort.order %}
 <script>
-    //$('.popover_links').popover({placement:'bottom'});
+    $('a[rel="popover"]').popover({placement:'bottom'});
     Dajaxice.Brownian.view.updateIndices(jQuery.noop);
 </script>
 <p><small>{{ took }}ms.</small></p>

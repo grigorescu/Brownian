@@ -21,9 +21,14 @@ body{
     width: 90%;
 }
 
-.popover-inner {
-    width: 340px;
+.popover {
+    width: 20%;
 }
+
+.popover td{
+    white-space: normal;
+}
+
 .modal {
     width: 900px;
 }
