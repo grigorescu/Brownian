@@ -6,8 +6,19 @@
     <strong>Error!</strong> {{ error }}
 </div>
 {% endif %}
+<div class="modal hide" id="testmodal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4>Details</h4>
+    </div>
+    <div class="modal-body well" id="exportRowModal">
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+</div>
 <table class="table table-condensed table-striped">
-    <thead>
+    <thead><th></th>
     {% for attr, type, desc in table.header %}
         <th><a rel="popover" data-trigger='hover' data-content="{{ desc }}" href="#">{{ attr }}</a><br/>
         {% if type == "time" or type == "port" or type == "transport_proto" or type == "count"%}
@@ -17,7 +28,7 @@
                 style="background-color: #fceb96;"
             {% endif %}
             {% endif %}
-            href="#" onclick="replaceSort('#{{ openTab }}_tab', '{{ attr }}', 'ASC');">
+            href="#" onclick="replaceSort('#{{ openTab }}_tab', '{{ attr }}', 'asc');">
                 <i class="icon-chevron-up"></i></a>
             <a
                     {% if sort.field == attr %}
@@ -25,7 +36,7 @@
                             style="background-color: #fceb96;"
                         {% endif %}
                     {% endif %}
-                            href="#" onclick="replaceSort('#{{ openTab }}_tab', '{{ attr }}', 'DESC');">
+                            href="#" onclick="replaceSort('#{{ openTab }}_tab', '{{ attr }}', 'desc');">
                 <i class="icon-chevron-down"></i></a>
         {% else %}
         &nbsp;
@@ -33,7 +44,9 @@
             </th>
     {% endfor %}
     </thead>
-    <tbody>{% for row in table.content %}<tr>{% for key, type, val in row %}
+    <tbody>{% for row in table.content %}<tr>
+        <td style="cursor: default;"><span class="label" style="background-color: #BE96E6;"><a data-toggle="testmodal" href="#" onclick="$('#exportRowModal').html(exportRow({{ forloop.counter0 }}));$('#testmodal').modal();"><i class="icon-file icon-white"></i></a></span></td>
+        {% for key, type, val in row %}
                 <td class="fieldval">
                     <ul class="nav nav-pills" style="margin-bottom: 0"><li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" style="padding:0;margin:1px;" title="{% if type == "time" and key == "ts" %} {{ val|dateToDatetimeWithoutYear }}{% elif type == "time" %}{{ val|dateToDatetimeWithYear }}{% elif type == "count" %}{{ val|intcomma }}{% else %}{{ val|hexEncode }}{% endif %}">
