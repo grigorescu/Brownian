@@ -67,7 +67,7 @@
         function replaceContents(data){
             $('#results').html(data);
         }
-        Dajaxice.Brownian.view.getData(replaceContents, {'type': '{{ openTab }}', 'query': '{{ query }}', 'indices': '{{ indices }}', 'sort': '{"ts": {"order": "DESC"}}'});
+        Dajaxice.Brownian.view.getData(replaceContents, {'type': '{{ openTab }}', 'query': '{{ query }}', 'indices': '{{ indices }}', 'sort': '{"ts": {"order": "asc"}}'});
     </script>
     {% endif %}
 {% endblock %}

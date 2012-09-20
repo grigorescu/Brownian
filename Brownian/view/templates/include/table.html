@@ -24,16 +24,16 @@
         {% if type == "time" or type == "port" or type == "transport_proto" or type == "count"%}
             <a
             {% if sort.field == attr %}
-            {% if sort.order == "ASC" %}
-                style="background-color: #fceb96;"
+            {% if sort.order == "asc" %}
+                style="background-color: #A9DBA9;"
             {% endif %}
             {% endif %}
             href="#" onclick="replaceSort('#{{ openTab }}_tab', '{{ attr }}', 'asc');">
                 <i class="icon-chevron-up"></i></a>
             <a
                     {% if sort.field == attr %}
-                        {% if sort.order == "DESC" %}
-                            style="background-color: #fceb96;"
+                        {% if sort.order == "desc" %}
+                            style="background-color: #A9DBA9;"
                         {% endif %}
                     {% endif %}
                             href="#" onclick="replaceSort('#{{ openTab }}_tab', '{{ attr }}', 'desc');">
@@ -45,7 +45,7 @@
     {% endfor %}
     </thead>
     <tbody>{% for row in table.content %}<tr>
-        <td style="cursor: default;"><span class="label" style="background-color: #BE96E6;"><a data-toggle="testmodal" href="#" onclick="$('#exportRowModal').html(exportRow({{ forloop.counter0 }}));$('#testmodal').modal();"><i class="icon-file icon-white"></i></a></span></td>
+        <td style="cursor: default;"><span class="label" style="background-color: #A9DBA9;"><a data-toggle="testmodal" href="#" onclick="$('#exportRowModal').html(exportRow({{ forloop.counter0 }}));$('#testmodal').modal();"><i class="icon-file icon-white"></i></a></span></td>
         {% for key, type, val in row %}
                 <td class="fieldval">
                     <ul class="nav nav-pills" style="margin-bottom: 0"><li class="dropdown">

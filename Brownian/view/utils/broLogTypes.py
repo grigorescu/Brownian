@@ -52,6 +52,8 @@ broLogs = {
         Field("orig_ip_bytes", "count", "Number IP level bytes the originator sent (as seen on the wire, taken from IP total_length header field). Only set if use_conn_size_analyzer = T"),
         Field("resp_pkts", "count", "Number of packets the responder sent. See orig_pkts."),
         Field("resp_ip_bytes", "count", "Number IP level bytes the responder sent. See orig_pkts."),
+        Field("orig_cc", "string", "The originating endpoint's GeoIP country code."),
+        Field("resp_cc", "string", "The responding endpoint's GeoIP country code."),
     ],
     "dns": [
         Field("ts", "time", "The earliest time at which a DNS protocol message over the associated connection is observed."),

@@ -23,6 +23,7 @@ ELASTICSEARCH_IGNORE_TYPES = [
     "loaded_scripts",
     "notice_alarm",
     "notice_policy",
+    "ssn_exposure",
     ]
 
 # Hide these columns for these types.
