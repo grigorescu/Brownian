@@ -13,7 +13,7 @@ class Plugin:
             sanitizedValues.append(str(value).translate(None, self.notAllowedCharMap))
         result = subprocess.Popen([self.command] + sanitizedValues, stdout=subprocess.PIPE)
         stdout, stderr = result.communicate()
-        return stdout
+        return stdout.replace("\n", "<br>")
 
 whois = {"displayName": "Whois Lookup",
          "plugin": Plugin("whois", string.letters + string.digits + ".:-_")}

@@ -31,7 +31,7 @@
             <strong>Error!</strong> {{ error }}
         </div>
     {% else %}
-  <div class="well tabbable tabs-left">
+  <div class="well tabbable tabs-left" id="mainDiv">
     <ul id="resultTabs" class="nav nav-tabs">
       {% for hit in hits %}
         <li style="padding:3px" class="tab{% if hit.type == openTab %} active{% endif %}">

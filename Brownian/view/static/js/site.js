@@ -84,10 +84,11 @@ function exportRow(rowNumber){
 }
 
 function displayPluginOutput(output){
-    $('#results').prepend('<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">×</button>' + output + '</div>');
+    $('#mainDiv').prepend('<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">×</button>' + output + '</div>');
 }
 
 function runPlugin(displayName, args){
+    $('.dropdown.open .dropdown-toggle').dropdown('toggle');
     Dajaxice.Brownian.view.runPlugin(displayPluginOutput, {'displayName': displayName, 'args': args});
 }
 
