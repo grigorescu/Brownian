@@ -83,6 +83,14 @@ function exportRow(rowNumber){
     return result;
 }
 
+function displayPluginOutput(output){
+    $('#results').prepend('<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">×</button>' + output + '</div>');
+}
+
+function runPlugin(displayName, args){
+    Dajaxice.Brownian.view.runPlugin(displayPluginOutput, {'displayName': displayName, 'args': args});
+}
+
 function replaceSort(tab, value, direction){
     var replacement = '{"' + value + '": {"order": "' + direction + "\"}}'});";
     var action = $(tab).attr('onclick').replace(/'sort': .*/, "'sort': '" + replacement);

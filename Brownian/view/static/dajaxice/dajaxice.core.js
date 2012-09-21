@@ -6,6 +6,9 @@ var Dajaxice = {
             },
             updateIndices: function(callback_function, argv, custom_settings){
                 Dajaxice.call('Brownian.view.updateIndices', 'POST', callback_function, argv, custom_settings);
+            },
+            runPlugin: function(callback_function, argv, custom_settings){
+                Dajaxice.call('Brownian.view.runPlugin', 'POST', callback_function, argv, custom_settings);
             }
         }
     },

@@ -3,6 +3,7 @@ from django.template.loader import render_to_string
 import utils.es
 import requests
 import ast
+import utils.plugins
 
 @dajaxice_register
 def getData(request, type, query, indices, sort, start=0):
@@ -25,12 +26,8 @@ def getData(request, type, query, indices, sort, start=0):
     data['openTab'] = type
     data['query'] = query.replace('"', "&quot;")
     data['indices'] = indices
+    data['plugin_mapping'] = utils.plugins.mapping
     data['total'] = result['hits']['total']
-    #try:
-    #    if result['es_shards']['failed']:
-    #        data['error'] = "%d of %d shards had failures." % (result['es_shards']['failed'], result['es_shards']['total'])
-    #except:
-    #    pass
     data['table'] = utils.es.resultToTable(result, type)
     return render_to_string("include/table.html", data)
 
@@ -42,3 +39,11 @@ def updateIndices(request):
         raise requests.ConnectionError("Error - could not connect to ElasticSearch server to fetch indices.")
     request.session['indices'] = indices
     return True
+
+@dajaxice_register
+def runPlugin(request, displayName, args):
+    for plugins in utils.plugins.mapping.values():
+        for plugin in plugins:
+            if plugin["displayName"] == displayName:
+                return "<strong>" + displayName + ":</strong> " + plugin["plugin"].run([args])
+    return "<strong>Error</strong>: Plugin not found."

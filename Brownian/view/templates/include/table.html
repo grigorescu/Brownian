@@ -55,7 +55,15 @@
                         <ul class="dropdown-menu"><li><a href="#" onclick="appendToQuery('{{ key }}:&quot;{{ val }}&quot;');">Include</a></li>
                             {% if type == "addr" and val %}<li><a href="#" onclick="appendToQuery(ipanywhere(&quot;{{ val }}&quot;));">Include in any IP field</a></li>{% endif %}
                             {% if type == "time" and val %}<li><a href="#" onclick="appendToQuery('{{ key }}:{{ val|tsRange:"500" }}');">Timestamp &plusmn; 500ms</a></li>{% endif %}
-                            <li><a href="#" onclick="appendToQuery('{{ key }}:&quot;{{ val }}&quot;', true);">Exclude</a></li></ul></li></ul></td>
+                            <li><a href="#" onclick="appendToQuery('{{ key }}:&quot;{{ val }}&quot;', true);">Exclude</a></li>
+                            {% for pluginType, plugins in plugin_mapping.items %}
+                                {% if pluginType == type %}
+                                    {% for plugin in plugins %}
+                                        <li><a href="#" onclick="runPlugin('{{ plugin.displayName }}', '{{ val }}');">{{ plugin.displayName }}</a></li>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </ul></li></ul></td>
             {% endfor %}</tr>{% endfor %}</tbody></table>
 
 {% paginate start total openTab query indices sort.field sort.order %}

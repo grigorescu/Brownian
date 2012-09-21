@@ -35,7 +35,7 @@
     <ul id="resultTabs" class="nav nav-tabs">
       {% for hit in hits %}
         <li style="padding:3px" class="tab{% if hit.type == openTab %} active{% endif %}">
-          <a href="#{{ hit.type }}" data-toggle="tab" id="{{ hit.type }}_tab" onclick="replaceContents('<img class=&quot;loader&quot; src=&quot;{% static "img/ajax-loader.gif" %}&quot;>');Dajaxice.Brownian.view.getData(replaceContents, {'type': '{{ hit.type }}', 'query': '{{ query }}', 'indices': '{{ indices }}', 'sort': '{&quot;ts&quot;: {&quot;order&quot: &quot;ASC&quot;}}'});"><span style="float:left">{{ hit.type }}</span>&nbsp;<span style="float: right" class="badge">{{ hit.total|intcomma }}</span>
+          <a href="#{{ hit.type }}" data-toggle="tab" id="{{ hit.type }}_tab" onclick="replaceContents('<img class=&quot;loader&quot; src=&quot;{% static "img/ajax-loader.gif" %}&quot;>');Dajaxice.Brownian.view.getData(replaceContents, {'type': '{{ hit.type }}', 'query': '{{ query }}', 'indices': '{{ indices }}', 'sort': '{&quot;ts&quot;: {&quot;order&quot: &quot;asc&quot;}}'});"><span style="float:left">{{ hit.type }}</span>&nbsp;<span style="float: right" class="badge">{{ hit.total|intcomma }}</span>
           <br/></a>
         </li>
       {% endfor %}
