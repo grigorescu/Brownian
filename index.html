@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Brownian by grigorescu</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/grigorescu/Brownian">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/grigorescu/Brownian/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/grigorescu/Brownian/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Brownian</h1>
+          <p>A web interface for interacting with your Bro IDS logs.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/grigorescu">grigorescu</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>Brownian</h1>
+
+<p>Brownian is a web interface for viewing and interacting with <a href="http://bro-ids.org/">Bro IDS</a> logs. Try it out on a <a href="http://brownian.bro-ids.org/?time=all">live demo</a>.</p>
+
+<h2>Why Brownian?</h2>
+
+<p>Brownian motion relates to the elastic collisions and random motion of particles. Brownian aims to help you leverage Bro and ElasticSearch to make sense of a massive amount of seemingly random data.</p>
+
+<h2>Prerequisites</h2>
+
+<p>This interface only works with Bro if you're using the new <a href="http://git.bro-ids.org/bro.git/blob/HEAD:/doc/logging-elasticsearch.rst">ElasticSearch Logging</a> plugin.</p>
+
+<p>Please refer to that documentation for getting ElasticSearch setup, and receiving logs.</p>
+
+<p>It's also <em>highly</em> recommended to review the <a href="https://github.com/grigorescu/Brownian/wiki/ElasticSearch-Configuration">ElasticSearch configuration tips</a>.</p>
+
+<h2>Requirements</h2>
+
+<ul>
+<li>Python version 2.6 or 2.7.</li>
+<li>Brownian comes with it's own webserver, for testing purposes.</li>
+<li>For production use, Apache with mod_wsgi is recommended.</li>
+</ul><h2>Virtualenv Setup</h2>
+
+<p>It is advised to run Brownian in a <a href="http://www.virtualenv.org/en/latest/index.html">virtualenv</a> - an isolated Python environment with its own set of libraries.
+This will prevent system upgrades from modifying the globally installed libraries and potentially breaking Brownian.</p>
+
+<ol>
+<li>Download the latest <a href="https://raw.github.com/pypa/virtualenv/master/virtualenv.py">virtualenv.py</a>.</li>
+<li>Create and switch to your environment:</li>
+</ol><div class="highlight"><pre><span class="nv">$ </span>python ./virtualenv.py Brownian
+<span class="nv">$ </span><span class="nb">cd </span>Brownian
+<span class="nv">$ </span><span class="nb">source</span> ./bin/activate
+</pre></div>
+
+<h2>Installation</h2>
+
+<div class="highlight"><pre><span class="nv">$ </span>pip install git+https://github.com/grigorescu/Brownian.git
+</pre></div>
+
+<p>The files are installed in ./lib/python2.X/site-packages/Brownian.</p>
+
+<h2>Configuration</h2>
+
+<ol>
+<li>Change <code>ELASTICSEARCH_SERVER</code> in Brownian/lib/python2.X/site-packages/Brownian/settings.py to your server's hostname and port.</li>
+<li>Change <code>TIME_ZONE</code> in settings.py to your desired timezone.</li>
+<li>Review the other settings at the top of settings.py and configure them as desired.</li>
+</ol><h2>Running the Development Server</h2>
+
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">export </span><span class="nv">DJANGO_SETTINGS_MODULE</span><span class="o">=</span>Brownian.settings
+</pre></div>
+
+<p>In settings.py, modify the <code>DATABASES</code> setting to the path you'd like a small SQLite database created (your user will need write permissions to both the file and the parent directory).</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>python ./bin/django-admin.py syncdb
+<span class="nv">$ </span>python ./bin/django-admin.py runserver
+</pre></div>
+
+<h2>Running the Production Server with Apache</h2>
+
+<ol>
+<li>Install mod_wsgi</li>
+<li>Edit <code>BROWNIAN_PATH</code> at the top of Brownian/lib/python2.X/site-packages/Brownian/wsgi.py to the location of your virtualenv directory.</li>
+<li>In settings.py, modify the <code>DATABASES</code> setting to the path you'd like a small SQLite database created (your Apache user will need write permissions to both the file and the parent directory).</li>
+<li>To create the database, in your virtualenv, run <code>./bin/django-admin.py syncdb</code>.</li>
+<li>Edit your Apache config to include:</li>
+</ol><div class="highlight"><pre><span class="nb">WSGIPassAuthorization</span> <span class="k">on</span>
+<span class="nb">WSGIScriptAlias</span> <span class="s2">"/Brownian"</span> <span class="s2">"/opt/Brownian/lib/python2.X/site-packages/Brownian/wsgi.py"</span>
+
+<span class="c"># Static content - CSS, Javascript, images, etc.</span>
+<span class="nb">Alias</span> <span class="sx">/static/</span> <span class="sx">/opt/Brownian/lib/python2.X/site-packages/Brownian/view/static/</span>
+<span class="nt">&lt;Directory</span> <span class="s">/opt/Brownian/lib/python2.X/site-packages/Brownian/view/static</span><span class="nt">&gt;</span>
+  <span class="nb">Order</span> allow,deny
+  <span class="nb">Allow</span> from <span class="k">all</span>
+<span class="nt">&lt;/Directory&gt;</span>
+
+<span class="c"># Optional - Permissions</span>
+<span class="nt">&lt;Directory</span> <span class="s">/opt/Brownian/lib/python2.X/site-packages/Brownian</span><span class="nt">&gt;</span>
+<span class="nb">Allow</span> from ...
+... <span class="nb">Blah</span> blah ...
+<span class="nt">&lt;/Directory&gt;</span>
+</pre></div>
+
+<p>Finally, restart Apache, and you should be good to go.</p>
+
+<p>If you'd like to have your static files somewhere other than <code>/static</code>, change <code>STATIC_URL</code> in settings.py. Please make sure to leave a trailing slash.</p>
+
+<p>For more information, see: <a href="https://docs.djangoproject.com/en/1.4/howto/deployment/wsgi/modwsgi/">https://docs.djangoproject.com/en/1.4/howto/deployment/wsgi/modwsgi/</a></p>
+
+<h2>Issues</h2>
+
+<p>If you see something that's broken, or something that you'd like added, please create an issue.</p>
+
+<p>As always, fork, patch, and push away!</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
