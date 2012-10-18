@@ -224,6 +224,20 @@ broLogs = {
         Field("capture_password", "bool", "Determines if the password will be captured for this request."),
         Field("proxied", "set", "All of the headers that may indicate if the request was proxied."),
         ],
+    "intel": [
+        Field("ts", "time", "The time at which the intelligence item was seen."),
+        Field("uid", "string", "Connection unique ID."),
+        Field("id.orig_h", "addr", "The originating endpoint's address."),
+        Field("id.orig_p", "port", "The originating endpoint's port."),
+        Field("id.resp_h", "addr", "The responding endpoint's address."),
+        Field("id.resp_p", "port", "The responding endpoint's port."),
+        Field("seen.host", "addr", "The IP address if the data seen is an IP address."),
+        Field("seen.str", "string", "The string if the data is about a string."),
+        Field("seen.str_type", "string", "The type of data that is in the string if the $str field is set."),
+        Field("seen.where", "set", "Where the data was discovered."),
+        Field("seen.conn", "connection", " If the data was discovered within a connection, the connection record that can give context to the data."),
+        Field("sources", "set", "Sources which supplied data that resulted in this match."),
+        ],
     "irc": [
         Field("ts", "time", "Timestamp for when the command was seen."),
         Field("uid", "string", "Connection unique ID."),
@@ -255,11 +269,6 @@ broLogs = {
         Field("port_num", "port", "The port number on which the service is running."),
         Field("port_proto", "transport_proto", "The transport-layer protocol which the service uses."),
         Field("service", "set", "A set of protocols that match the service's connection payloads."),
-    ],
-    "intel": [
-        Field("ts", "time", "The current network time."),
-        Field("level", "string", "Represents the severity of the message. This value should be one of: info, warn, error"),
-        Field("message", "string", "The message."),
     ],
     "loaded_scripts": [
         Field("name", "string", "Name of the script loaded potentially with spaces included before the file name to indicate load depth. The convention is two spaces per level of depth."),
