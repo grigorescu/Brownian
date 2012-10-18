@@ -71,7 +71,7 @@ Running the Production Server with Apache
 1. Install mod_wsgi
 + Edit ```BROWNIAN_PATH``` at the top of Brownian/lib/python2.X/site-packages/Brownian/wsgi.py to the location of your virtualenv directory.
 + In settings.py, modify the ```DATABASES``` setting to the path you'd like a small SQLite database created (your Apache user will need write permissions to both the file and the parent directory).
-+ To create the database, in your virtualenv, run ```./bin/django-admin.py syncdb```.
++ To create the database, in your virtualenv, run ```DJANGO_SETTINGS_MODULE=Brownian.settings ./bin/django-admin.py syncdb```. You don't need to create any users.
 + Edit your Apache config to include:
 
 ```conf
