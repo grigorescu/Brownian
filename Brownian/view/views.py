@@ -46,7 +46,7 @@ def query(request):
     except:
         data["error"] = "Could not connect to ElasticSearch server for query - please check ElasticSearch cluster health."
         return render(request, "home.html", data)
-    if data["hits"]["total"] == 0:
+    if not data["hits"]:
         data["error"] = "Query returned no hits."
         return render(request, "home.html", data)
     # To make the Javascript easier, we strip off the # from the currently open tab.
