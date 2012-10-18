@@ -46,7 +46,9 @@ def query(request):
     except:
         data["error"] = "Could not connect to ElasticSearch server for query - please check ElasticSearch cluster health."
         return render(request, "home.html", data)
-
+    if data["hits"]["total"] == 0:
+        data["error"] = "Query returned no hits."
+        return render(request, "home.html", data)
     # To make the Javascript easier, we strip off the # from the currently open tab.
     # If we don't have an open tab, default to conn.
     openTab = params.get("openTab", "#conn").replace("#", "")
@@ -92,6 +94,7 @@ def alerts(request):
         return render(request, "alerts.html", data)
     facets = {"ips": {"terms": {"field": ["src", "dst"], "size": 25}},
               "ports": {"terms": {"field": "p", "size": 25}},
+              "notices": {"terms": {"field": "note", "size": 25}},
               }
     data['facets'] = utils.es.doQuery("*", index=selectedIndices, size=0, type="notice", facets=facets)['facets']
 
