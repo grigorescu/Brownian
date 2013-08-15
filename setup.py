@@ -3,7 +3,7 @@ setup(
     name = "Brownian",
     version = "0.5-r107",
     packages = ["Brownian", "Brownian.view", "Brownian.view.templatetags", "Brownian.view.utils"],
-    install_requires = ["Django==1.4.1", "django-dajax==0.9.1", "django-dajaxice==0.5", "requests==0.13.6", "nose", "pytz"],
+    install_requires = ["Django==1.4.1", "django-dajax==0.9.1", "django-dajaxice==0.5", "requests==0.13.6", "nose", "pytz==2013b"],
     package_data = {'Brownian.view':
                         ['static/css/*.css',
                          'static/img/*.png',
