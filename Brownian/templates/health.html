@@ -1,0 +1,58 @@
+{% extends "include/layout.html" %}
+{% block title %}Home{% endblock %}
+{% block contents %}
+    <div class="well container-fluid span4" xmlns="http://www.w3.org/1999/html">
+        <h3 style="text-align: center;">Cluster Health</h3>
+        <table class="table table-condensed table-striped">
+            <tbody>
+            {% for cluster, response in health.items() %}
+                {% if cluster != "_status" %}
+                    {% for key, value in health[cluster].items() %}
+                        <tr><td><strong>{{ cluster }}</strong>: {{ key }}</td><td>{{ value }}</td></tr>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="well container-fluid span8" xmlns="http://www.w3.org/1999/html">
+    <h3 style="text-align: center;">Node Health</h3>
+    <table class="table table-condensed table-striped">
+        <thead>
+        <th>Node</th><th>Uptime</th><th>Load</th><th>Free Mem</th><th>Used Swap</th><th>Available Disk</th>
+        </thead>
+        <tbody>
+        {% for node_name, node in nodes.items %}
+            <tr>
+                <td>{{ node.name }}</td>
+                <td>{{ node.os.uptime }}</td>
+                <td>{{ node.os.load_average.0 }}, {{ node.os.load_average.1 }}, {{ node.os.load_average.2 }}</td>
+                <td>{{ node.os.mem.free_percent }}%</td>
+                <td>{{ node.os.swap.used_in_bytes }}</td>
+                <td>
+                    {{ node.fs.items.1.1 }}
+                </td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="well container-fluid span6" xmlns="http://www.w3.org/1999/html">
+    <h3 style="text-align: center;">Shard Failures</h3>
+    {% if shards.es_shards.failures %}
+        <table class="table table-condensed table-striped">
+            <thead>
+            <th>Index (Shard)</th><th>Reason</th>
+            </thead>
+            <tbody>
+            {% for failure in shards.es_shards.failures %}
+                <tr><td>{{ failure.index }} ({{ failure.shard }})</td><td style="white-space:normal">{{ failure.reason }}</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        No shard failures.
+    {% endif %}
+</div>
+{% endblock %}
