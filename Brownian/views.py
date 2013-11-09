@@ -25,4 +25,6 @@ def notices():
 @app.route('/health')
 def health():
     health, errors = elastibro.utils.getHealth()
-    return render_template('health.html', health=health, errors=errors)
+    nodes, errors = elastibro.utils.getNodeInfo(errors)
+    shards, errors = elastibro.utils.getShardInfo(errors)
+    return render_template('health.html', health=health, nodes=nodes, shards=shards, errors=errors)

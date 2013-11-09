@@ -15,44 +15,52 @@
             </tbody>
         </table>
     </div>
-</div>
-<div class="well container-fluid span8" xmlns="http://www.w3.org/1999/html">
-    <h3 style="text-align: center;">Node Health</h3>
-    <table class="table table-condensed table-striped">
-        <thead>
-        <th>Node</th><th>Uptime</th><th>Load</th><th>Free Mem</th><th>Used Swap</th><th>Available Disk</th>
-        </thead>
-        <tbody>
-        {% for node_name, node in nodes.items %}
-            <tr>
-                <td>{{ node.name }}</td>
-                <td>{{ node.os.uptime }}</td>
-                <td>{{ node.os.load_average.0 }}, {{ node.os.load_average.1 }}, {{ node.os.load_average.2 }}</td>
-                <td>{{ node.os.mem.free_percent }}%</td>
-                <td>{{ node.os.swap.used_in_bytes }}</td>
-                <td>
-                    {{ node.fs.items.1.1 }}
-                </td></tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
 
-<div class="well container-fluid span6" xmlns="http://www.w3.org/1999/html">
-    <h3 style="text-align: center;">Shard Failures</h3>
-    {% if shards.es_shards.failures %}
+    <div class="well container-fluid span6" xmlns="http://www.w3.org/1999/html">
+        <h3 style="text-align: center;">Node Health</h3>
         <table class="table table-condensed table-striped">
             <thead>
-            <th>Index (Shard)</th><th>Reason</th>
+            <th>Cluster</th><th>Node</th><th>Uptime</th><th>Load</th><th>Mem Free</th><th>Disk Free</th>
             </thead>
             <tbody>
-            {% for failure in shards.es_shards.failures %}
-                <tr><td>{{ failure.index }} ({{ failure.shard }})</td><td style="white-space:normal">{{ failure.reason }}</td></tr>
+            {% for cluster_name, cluster in nodes.items() %}
+                {% if cluster_name != "_status" %}
+                    {% for node_name, node in nodes[cluster_name]['nodes'].items() %}
+                        <tr>
+                            <td><strong>{{ cluster_name }}</strong></td>
+                            <td>{{ node.hostname }}</td>
+                            <td>{{ node.os.uptime }}</td>
+                            <td>{{ node.os.load_average.0 }}, {{ node.os.load_average.1 }}, {{ node.os.load_average.2 }}</td>
+                            <td>{{ node.os.mem.free_percent }}%</td>
+                            <td>{{ node.fs.items()[1][1][0].available }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
             {% endfor %}
             </tbody>
         </table>
-    {% else %}
-        No shard failures.
-    {% endif %}
-</div>
+    </div>
+
+    <div class="well container-fluid span6" xmlns="http://www.w3.org/1999/html">
+        <h3 style="text-align: center;">Shard Failures</h3>
+        <table class="table table-condensed table-striped">
+            <thead>
+            <th>Cluster</th><th>Index (Shard)</th><th>Reason</th>
+            </thead>
+            <tbody>
+            {%  for cluster_name, cluster in shards.items() %}
+                {% if cluster_name != "_status" %}
+                    {% if shards[cluster_name]['_shards'].failed > 0 %}
+                        {% for failure in shards[cluster_name]['_shards'].failures %}
+                            <tr><td>{{ cluster_name }}</td><td>{{ failure.index }} ({{ failure.shard }})</td><td style="white-space:normal">{{ failure.reason }}</td></tr>
+                        {% endfor %}
+                    {% else %}
+                    <tr><td><strong>{{ cluster_name }}</strong><td colspan="2">No shard failures.</td></tr>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 {% endblock %}
