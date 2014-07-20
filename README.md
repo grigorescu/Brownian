@@ -1,7 +1,7 @@
-Brownian [![Build Status](https://secure.travis-ci.org/grigorescu/Brownian.png)](http://travis-ci.org/grigorescu/Brownian)
+Brownian [![Build Status](https://secure.travis-ci.org/grigorescu/Brownian.png?branch=master)](http://travis-ci.org/grigorescu/Brownian)
 ================================
 
-Brownian is a web interface for viewing and interacting with [Bro IDS](http://bro-ids.org/) logs. Try it out on a [live demo](http://brownian.bro-ids.org/?time=all).
+Brownian is a web interface for viewing and interacting with [Bro IDS](http://bro.org/) logs. Try it out on a [live demo](http://brownian.bro.org/?time=all).
 
 Why Brownian?
 -------------
@@ -11,7 +11,7 @@ Brownian motion relates to the elastic collisions and random motion of particles
 Prerequisites
 -------------
 
-This interface only works with Bro if you're using the new [ElasticSearch Logging](http://git.bro-ids.org/bro.git/blob/HEAD:/doc/logging-elasticsearch.rst) plugin.
+This interface only works with Bro if you're using the new [ElasticSearch Logging](http://bro.org/sphinx/frameworks/logging-elasticsearch.html) plugin.
 
 Please refer to that documentation for getting ElasticSearch setup, and receiving logs.
 
