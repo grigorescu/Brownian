@@ -92,7 +92,7 @@ def alerts(request):
     if not selectedIndices:
         data["error"] = "No indices found in that time range - please adjust your time range."
         return render(request, "alerts.html", data)
-    facets = {"ips": {"terms": {"field": ["src", "dst"], "size": 25}},
+    facets = {"ips": {"terms":[{"field": "src", "size": 25}, {"field": "dst", "size": 25}]},
               "ports": {"terms": {"field": "p", "size": 25}},
               "notices": {"terms": {"field": "note", "size": 25}},
               }
