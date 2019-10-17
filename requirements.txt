@@ -3,5 +3,5 @@ django-dajax==0.9.1
 django-dajaxice==0.5
 nose==1.1.2
 pytz==2013b
-requests==0.13.6
+requests==2.20.0
 wsgiref==0.1.2
